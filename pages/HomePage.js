@@ -1,9 +1,9 @@
 import { BaseComponent } from "../components/BaseComponent.js";
 
 const testTasks = [
-    { task: "To finish the project", isComplete: false },
-    { task: "To run a marathon", isComplete: false },
-    { task: "To watch a course", isComplete: true }
+    {  id: 1, task: "To finish the project", isComplete: false },
+    { id: 2, task: "To run a marathon", isComplete: false },
+    { id: 3, task: "To watch a course", isComplete: true }
 ];
 
 export class HomePage extends BaseComponent {

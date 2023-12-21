@@ -33,7 +33,7 @@
 <template id="task-form">
     <form>
         <div class="form-control">
-            <label for="task">Task</label>
+            <label class="movable" for="task">Task</label>
             <input id="task" name="task" placeholder="To win the world before lunchtime..." type="text"/>
         </div>
         <div class="form__actions">
@@ -49,9 +49,11 @@
 </template>
 
 <template id="task-item">
-    <div class="container">
+    <div class="container d-flex justify-between">
         <span class="task-item__text"></span>
-        <input type="checkbox" />
+        <label>
+            <input type="checkbox"/>
+        </label>
     </div>
 </template>
 
