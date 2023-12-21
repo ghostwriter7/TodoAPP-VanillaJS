@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700&display=swap');
+
+:root {
+    --clr-primary: #d5ddcb;
+    --clr-secondary: #5f7e97;
+    --clr-accent: #7e57c2;
+    --bg-primary: #011627;
+    --bg-secondary: #010e1a;
+
+    --border-primary: #122d42;
+    --border-secondary: #30373d;
+
+    --gap: 60px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-primary);
+    font: normal 27px 'JetBrains Mono', sans-serif;
+    margin: 0;
+    padding: 60px;
+}
+
+a {
+    color: var(--clr-accent);
+    text-decoration: none;
+}
+
+.clr-accent { color: var(--clr-accent);}
+.clr-primary { color: var(--clr-primary);}
+.clr-secondary { color: var(--clr-secondary);}
+
+.bg-primary { background-color: var(--bg-primary);}
+.bg-secondary { background-color: var(--bg-secondary);}
+
+.fw-100 {font-weight: 100;}
+.fw-200 {font-weight: 200;}
+.fw-300 {font-weight: 300;}
+.fw-400 {font-weight: 400;}
+.fw-500 {font-weight: 500;}
+.fw-600 {font-weight: 600;}
+.fw-700 {font-weight: 700;}
