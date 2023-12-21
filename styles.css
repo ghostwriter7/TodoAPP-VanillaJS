@@ -22,7 +22,7 @@ body {
     background-color: var(--bg-primary);
     font: normal 27px 'JetBrains Mono', sans-serif;
     margin: 0;
-    padding: 60px;
+    padding: 12px;
 }
 
 a {
@@ -44,3 +44,18 @@ a {
 .fw-500 {font-weight: 500;}
 .fw-600 {font-weight: 600;}
 .fw-700 {font-weight: 700;}
+
+nav {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-secondary);
+    border-bottom-color: var(--border-primary);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+}
+
+nav > span {
+    flex: 1;
+}
