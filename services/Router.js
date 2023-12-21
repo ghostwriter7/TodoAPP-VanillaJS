@@ -3,9 +3,11 @@ export default class Router {
         document.querySelector('nav').querySelectorAll('a').forEach((link) => {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.navigateTo(event.target.pathname);
+                this.navigateTo(event.currentTarget.pathname);
             });
         });
+
+        this.navigateTo(location.pathname);
     }
 
     navigateTo(route, addToHistory = true) {
