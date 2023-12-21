@@ -1,8 +1,8 @@
 import Router from "./services/Router.js";
 import { TaskForm } from "./components/task-form/TaskForm.js";
-import { HomePage } from "./components/HomePage.js";
+import { HomePage } from "./pages/HomePage.js";
 import { TaskList } from "./components/task-list/TaskList.js";
-import { TaskItem } from "./components/task/TaskItem.js";
+import { TaskItem } from "./components/task-item/TaskItem.js";
 
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);

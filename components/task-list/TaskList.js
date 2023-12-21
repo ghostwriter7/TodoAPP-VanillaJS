@@ -1,5 +1,11 @@
-export class TaskList extends HTMLElement {
+import { BaseComponent } from "../BaseComponent.js";
+
+export class TaskList extends BaseComponent {
     constructor() {
         super();
+    }
+
+    connectedCallback() {
+        this.attachTemplate('task-list');
     }
 }

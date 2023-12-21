@@ -1,11 +1,11 @@
-export class TaskForm extends HTMLElement {
+import { BaseComponent } from "../BaseComponent.js";
+
+export class TaskForm extends BaseComponent {
     constructor() {
         super();
     }
 
     connectedCallback() {
-        const template = document.getElementById('task-form');
-        const content = template.content.cloneNode(true);
-        this.appendChild(content);
+        this.attachTemplate('task-form');
     }
 }
