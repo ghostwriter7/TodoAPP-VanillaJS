@@ -19,8 +19,7 @@ export default class Router {
 
         switch (route) {
             case '/':
-                pageElement = document.createElement('div');
-                pageElement.innerText = 'Home page';
+                pageElement = document.createElement('home-page');
                 break;
             case '/calendar':
                 pageElement = document.createElement('div');
