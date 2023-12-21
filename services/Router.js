@@ -3,7 +3,7 @@ export default class Router {
         document.querySelector('nav').querySelectorAll('a').forEach((link) => {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
-                this.navigateTo(event.target.href);
+                this.navigateTo(event.target.pathname);
             });
         });
     }
@@ -19,18 +19,23 @@ export default class Router {
             case '/':
                 pageElement = document.createElement('div');
                 pageElement.innerText = 'Home page';
+                break;
             case '/calendar':
                 pageElement = document.createElement('div');
                 pageElement.innerText = 'Calendar';
+                break;
             case '/settings':
                 pageElement = document.createElement('div');
                 pageElement.innerText = 'Settings';
+                break;
             default:
                 pageElement = document.createElement('div');
                 pageElement.innerText = '404';
         }
 
-        document.querySelector('main').appendChild(pageElement);
+        const main = document.querySelector('main');
+        main.childNodes[0].remove();
+        main.appendChild(pageElement);
     }
 
 }
