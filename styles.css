@@ -4,8 +4,12 @@
     --clr-primary: #d5ddcb;
     --clr-secondary: #5f7e97;
     --clr-accent: #7e57c2;
+
     --bg-primary: #011627;
     --bg-secondary: #010e1a;
+
+    --bg-btn: #0b253a;
+    --bg-btn-active: #153a58;
 
     --border-primary: #122d42;
     --border-secondary: #30373d;
@@ -108,3 +112,19 @@ label:has(+ input:active) {
     transform: translate(-5px, -5px);
 }
 
+button {
+    background-color: var(--bg-btn);
+    border: 0;
+    border-radius: 4px;
+    color: var(--clr-secondary);
+    cursor: pointer;
+    font: 600 16px/20px var(--font);
+    padding: 4px 8px;
+    min-width: 80px;
+    transition: all 0.3s ease-in-out;
+}
+
+button:active, button:hover {
+    background-color: var(--bg-btn-active);
+    color: var(--clr-primary);
+}
