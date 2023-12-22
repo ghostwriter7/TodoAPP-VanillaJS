@@ -37,6 +37,7 @@ export default class Router {
         const main = document.querySelector('main');
         main.childNodes[0].remove();
         main.appendChild(pageElement);
+        scrollX = scrollY = 0;
     }
 
 }

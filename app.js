@@ -4,6 +4,7 @@ import { HomePage } from "./pages/HomePage.js";
 import { TaskList } from "./components/task-list/TaskList.js";
 import { TaskItem } from "./components/task-item/TaskItem.js";
 import { FormControl } from "./components/form-control/FormControl.js";
+import { TaskService } from "./services/TaskService.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
@@ -13,7 +14,8 @@ customElements.define('home-page', HomePage);
 
 window.app = {
     router: new Router(),
-}
+    taskService: new TaskService()
+};
 
 addEventListener('popstate', (event) => {
     event.preventDefault();
