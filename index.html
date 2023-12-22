@@ -32,10 +32,12 @@
 
 <template id="task-form">
     <form>
-        <div class="form-control">
-            <label class="movable" for="task">Task</label>
-            <input id="task" name="task" placeholder="To win the world before lunchtime..." type="text"/>
-        </div>
+        <form-control
+            data-label="Task"
+            data-id="task"
+            data-placeholder="To win the world before lunchtime..."
+            data-type="text"
+        ></form-control>
         <div class="form__actions">
             <button type="submit">Add
                 <i class="fa-solid fa-fire"></i>

@@ -3,7 +3,9 @@ import { TaskForm } from "./components/task-form/TaskForm.js";
 import { HomePage } from "./pages/HomePage.js";
 import { TaskList } from "./components/task-list/TaskList.js";
 import { TaskItem } from "./components/task-item/TaskItem.js";
+import { FormControl } from "./components/form-control/FormControl.js";
 
+customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);
 customElements.define('task-item', TaskItem);
