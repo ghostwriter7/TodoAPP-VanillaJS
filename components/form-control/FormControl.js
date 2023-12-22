@@ -3,6 +3,7 @@ import { BaseComponent } from '../BaseComponent.js'
 export class FormControl extends BaseComponent {
     constructor() {
         super();
+        this.root = this.attachShadow({ mode: 'open'});
     }
 
     connectedCallback() {
@@ -25,6 +26,6 @@ export class FormControl extends BaseComponent {
 
         wrapperEl.appendChild(inputEl);
 
-        this.appendChild(wrapperEl);
+        this.root.appendChild(wrapperEl);
     }
 }

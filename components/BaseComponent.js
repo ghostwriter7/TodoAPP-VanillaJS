@@ -25,6 +25,6 @@ export class BaseComponent extends HTMLElement {
     #createStyles(styles) {
         const styleEl = document.createElement('style');
         styleEl.innerText = styles;
-        document.querySelector('head').appendChild(styleEl);
+        this.root.appendChild(styleEl);
     }
 }
