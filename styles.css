@@ -53,6 +53,11 @@ a {
 .fw-600 {font-weight: 600;}
 .fw-700 {font-weight: 700;}
 
+.fs-sm {font-size: 10px;}
+.fs-md {font-size: 14px;}
+.fs-lg {font-size: 18px;}
+.fs-xl {font-size: 22px;}
+
 nav {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-secondary);
@@ -158,4 +163,12 @@ button:active, button:hover {
 
 .justify-between {
     justify-content: space-between;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.pointer {
+    cursor: pointer;
 }

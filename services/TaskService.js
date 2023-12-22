@@ -1,9 +1,10 @@
 export class TaskService {
     #tasks;
+    #activeDate = new Date().toLocaleDateString();
 
     constructor() {
         this.#tasks = {
-            [new Date().toLocaleDateString()]: []
+            [this.#activeDate]: []
         };
 
         this.tasksStore = new Proxy(this.#tasks, {
@@ -25,5 +26,9 @@ export class TaskService {
 
     getTasks(date) {
         return [...this.#tasks[date]];
+    }
+
+    updateTask(id, payload) {
+        this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...task, ...payload } : task);
     }
 }
