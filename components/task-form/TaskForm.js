@@ -6,6 +6,9 @@ export class TaskForm extends BaseComponent {
     }
     #taskProxy;
     #inputMap = {};
+    #label;
+    #button;
+    #formControl;
 
     constructor() {
         super();
@@ -13,6 +16,10 @@ export class TaskForm extends BaseComponent {
 
     connectedCallback() {
         this.attachTemplate('task-form');
+        this.#formControl = this.querySelector('form-control');
+        this.#label = this.#formControl.root.querySelector('label');
+        this.#button = this.querySelector('button[type="submit"]');
+
         this.#handleFormSubmit();
         this.#handleTaskEdit();
         this.#initTwoWayDataBinding();
@@ -27,6 +34,8 @@ export class TaskForm extends BaseComponent {
         this.formSubmitHandler = (event) => {
             event.preventDefault();
             const taskText = this.querySelector('form-control').root.querySelector('input').value;
+            this.#taskProxy.task = '';
+            this.#taskProxy.id = null;
             app.taskService.addTask(taskText, new Date().toLocaleDateString());
         };
         this.form = this.querySelector('form');
@@ -38,6 +47,8 @@ export class TaskForm extends BaseComponent {
             const { payload } = event;
             this.#taskProxy.task = payload.task;
             this.#taskProxy.id = payload.id;
+            this.#label.innerText = 'Edit Task';
+            this.#button.innerHTML = this.#button.innerHTML.replace('Add', 'Update');
         });
     }
 
