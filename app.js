@@ -11,6 +11,8 @@ import { Calendar } from "./components/Calendar.js";
 import { DayTile } from "./components/DayTile.js";
 import { NotFound } from "./pages/NotFound.js";
 import { TaskSummary } from "./components/TaskSummary.js";
+import { CalendarHeader } from "./components/CalendarHeader.js";
+import { CalendarService } from "./services/CalendarService.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
@@ -18,6 +20,7 @@ customElements.define('task-list', TaskList);
 customElements.define('task-item', TaskItem);
 customElements.define('task-summary', TaskSummary);
 customElements.define('calendar-component', Calendar);
+customElements.define('calendar-header', CalendarHeader);
 customElements.define('day-tile', DayTile);
 
 customElements.define('tasks-page', TasksPage);
@@ -27,7 +30,8 @@ customElements.define('not-found-page', NotFound);
 window.app = {
     dataSource: new DataSource(),
     router: new Router(),
-    taskService: new TaskService()
+    taskService: new TaskService(),
+    calendarService: new CalendarService()
 };
 
 addEventListener('popstate', (event) => {

@@ -4,7 +4,12 @@ export class CalendarPage extends HTMLElement {
     }
 
     connectedCallback() {
-        const calendar = document.createElement('calendar-component');
-        this.appendChild(calendar);
+        this.#renderComponent('calendar-header');
+        this.#renderComponent('calendar-component');
+    }
+
+    #renderComponent(tagName) {
+        const component = document.createElement(tagName);
+        this.appendChild(component);
     }
 }

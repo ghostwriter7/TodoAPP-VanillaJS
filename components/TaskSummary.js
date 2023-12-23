@@ -23,7 +23,7 @@ export class TaskSummary extends BaseComponent {
     #renderTitle() {
         const title = this.querySelector('span');
         const [date, month, year] = this.date.split('/');
-        const monthName = getMonthName(month);
+        const monthName = getMonthName(month - 1);
         title.innerText = `${date} ${monthName} ${year}`;
     }
 

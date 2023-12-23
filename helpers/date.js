@@ -6,5 +6,5 @@ export function toTaskId(input) {
 }
 
 export function getMonthName(month) {
-   return  new Intl.DateTimeFormat('gb-GB', { month: 'long'}).format(new Date().setMonth(month - 1));
+   return  new Intl.DateTimeFormat('gb-GB', { month: 'long'}).format(new Date().setMonth(month));
 }
