@@ -37,16 +37,9 @@ export class Calendar extends BaseComponent {
 
         new Array(lastDateOfMonth).fill('').map((_, index) => {
             const date = new Date(year, month, index + 1);
-            const dateEl = document.createElement('div');
-            dateEl.className = 'container calendar__day';
-
-            if (index === 0) {
-                const dayOfWeekIndex = date.getDay();
-                dateEl.style.gridColumn = `${dayOfWeekIndex} / ${dayOfWeekIndex + 1}`;
-            }
-
-            dateEl.innerText = date.getDate();
-            daysContainer.appendChild(dateEl);
+            const dayTile = document.createElement('day-tile');
+            dayTile.date = date;
+            daysContainer.appendChild(dayTile);
         });
 
         this.appendChild(daysContainer);

@@ -8,12 +8,14 @@ import { TaskService } from "./services/TaskService.js";
 import { DataSource } from "./services/DataSource.js";
 import { CalendarPage } from "./pages/CalendarPage.js";
 import { Calendar } from "./components/calendar/Calendar.js";
+import { DayTile } from "./components/calendar/DayTile.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);
 customElements.define('task-item', TaskItem);
 customElements.define('calendar-component', Calendar);
+customElements.define('day-tile', DayTile);
 
 customElements.define('home-page', HomePage);
 customElements.define('calendar-page', CalendarPage);
