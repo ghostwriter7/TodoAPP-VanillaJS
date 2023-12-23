@@ -6,15 +6,18 @@ export class TasksPage extends BaseComponent {
     }
 
     async connectedCallback() {
-        const taskForm = document.createElement('task-form');
-        taskForm.date = this.date;
-        this.appendChild(taskForm);
+        this.#renderComponent('task-form');
 
         app.taskService.setActiveView(this.date);
         await app.taskService.loadTasks();
 
-        const taskList = document.createElement('task-list');
-        taskList.date = this.date;
-        this.appendChild(taskList);
+        this.#renderComponent('task-list');
     }
+
+    #renderComponent(tagName) {
+        const component = document.createElement(tagName);
+        component.date = this.date;
+        this.appendChild(component);
+    }
+
 }
