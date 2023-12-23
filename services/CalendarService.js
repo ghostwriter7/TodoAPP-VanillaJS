@@ -30,11 +30,15 @@ export class CalendarService {
         return this.#stateProxy.month;
     }
 
+    getYear() {
+        return this.#stateProxy.year;
+    }
+
     setMonth(month) {
-        this.#stateProxy.month = month;
+        this.#stateProxy.month = Number.parseInt(month);
     }
 
     setYear(year) {
-        this.#stateProxy.year = year;
+        this.#stateProxy.year = Number.parseInt(year);
     }
 }

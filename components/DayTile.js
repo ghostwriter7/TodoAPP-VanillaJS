@@ -18,7 +18,7 @@ export class DayTile extends HTMLElement {
         this.className = 'container calendar__day';
 
         if (this.date.getDate() === 1) {
-            const dayOfWeekIndex = this.date.getDay();
+            const dayOfWeekIndex = this.date.getDay() || 7;
             this.style.gridColumn = `${dayOfWeekIndex} / ${dayOfWeekIndex + 1}`;
         }
 
