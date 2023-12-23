@@ -36,8 +36,7 @@ export default class Router {
                 pageElement.innerText = 'Settings';
                 break;
             default:
-                pageElement = document.createElement('div');
-                pageElement.innerText = '404';
+                pageElement = document.createElement('not-found-page');
         }
 
         const main = document.querySelector('main');

@@ -9,6 +9,7 @@ import { DataSource } from "./services/DataSource.js";
 import { CalendarPage } from "./pages/CalendarPage.js";
 import { Calendar } from "./components/calendar/Calendar.js";
 import { DayTile } from "./components/calendar/DayTile.js";
+import { NotFound } from "./pages/NotFound.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
@@ -19,6 +20,7 @@ customElements.define('day-tile', DayTile);
 
 customElements.define('tasks-page', TasksPage);
 customElements.define('calendar-page', CalendarPage);
+customElements.define('not-found-page', NotFound);
 
 window.app = {
     dataSource: new DataSource(),
