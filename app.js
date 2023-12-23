@@ -13,6 +13,7 @@ import { NotFound } from "./pages/NotFound.js";
 import { TaskSummary } from "./components/TaskSummary.js";
 import { CalendarHeader } from "./components/CalendarHeader.js";
 import { CalendarService } from "./services/CalendarService.js";
+import { Dropdown } from "./components/Dropdown.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
@@ -22,6 +23,7 @@ customElements.define('task-summary', TaskSummary);
 customElements.define('calendar-component', Calendar);
 customElements.define('calendar-header', CalendarHeader);
 customElements.define('day-tile', DayTile);
+customElements.define('dropdown-control', Dropdown, { extends: 'select' });
 
 customElements.define('tasks-page', TasksPage);
 customElements.define('calendar-page', CalendarPage);

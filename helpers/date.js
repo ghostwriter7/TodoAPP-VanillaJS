@@ -6,5 +6,12 @@ export function toTaskId(input) {
 }
 
 export function getMonthName(month) {
-   return  new Intl.DateTimeFormat('gb-GB', { month: 'long'}).format(new Date().setMonth(month));
+    return new Intl.DateTimeFormat('gb-GB', { month: 'long' }).format(new Date().setMonth(month));
+}
+
+export function getMonthNames() {
+    const monthIndexes = new Array(12).fill(0).map((_, index) => index);
+    const date = new Date(2023, 0, 1);
+    const formatter = Intl.DateTimeFormat('gb-GB', { month: 'long' });
+    return monthIndexes.map((month) => formatter.format(date.setMonth(month)));
 }

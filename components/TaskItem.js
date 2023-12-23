@@ -1,4 +1,5 @@
 import { BaseComponent } from "./BaseComponent.js";
+import { taskEditInitEvent } from "../consts/events.js";
 
 export class TaskItem extends BaseComponent {
     constructor() {
@@ -29,9 +30,9 @@ export class TaskItem extends BaseComponent {
 
     #handleTaskEditInit() {
         this.taskEditInitHandler = () => {
-            const taskEditInitEvent = new Event('apptaskeditinit');
-            taskEditInitEvent.payload = { ...this.task };
-            dispatchEvent(taskEditInitEvent);
+            const event = new Event(taskEditInitEvent);
+            event.payload = { ...this.task };
+            dispatchEvent(event);
         };
         this.editIcon = this.querySelector('#task-edit');
         this.editIcon.addEventListener('click', this.taskEditInitHandler);

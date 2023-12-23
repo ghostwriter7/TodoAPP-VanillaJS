@@ -1,4 +1,5 @@
 import { BaseComponent } from "./BaseComponent.js";
+import { taskChangeEvent } from "../consts/events.js";
 
 export class TaskList extends BaseComponent {
     constructor() {
@@ -9,7 +10,7 @@ export class TaskList extends BaseComponent {
         this.attachTemplate('task-list');
         this.#render();
 
-        window.addEventListener('apptaskchange', () => {
+        window.addEventListener(taskChangeEvent, () => {
             this.#render();
         });
     }

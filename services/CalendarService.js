@@ -1,4 +1,5 @@
 import { getMonthName } from "../helpers/date.js";
+import { calendarChangeEvent } from "../consts/events.js";
 
 export class CalendarService {
     #state = {
@@ -15,6 +16,7 @@ export class CalendarService {
         this.#stateProxy = new Proxy(this.#state, {
             set: (target, property, newValue) => {
                 target[property] = newValue;
+                dispatchEvent(new Event(calendarChangeEvent));
                 return true;
             }
         });
@@ -22,6 +24,10 @@ export class CalendarService {
 
     getCalendarLabel() {
         return `${getMonthName(this.#stateProxy.month)} ${this.#stateProxy.year}`;
+    }
+
+    getMonth() {
+        return this.#stateProxy.month;
     }
 
     setMonth(month) {

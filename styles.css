@@ -138,6 +138,15 @@ label:has(> input[type="checkbox"]:checked):before {
     justify-content: center;
 }
 
+select {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    color: var(--clr-primary);
+    font-size: 16px;
+    font-family: inherit;
+    padding: 2px 10px;
+}
+
 button {
     background-color: var(--bg-btn);
     border: 0;
@@ -174,6 +183,10 @@ button:disabled {
 
 .justify-between {
     justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
 }
 
 .ml-auto {

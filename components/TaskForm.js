@@ -1,4 +1,5 @@
 import { BaseComponent } from "./BaseComponent.js";
+import { taskEditInitEvent } from "../consts/events.js";
 
 export class TaskForm extends BaseComponent {
     #taskModel = {
@@ -58,7 +59,7 @@ export class TaskForm extends BaseComponent {
     }
 
     #handleTaskEdit() {
-        addEventListener('apptaskeditinit', (event) => {
+        addEventListener(taskEditInitEvent, (event) => {
             const { payload } = event;
             this.#taskProxy.task = payload.task;
             this.#taskProxy.id = payload.id;

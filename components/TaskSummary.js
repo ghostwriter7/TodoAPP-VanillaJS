@@ -1,5 +1,6 @@
 import { BaseComponent } from "./BaseComponent.js";
 import { getMonthName } from "../helpers/date.js";
+import { taskChangeEvent } from "../consts/events.js";
 
 export class TaskSummary extends BaseComponent {
     #appTaskChangeHandler;
@@ -13,11 +14,11 @@ export class TaskSummary extends BaseComponent {
         this.#renderTaskCount();
 
         this.#appTaskChangeHandler = () => this.#renderTaskCount();
-        addEventListener('apptaskchange', this.#appTaskChangeHandler);
+        addEventListener(taskChangeEvent, this.#appTaskChangeHandler);
     }
 
     disconnectedCallback() {
-        removeEventListener('apptaskchange', this.#appTaskChangeHandler);
+        removeEventListener(taskChangeEvent, this.#appTaskChangeHandler);
     }
 
     #renderTitle() {

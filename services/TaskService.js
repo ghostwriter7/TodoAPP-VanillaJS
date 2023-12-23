@@ -1,4 +1,5 @@
 import { toTaskId } from "../helpers/date.js";
+import { taskChangeEvent } from "../consts/events.js";
 
 export class TaskService {
     #tasks;
@@ -11,7 +12,7 @@ export class TaskService {
         this.tasksStore = new Proxy(this.#tasks, {
             set: (target, property, newValue) => {
                 target[property] = newValue;
-                window.dispatchEvent(new Event('apptaskchange'));
+                window.dispatchEvent(new Event(taskChangeEvent));
                 return true;
             }
         });
