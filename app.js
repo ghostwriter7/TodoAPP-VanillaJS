@@ -1,20 +1,22 @@
 import Router from "./services/Router.js";
-import { TaskForm } from "./components/task-form/TaskForm.js";
+import { TaskForm } from "./components/TaskForm.js";
 import { TasksPage } from "./pages/TasksPage.js";
-import { TaskList } from "./components/task-list/TaskList.js";
-import { TaskItem } from "./components/task-item/TaskItem.js";
+import { TaskList } from "./components/TaskList.js";
+import { TaskItem } from "./components/TaskItem.js";
 import { FormControl } from "./components/form-control/FormControl.js";
 import { TaskService } from "./services/TaskService.js";
 import { DataSource } from "./services/DataSource.js";
 import { CalendarPage } from "./pages/CalendarPage.js";
-import { Calendar } from "./components/calendar/Calendar.js";
-import { DayTile } from "./components/calendar/DayTile.js";
+import { Calendar } from "./components/Calendar.js";
+import { DayTile } from "./components/DayTile.js";
 import { NotFound } from "./pages/NotFound.js";
+import { TaskSummary } from "./components/TaskSummary.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);
 customElements.define('task-item', TaskItem);
+customElements.define('task-summary', TaskSummary);
 customElements.define('calendar-component', Calendar);
 customElements.define('day-tile', DayTile);
 

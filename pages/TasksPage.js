@@ -7,10 +7,10 @@ export class TasksPage extends BaseComponent {
 
     async connectedCallback() {
         this.#renderComponent('task-form');
-
         app.taskService.setActiveView(this.date);
         await app.taskService.loadTasks();
 
+        this.#renderComponent('task-summary');
         this.#renderComponent('task-list');
     }
 

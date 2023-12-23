@@ -1,3 +1,5 @@
+import { toTaskId } from "../helpers/date.js";
+
 export default class Router {
     init() {
         document.querySelector('nav').querySelectorAll('a').forEach((link) => {
@@ -26,7 +28,7 @@ export default class Router {
             case '/':
             case '/tasks':
                 pageElement = document.createElement('tasks-page');
-                pageElement.date = paramsMap.date || new Date().toLocaleDateString();
+                pageElement.date = paramsMap.date || toTaskId(new Date());
                 break;
             case '/calendar':
                 pageElement = document.createElement('calendar-page');

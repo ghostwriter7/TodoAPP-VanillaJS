@@ -1,3 +1,5 @@
+import { toTaskId } from "../helpers/date.js";
+
 export class DayTile extends HTMLElement {
     constructor() {
         super();
@@ -24,7 +26,7 @@ export class DayTile extends HTMLElement {
     }
 
     #initializeEventListener() {
-        this.clickHandler = () => app.router.navigateTo(`/tasks?date=${this.date.toLocaleDateString()}`);
+        this.clickHandler = () => app.router.navigateTo(`/tasks?date=${toTaskId(this.date)}`);
         this.addEventListener('click', this.clickHandler);
     }
 }

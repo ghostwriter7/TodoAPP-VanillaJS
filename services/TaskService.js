@@ -1,6 +1,8 @@
+import { toTaskId } from "../helpers/date.js";
+
 export class TaskService {
     #tasks;
-    #activeDate = new Date().toLocaleDateString();
+    #activeDate = toTaskId(new Date());
 
     constructor() {
         this.#tasks = {
@@ -22,6 +24,16 @@ export class TaskService {
 
     getTasks(date) {
         return [...this.tasksStore[date]];
+    }
+
+    getTasksSummary(date) {
+        const tasks = this.getTasks(date);
+        const active = tasks.reduce((active, task) => active + (!task.isComplete ? 1 : 0), 0);
+        const complete = tasks.length - active;
+        return {
+            active,
+            complete
+        }
     }
 
     async updateTask(id, payload) {
