@@ -22,10 +22,6 @@ export class CalendarService {
         });
     }
 
-    getCalendarLabel() {
-        return `${getMonthName(this.#stateProxy.month)} ${this.#stateProxy.year}`;
-    }
-
     getMonth() {
         return this.#stateProxy.month;
     }
