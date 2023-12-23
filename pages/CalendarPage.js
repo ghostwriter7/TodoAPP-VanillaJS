@@ -1,15 +1,12 @@
-export class CalendarPage extends HTMLElement {
+import { BaseComponent } from "../components/BaseComponent.js";
+
+export class CalendarPage extends BaseComponent {
     constructor() {
         super();
     }
 
     connectedCallback() {
-        this.#renderComponent('calendar-header');
-        this.#renderComponent('calendar-component');
-    }
-
-    #renderComponent(tagName) {
-        const component = document.createElement(tagName);
-        this.appendChild(component);
+        this.renderComponent('calendar-header');
+        this.renderComponent('calendar-component');
     }
 }

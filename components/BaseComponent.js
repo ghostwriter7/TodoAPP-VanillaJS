@@ -22,6 +22,16 @@ export class BaseComponent extends HTMLElement {
         }
     }
 
+    renderComponent(tagName, props) {
+        const component = document.createElement(tagName);
+
+        if (props) {
+            Object.entries(props).forEach(([key, value]) => component[key] = value);
+        }
+
+        this.appendChild(component);
+    }
+
     #createStyles(styles) {
         const styleEl = document.createElement('style');
         styleEl.innerText = styles;
