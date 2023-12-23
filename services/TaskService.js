@@ -28,12 +28,13 @@ export class TaskService {
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...task, ...payload } : task);
     }
 
-    deleteTask(id) {
+    async deleteTask(id) {
+        await app.dataSource.deleteOneById('todo', id);
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
     }
 
     async loadTasks() {
-        const result = await app.dataSource.getAllByIndex('todo', 'idx-todo-date', this.#activeDate);
+        const result = await app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.#activeDate);
         this.tasksStore[this.#activeDate] = [...result];
     }
 }

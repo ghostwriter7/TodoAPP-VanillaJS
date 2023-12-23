@@ -22,7 +22,18 @@ export class DataSource {
         });
     }
 
-    getAllByIndex(objectStoreName, index, value) {
+    deleteOneById(objectStoreKey, id) {
+        return new Promise(async (resolve, reject) => {
+            const dataSource = await this.#getDataSource();
+            const transaction = dataSource.transaction(objectStoreKey, 'readwrite');
+            const request = transaction.objectStore(objectStoreKey).delete(id);
+
+            request.onsuccess = () => resolve(true);
+            request.onerror = ({ target }) => reject(target.error)
+        });
+    }
+
+    getAllByIndexAndValue(objectStoreName, index, value) {
         return new Promise(async (resolve, reject) => {
             const dataSource = await this.#getDataSource();
             const store = dataSource.transaction(objectStoreName, 'readonly').objectStore(objectStoreName);
