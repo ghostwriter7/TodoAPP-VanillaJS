@@ -1,6 +1,6 @@
 import Router from "./services/Router.js";
 import { TaskForm } from "./components/task-form/TaskForm.js";
-import { HomePage } from "./pages/HomePage.js";
+import { TasksPage } from "./pages/TasksPage.js";
 import { TaskList } from "./components/task-list/TaskList.js";
 import { TaskItem } from "./components/task-item/TaskItem.js";
 import { FormControl } from "./components/form-control/FormControl.js";
@@ -17,7 +17,7 @@ customElements.define('task-item', TaskItem);
 customElements.define('calendar-component', Calendar);
 customElements.define('day-tile', DayTile);
 
-customElements.define('home-page', HomePage);
+customElements.define('tasks-page', TasksPage);
 customElements.define('calendar-page', CalendarPage);
 
 window.app = {
@@ -33,5 +33,4 @@ addEventListener('popstate', (event) => {
 
 addEventListener('DOMContentLoaded', (event) => {
     app.router.init();
-    app.taskService.loadTasks();
 });

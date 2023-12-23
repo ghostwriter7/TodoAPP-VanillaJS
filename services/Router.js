@@ -17,9 +17,16 @@ export default class Router {
 
         let pageElement = null;
 
+        const paramsMap = this.#getQueryParamsMap(route);
+        if (this.#hasQueryParams(paramsMap)) {
+            route = this.#getRouteWithoutQueryParams(route)
+        }
+
         switch (route) {
             case '/':
-                pageElement = document.createElement('home-page');
+            case '/tasks':
+                pageElement = document.createElement('tasks-page');
+                pageElement.date = paramsMap.date || new Date().toLocaleDateString();
                 break;
             case '/calendar':
                 pageElement = document.createElement('calendar-page');
@@ -39,4 +46,22 @@ export default class Router {
         scrollX = scrollY = 0;
     }
 
+    #getQueryParamsMap(route) {
+        const regex = /[?&]([^=#]+)=([^&#]*)/g;
+        const paramsMap = {};
+        let match;
+        while (match = regex.exec(route)) {
+            paramsMap[match[1]] = match[2];
+        }
+        return paramsMap;
+    }
+
+    #hasQueryParams(paramsMap) {
+        return Object.keys(paramsMap).length !== 0;
+        ;
+    }
+
+    #getRouteWithoutQueryParams(route) {
+        return route.slice(0, route.indexOf('?'));
+    }
 }

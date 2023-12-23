@@ -4,6 +4,15 @@ export class DayTile extends HTMLElement {
     }
 
     connectedCallback() {
+        this.#render();
+        this.#initializeEventListener();
+    }
+
+    disconnectedCallback() {
+        this.removeEventListener('click', this.clickHandler);
+    }
+
+    #render() {
         this.className = 'container calendar__day';
 
         if (this.date.getDate() === 1) {
@@ -12,5 +21,10 @@ export class DayTile extends HTMLElement {
         }
 
         this.innerText = this.date.getDate();
+    }
+
+    #initializeEventListener() {
+        this.clickHandler = () => app.router.navigateTo(`/tasks?date=${this.date.toLocaleDateString()}`);
+        this.addEventListener('click', this.clickHandler);
     }
 }

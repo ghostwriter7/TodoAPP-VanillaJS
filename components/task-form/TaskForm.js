@@ -35,7 +35,7 @@ export class TaskForm extends BaseComponent {
             event.preventDefault();
             this.#taskProxy.id ?
                 app.taskService.updateTask(this.#taskProxy.id, { task: this.#taskProxy.task }) :
-                app.taskService.addTask(this.#taskProxy.task, new Date().toLocaleDateString());
+                app.taskService.addTask(this.#taskProxy.task, this.date);
 
             this.#taskProxy.id && this.#removeCancelButton();
             this.#resetForm();

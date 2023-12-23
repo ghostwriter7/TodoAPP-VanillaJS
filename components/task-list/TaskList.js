@@ -17,7 +17,7 @@ export class TaskList extends BaseComponent {
     #render() {
         const ul = this.querySelector('ul');
         ul.innerHTML = '';
-        const tasks = app.taskService.getTasks(new Date().toLocaleDateString());
+        const tasks = app.taskService.getTasks(this.date);
 
         if (tasks.length) {
             tasks.forEach((task) => {

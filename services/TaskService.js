@@ -21,7 +21,7 @@ export class TaskService {
     }
 
     getTasks(date) {
-        return [...this.#tasks[date]];
+        return [...this.tasksStore[date]];
     }
 
     async updateTask(id, payload) {
@@ -37,5 +37,9 @@ export class TaskService {
     async loadTasks() {
         const result = await app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.#activeDate);
         this.tasksStore[this.#activeDate] = [...result];
+    }
+
+    setActiveView(date) {
+        this.#activeDate = date;
     }
 }
