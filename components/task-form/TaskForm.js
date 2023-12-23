@@ -19,10 +19,12 @@ export class TaskForm extends BaseComponent {
         this.#formControl = this.querySelector('form-control');
         this.#label = this.#formControl.root.querySelector('label');
         this.#button = this.querySelector('button[type="submit"]');
+        this.#button.disabled = true;
 
         this.#handleFormSubmit();
         this.#handleTaskEdit();
         this.#initTwoWayDataBinding();
+        this.#disableSubmitButtonOnEmpty();
 
     }
 
@@ -50,6 +52,7 @@ export class TaskForm extends BaseComponent {
             const { payload } = event;
             this.#taskProxy.task = payload.task;
             this.#taskProxy.id = payload.id;
+            this.#button.disabled = false;
             this.#updateLabelAndSubmitButton('Edit Task', 'Update');
             this.#initCancelButton();
         });
@@ -104,5 +107,11 @@ export class TaskForm extends BaseComponent {
         this.cancelButton.innerHTML = 'Cancel <i class="fa-solid fa-xmark"></i>';
         this.querySelector('.form__actions').insertAdjacentElement('afterbegin', this.cancelButton);
         this.cancelButton.addEventListener('click', () => this.#cancelTaskEdit(), { once: true });
+    }
+
+    #disableSubmitButtonOnEmpty() {
+        this.#formControl.onValueChange((value) => {
+            this.#button.disabled = !value;
+        });
     }
 }

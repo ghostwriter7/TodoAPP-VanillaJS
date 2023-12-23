@@ -150,9 +150,14 @@ button {
     transition: all 0.3s ease-in-out;
 }
 
-button:active, button:hover {
+button:not(:disabled):active, button:not(:disabled):hover {
     background-color: var(--bg-btn-active);
     color: var(--clr-primary);
+}
+
+button:disabled {
+    cursor: default;
+    opacity: 0.4;
 }
 
 .container {
