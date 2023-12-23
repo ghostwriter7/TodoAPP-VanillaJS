@@ -33,6 +33,19 @@ export class DataSource {
         });
     }
 
+    updateOneById(objectStoreKey, id, payload) {
+        return new Promise(async (resolve, reject) => {
+            const existingRecord = await this.getOneById(objectStoreKey, id);
+            const dataSource = await this.#getDataSource();
+            const transaction = dataSource.transaction(objectStoreKey, 'readwrite');
+            const updatedRecord = { ...existingRecord, ...payload };
+            const request = transaction.objectStore(objectStoreKey).put(updatedRecord);
+
+            request.onsuccess = () => resolve(updatedRecord);
+            request.onerror = ({ target }) => reject(target.error);
+        });
+    }
+
     getAllByIndexAndValue(objectStoreName, index, value) {
         return new Promise(async (resolve, reject) => {
             const dataSource = await this.#getDataSource();
@@ -45,6 +58,17 @@ export class DataSource {
             request.onsuccess = (({ target }) => resolve(target.result));
             request.onerror = (({ target }) => reject(target.error))
         });
+    }
+
+    getOneById(objectStoreKey, id) {
+        return new Promise(async (resolve, reject) => {
+            const dataSource = await this.#getDataSource();
+            const transaction = dataSource.transaction(objectStoreKey, 'readonly');
+            const request = transaction.objectStore(objectStoreKey).get(id);
+
+            request.onsuccess = ({ target }) => resolve(target.result);
+            request.onerror = ({ target }) => reject(target.error);
+        })
     }
 
     #getDataSource() {

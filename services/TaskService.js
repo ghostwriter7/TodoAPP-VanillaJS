@@ -24,8 +24,9 @@ export class TaskService {
         return [...this.#tasks[date]];
     }
 
-    updateTask(id, payload) {
-        this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...task, ...payload } : task);
+    async updateTask(id, payload) {
+        const updatedTask = await app.dataSource.updateOneById('todo', id, payload);
+        this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...updatedTask } : task);
     }
 
     async deleteTask(id) {
