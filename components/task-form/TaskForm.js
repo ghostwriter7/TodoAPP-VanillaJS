@@ -33,10 +33,8 @@ export class TaskForm extends BaseComponent {
     #handleFormSubmit() {
         this.formSubmitHandler = (event) => {
             event.preventDefault();
-            const taskText = this.querySelector('form-control').root.querySelector('input').value;
-            this.#taskProxy.task = '';
-            this.#taskProxy.id = null;
-            app.taskService.addTask(taskText, new Date().toLocaleDateString());
+            app.taskService.addTask(this.#taskProxy.task, new Date().toLocaleDateString());
+            this.#resetForm();
         };
         this.form = this.querySelector('form');
         this.form.addEventListener('submit', this.formSubmitHandler);
@@ -47,8 +45,8 @@ export class TaskForm extends BaseComponent {
             const { payload } = event;
             this.#taskProxy.task = payload.task;
             this.#taskProxy.id = payload.id;
-            this.#label.innerText = 'Edit Task';
-            this.#button.innerHTML = this.#button.innerHTML.replace('Add', 'Update');
+            this.#updateLabelAndSubmitButton('Edit Task', 'Update');
+            this.#initCancelButton();
         });
     }
 
@@ -71,5 +69,35 @@ export class TaskForm extends BaseComponent {
                 return true;
             }
         });
+    }
+
+    #cancelTaskEdit() {
+        this.#resetForm();
+        this.#removeCancelButton();
+        this.#updateLabelAndSubmitButton('Task', 'Add');
+    }
+
+    #resetForm() {
+        this.#taskProxy.task = '';
+        this.#taskProxy.id = null;
+    }
+
+    #removeCancelButton() {
+        this.cancelButton.remove();
+    }
+
+    #updateLabelAndSubmitButton(label, buttonLabel) {
+        this.#label.innerText = label;
+        const buttonHTML = this.#button.innerHTML;
+        const textEndsAtIndex = buttonHTML.indexOf(" ");
+        const currentLabel = buttonHTML.substring(0, textEndsAtIndex);
+        this.#button.innerHTML = this.#button.innerHTML.replace(currentLabel, buttonLabel);
+    }
+
+    #initCancelButton() {
+        this.cancelButton = document.createElement('button');
+        this.cancelButton.innerHTML = 'Cancel <i class="fa-solid fa-xmark"></i>';
+        this.querySelector('.form__actions').insertAdjacentElement('afterbegin', this.cancelButton);
+        this.cancelButton.addEventListener('click', () => this.#cancelTaskEdit(), { once: true });
     }
 }
