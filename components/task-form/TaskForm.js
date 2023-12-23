@@ -33,8 +33,13 @@ export class TaskForm extends BaseComponent {
     #handleFormSubmit() {
         this.formSubmitHandler = (event) => {
             event.preventDefault();
-            app.taskService.addTask(this.#taskProxy.task, new Date().toLocaleDateString());
+            this.#taskProxy.id ?
+                app.taskService.updateTask(this.#taskProxy.id, { task: this.#taskProxy.task }) :
+                app.taskService.addTask(this.#taskProxy.task, new Date().toLocaleDateString());
+
+            this.#taskProxy.id && this.#removeCancelButton();
             this.#resetForm();
+            this.#updateLabelAndSubmitButton('Task', 'Add');
         };
         this.form = this.querySelector('form');
         this.form.addEventListener('submit', this.formSubmitHandler);
