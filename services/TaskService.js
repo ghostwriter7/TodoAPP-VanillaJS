@@ -31,4 +31,8 @@ export class TaskService {
     updateTask(id, payload) {
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...task, ...payload } : task);
     }
+
+    deleteTask(id) {
+        this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
+    }
 }

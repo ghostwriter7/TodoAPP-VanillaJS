@@ -33,10 +33,10 @@
 <template id="task-form">
     <form>
         <form-control
-            data-label="Task"
-            data-id="task"
-            data-placeholder="To win the world before lunchtime..."
-            data-type="text"
+                data-label="Task"
+                data-id="task"
+                data-placeholder="To win the world before lunchtime..."
+                data-type="text"
         ></form-control>
         <div class="form__actions">
             <button type="submit">Add
@@ -53,10 +53,13 @@
 <template id="task-item">
     <div class="container d-flex justify-between">
         <span class="task-item__text"></span>
-        <i id="task-edit" class="pointer ml-auto fs-xl fa-regular fa-pen-to-square"></i>
-        <label>
-            <input type="checkbox"/>
-        </label>
+        <div class="d-flex gap-md">
+            <i id="task-edit" class="pointer fs-xl fa-regular fa-pen-to-square"></i>
+            <i id="task-delete" class="pointer fs-xl fa-solid fa-trash-can"></i>
+            <label>
+                <input type="checkbox"/>
+            </label>
+        </div>
     </div>
 </template>
 

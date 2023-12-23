@@ -58,6 +58,11 @@ a {
 .fs-lg {font-size: 18px;}
 .fs-xl {font-size: 22px;}
 
+.gap-sm {gap: 4px;}
+.gap-md {gap: 8px;}
+.gap-lg {gap: 12px;}
+.gap-xl {gap: 16px;}
+
 nav {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-secondary);
