@@ -6,12 +6,17 @@ import { TaskItem } from "./components/task-item/TaskItem.js";
 import { FormControl } from "./components/form-control/FormControl.js";
 import { TaskService } from "./services/TaskService.js";
 import { DataSource } from "./services/DataSource.js";
+import { CalendarPage } from "./pages/CalendarPage.js";
+import { Calendar } from "./components/calendar/Calendar.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);
 customElements.define('task-item', TaskItem);
+customElements.define('calendar-component', Calendar);
+
 customElements.define('home-page', HomePage);
+customElements.define('calendar-page', CalendarPage);
 
 window.app = {
     dataSource: new DataSource(),

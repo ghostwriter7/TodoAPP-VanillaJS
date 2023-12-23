@@ -22,8 +22,7 @@ export default class Router {
                 pageElement = document.createElement('home-page');
                 break;
             case '/calendar':
-                pageElement = document.createElement('div');
-                pageElement.innerText = 'Calendar';
+                pageElement = document.createElement('calendar-page');
                 break;
             case '/settings':
                 pageElement = document.createElement('div');

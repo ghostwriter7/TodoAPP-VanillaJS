@@ -178,3 +178,16 @@ button:active, button:hover {
 .pointer {
     cursor: pointer;
 }
+
+.grow {
+    flex: 1;
+}
+
+.calendar__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar__day {
+    margin-block: 0;
+}
