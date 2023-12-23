@@ -19,9 +19,10 @@ export class TaskForm extends BaseComponent {
         this.#formControl = this.querySelector('form-control');
         this.#label = this.#formControl.root.querySelector('label');
         this.#button = this.querySelector('button[type="submit"]');
-        this.#button.disabled = true;
+        this.#setDisabledOnSubmitButton(true);
 
         this.#handleFormSubmit();
+
         this.#handleTaskEdit();
         this.#initTwoWayDataBinding();
         this.#disableSubmitButtonOnEmpty();
@@ -30,6 +31,7 @@ export class TaskForm extends BaseComponent {
 
     disconnectedCallback() {
         this.form.removeEventListener('submit', this.formSubmitHandler);
+        this.form.removeEventListener('keydown', this.submitOnEnterHandler);
     }
 
     #handleFormSubmit() {
@@ -41,10 +43,18 @@ export class TaskForm extends BaseComponent {
 
             this.#taskProxy.id && this.#removeCancelButton();
             this.#resetForm();
+            this.#setDisabledOnSubmitButton(true);
             this.#updateLabelAndSubmitButton('Task', 'Add');
         };
         this.form = this.querySelector('form');
         this.form.addEventListener('submit', this.formSubmitHandler);
+
+        this.submitOnEnterHandler = (event) => {
+            if (event.code === 'Enter' && !!this.#taskProxy.task) {
+                this.form.dispatchEvent(new Event('submit'));
+            }
+        };
+        this.form.addEventListener('keydown', this.submitOnEnterHandler);
     }
 
     #handleTaskEdit() {
@@ -62,7 +72,7 @@ export class TaskForm extends BaseComponent {
         this.form.querySelectorAll('form-control').forEach((formControl) => {
             const input = formControl.root.querySelector('input');
             this.#inputMap[input.name] = input;
-            input.addEventListener('change', (event) => {
+            input.addEventListener('input', (event) => {
                 this.#taskProxy[input.name] = event.currentTarget.value;
             });
         })
@@ -111,7 +121,11 @@ export class TaskForm extends BaseComponent {
 
     #disableSubmitButtonOnEmpty() {
         this.#formControl.onValueChange((value) => {
-            this.#button.disabled = !value;
+            this.#setDisabledOnSubmitButton(!value);
         });
+    }
+
+    #setDisabledOnSubmitButton(disabled) {
+        this.#button.disabled = disabled;
     }
 }
