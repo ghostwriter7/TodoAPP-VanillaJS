@@ -5,6 +5,7 @@ import { TaskList } from "./components/task-list/TaskList.js";
 import { TaskItem } from "./components/task-item/TaskItem.js";
 import { FormControl } from "./components/form-control/FormControl.js";
 import { TaskService } from "./services/TaskService.js";
+import { DataSource } from "./services/DataSource.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
@@ -13,6 +14,7 @@ customElements.define('task-item', TaskItem);
 customElements.define('home-page', HomePage);
 
 window.app = {
+    dataSource: new DataSource(),
     router: new Router(),
     taskService: new TaskService()
 };
@@ -24,4 +26,5 @@ addEventListener('popstate', (event) => {
 
 addEventListener('DOMContentLoaded', (event) => {
     app.router.init();
+    app.taskService.loadTasks();
 });

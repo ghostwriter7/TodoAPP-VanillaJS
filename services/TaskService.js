@@ -6,7 +6,6 @@ export class TaskService {
         this.#tasks = {
             [this.#activeDate]: []
         };
-
         this.tasksStore = new Proxy(this.#tasks, {
             set: (target, property, newValue) => {
                 target[property] = newValue;
@@ -16,12 +15,9 @@ export class TaskService {
         });
     }
 
-    addTask(task, date) {
-        this.tasksStore[date] = [{
-            task,
-            isComplete: false,
-            id: this.tasksStore[date].length + 1
-        }, ...this.tasksStore[date]]
+    async addTask(task, date) {
+        const todo = await app.dataSource.addOne('todo', { date: this.#activeDate, task, isComplete: false });
+        this.tasksStore[date] = [{ ...todo }, ...this.tasksStore[date]];
     }
 
     getTasks(date) {
@@ -34,5 +30,10 @@ export class TaskService {
 
     deleteTask(id) {
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
+    }
+
+    async loadTasks() {
+        const result = await app.dataSource.getAllByIndex('todo', 'idx-todo-date', this.#activeDate);
+        this.tasksStore[this.#activeDate] = [...result];
     }
 }
