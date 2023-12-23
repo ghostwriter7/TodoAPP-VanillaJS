@@ -10,7 +10,7 @@ export class TasksPage extends BaseComponent {
         app.taskService.setActiveView(this.date);
         await app.taskService.loadTasks();
 
-        this.renderComponent('task-summary');
-        this.renderComponent('task-list');
+        this.renderComponent('task-summary', { date: this.date });
+        this.renderComponent('task-list', { date: this.date });
     }
 }
