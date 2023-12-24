@@ -11,6 +11,7 @@ export class CalendarHeader extends BaseComponent {
     #incrementYearIcon;
     #decrementYearClickHandler;
     #decrementYearIcon;
+    #monthChangeSubscription;
     #showActiveViewBtn;
 
     constructor() {
@@ -39,6 +40,7 @@ export class CalendarHeader extends BaseComponent {
         this.#decrementYearIcon.removeEventListener('click', this.#decrementYearClickHandler);
         this.#activeViewSubscription.unsubscribe();
         this.#buttonClickSubscription.unsubscribe();
+        this.#monthChangeSubscription.unsubscribe();
     }
 
     #renderMonthDropdown() {
@@ -54,7 +56,7 @@ export class CalendarHeader extends BaseComponent {
             select.appendChild(option);
         });
 
-        select.attachObserver({ next: (value) => app.calendarService.setMonth(value) });
+        this.#monthChangeSubscription = select.change$.subscribe({ next: (value) => app.calendarService.setMonth(value) });
     }
 
     #renderYearSelector() {

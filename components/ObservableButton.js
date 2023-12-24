@@ -3,9 +3,10 @@ import { Subject } from "../services/Subject.js";
 export class ObservableButton extends HTMLButtonElement {
     #clickSubject = new Subject();
     #clickHandler;
+    click$ = this.#clickSubject.asObservable();
+
     constructor() {
         super();
-        this.click$ = this.#clickSubject.asObservable();
     }
 
     connectedCallback() {
