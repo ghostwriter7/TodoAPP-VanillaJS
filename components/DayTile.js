@@ -15,7 +15,7 @@ export class DayTile extends HTMLElement {
     }
 
     #render() {
-        this.classList.add('container', 'calendar__day');
+        this.classList.add('container', 'calendar__day', 'd-flex', 'justify-between');
 
         if (this.isToday) {
             this.classList.add('calendar__day--today');
@@ -26,7 +26,16 @@ export class DayTile extends HTMLElement {
             this.style.gridColumn = `${dayOfWeekIndex} / ${dayOfWeekIndex + 1}`;
         }
 
-        this.innerText = this.date.getDate();
+        const date = document.createElement('span');
+        date.innerText = this.date.getDate();
+        this.appendChild(date);
+
+        if (this.stats.total !== 0) {
+            const stats = document.createElement('span');
+            stats.className = 'fs-sm fw-700';
+            stats.innerText = `${this.stats.complete} / ${this.stats.total}`;
+            this.appendChild(stats);
+        }
     }
 
     #initializeEventListener() {
