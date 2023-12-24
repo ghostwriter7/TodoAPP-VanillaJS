@@ -1,5 +1,5 @@
-import { getMonthName } from "../helpers/date.js";
 import { calendarChangeEvent } from "../consts/events.js";
+import { Subject } from "./Subject.js";
 
 export class CalendarService {
     #state = {
@@ -7,8 +7,12 @@ export class CalendarService {
         year: null,
     }
     #stateProxy;
+    #activeViewSubject = new Subject();
+    activeView$;
 
     constructor() {
+        this.activeView$ = this.#activeViewSubject.asObservable();
+
         const now = new Date();
         this.#state.month = now.getMonth();
         this.#state.year = now.getFullYear();
@@ -17,6 +21,10 @@ export class CalendarService {
             set: (target, property, newValue) => {
                 target[property] = newValue;
                 dispatchEvent(new Event(calendarChangeEvent));
+
+                if (['month', 'year'].includes(property)) {
+                    this.#activeViewSubject.next({ month: target['month'], year: target['year'] });
+                }
                 return true;
             }
         });

@@ -2,32 +2,50 @@ import { BaseComponent } from "./BaseComponent.js";
 import { getMonthNames } from "../helpers/date.js";
 
 export class CalendarHeader extends BaseComponent {
+    #actions;
+    #activeViewSubscription;
+    #buttonClickSubscription;
+    #currentMonth;
+    #currentYear;
     #incrementYearClickHandler;
     #incrementYearIcon;
     #decrementYearClickHandler;
     #decrementYearIcon;
+    #showActiveViewBtn;
 
     constructor() {
         super();
     }
 
     connectedCallback() {
+        this.#setCurrentMonthAndYear();
         this.attachTemplate('calendar-header');
+        this.#actions = document.querySelector('#calendar-header-actions');
         this.#renderMonthDropdown();
         this.#renderYearSelector();
+        this.#renderShowActiveMonthButton();
+
+        this.#activeViewSubscription = app.calendarService.activeView$.subscribe({
+            next: ({ month, year }) => {
+                this.#setActiveViewButtonDisplayProperty(month, year);
+                this.#updateYear(year);
+                this.#setMonthDropdownValue(month);
+            }
+        });
     }
 
     disconnectedCallback() {
         this.#incrementYearIcon.removeEventListener('click', this.#incrementYearClickHandler);
         this.#decrementYearIcon.removeEventListener('click', this.#decrementYearClickHandler);
+        this.#activeViewSubscription.unsubscribe();
+        this.#buttonClickSubscription.unsubscribe();
     }
 
     #renderMonthDropdown() {
-        const actions = document.querySelector('#calendar-header-actions');
         const select = document.createElement('select', { is: 'dropdown-control' });
         select.id = 'month';
         const activeMonth = app.calendarService.getMonth();
-        actions.appendChild(select);
+        this.#actions.appendChild(select);
         getMonthNames().forEach((name, index) => {
             const option = document.createElement('option');
             option.value = index;
@@ -40,7 +58,6 @@ export class CalendarHeader extends BaseComponent {
     }
 
     #renderYearSelector() {
-        const actions = document.querySelector('#calendar-header-actions');
         const div = document.createElement('div');
         let activeYear = app.calendarService.getYear()
         div.className = 'd-flex align-center gap-xl'
@@ -50,25 +67,59 @@ export class CalendarHeader extends BaseComponent {
             <i id="decrement-year" class="fs-xl pointer fa-solid fa-down-long"></i>
         `;
 
-        const updateYear = () => {
-            activeYear = app.calendarService.getYear();
-            div.querySelector('#current-year').innerText = activeYear;
-        };
-
         this.#incrementYearClickHandler = () => {
             app.calendarService.setYear(activeYear + 1);
-            updateYear();
         };
-        this.#incrementYearIcon =  div.querySelector('#increment-year');
+        this.#incrementYearIcon = div.querySelector('#increment-year');
         this.#incrementYearIcon.addEventListener('click', this.#incrementYearClickHandler);
 
         this.#decrementYearClickHandler = () => {
             app.calendarService.setYear(activeYear - 1);
-            updateYear();
         };
         this.#decrementYearIcon = div.querySelector('#decrement-year');
         this.#decrementYearIcon.addEventListener('click', this.#decrementYearClickHandler);
 
-        actions.appendChild(div);
+        this.#actions.appendChild(div);
+    }
+
+    #renderShowActiveMonthButton() {
+        this.#showActiveViewBtn = document.createElement('button', { is: 'observable-button' });
+        this.#showActiveViewBtn.innerText = 'Show Active Month';
+
+        const isHidden = this.#currentMonth === app.calendarService.getMonth() && this.#currentYear === app.calendarService.getYear();
+
+        if (isHidden) {
+            this.#showActiveViewBtn.style.display = 'none';
+        }
+
+        this.#buttonClickSubscription = this.#showActiveViewBtn.click$.subscribe({
+            next: () => {
+                app.calendarService.setMonth(this.#currentMonth);
+                app.calendarService.setYear(this.#currentYear);
+            }
+        });
+
+        this.#actions.appendChild(this.#showActiveViewBtn);
+    }
+
+    #updateYear(year) {
+        this.querySelector('#current-year').innerText = year;
+    }
+
+    #setMonthDropdownValue(month) {
+        this.querySelectorAll('option').forEach((option, index) => {
+            option.selected = month === index;
+        })
+    }
+
+    #setActiveViewButtonDisplayProperty(month, year) {
+        const isCurrentViewActive = this.#currentMonth === month && this.#currentYear === year;
+        this.#showActiveViewBtn.style.display = isCurrentViewActive ? 'none' : 'block';
+    }
+
+    #setCurrentMonthAndYear() {
+        const today = new Date();
+        this.#currentMonth = today.getMonth();
+        this.#currentYear = today.getFullYear();
     }
 }
