@@ -2,6 +2,10 @@ import { BaseComponent } from "./BaseComponent.js";
 import { getMonthNames } from "../helpers/date.js";
 
 export class CalendarHeader extends BaseComponent {
+    static get observedAttributes() {
+        return ['summary'];
+    }
+
     #actions;
     #activeViewSubscription;
     #buttonClickSubscription;
@@ -41,6 +45,10 @@ export class CalendarHeader extends BaseComponent {
         this.#activeViewSubscription.unsubscribe();
         this.#buttonClickSubscription.unsubscribe();
         this.#monthChangeSubscription.unsubscribe();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        this.#updateTaskCounters(newValue);
     }
 
     #renderMonthDropdown() {
@@ -118,5 +126,9 @@ export class CalendarHeader extends BaseComponent {
         const today = new Date();
         this.#currentMonth = today.getMonth();
         this.#currentYear = today.getFullYear();
+    }
+
+    #updateTaskCounters(newValue) {
+        this.querySelector('task-counters').setAttribute('summary', newValue);
     }
 }

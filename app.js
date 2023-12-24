@@ -15,12 +15,14 @@ import { CalendarHeader } from "./components/CalendarHeader.js";
 import { CalendarService } from "./services/CalendarService.js";
 import { Dropdown } from "./components/Dropdown.js";
 import { ObservableButton } from "./components/ObservableButton.js";
+import { TaskCounters } from "./components/TaskCounters.js";
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);
 customElements.define('task-item', TaskItem);
 customElements.define('task-summary', TaskSummary);
+customElements.define('task-counters', TaskCounters);
 customElements.define('calendar-component', Calendar);
 customElements.define('calendar-header', CalendarHeader);
 customElements.define('day-tile', DayTile);
@@ -43,6 +45,6 @@ addEventListener('popstate', (event) => {
     app.router.navigateTo(event.state.route, false);
 });
 
-addEventListener('DOMContentLoaded', (event) => {
+addEventListener('DOMContentLoaded', () => {
     app.router.init();
 });

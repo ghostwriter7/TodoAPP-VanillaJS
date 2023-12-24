@@ -8,11 +8,9 @@ export class CalendarService {
     }
     #stateProxy;
     #activeViewSubject = new Subject();
-    activeView$;
+    activeView$ = this.#activeViewSubject.asObservable();
 
     constructor() {
-        this.activeView$ = this.#activeViewSubject.asObservable();
-
         const now = new Date();
         this.#state.month = now.getMonth();
         this.#state.year = now.getFullYear();
@@ -52,5 +50,40 @@ export class CalendarService {
 
     setPreviousYear() {
         this.#stateProxy.year--;
+    }
+
+    async getMonthSummary() {
+        return new Promise(async (resolve) => {
+            const tasks = await this.#getMonthTasks();
+            const monthSummary = { complete: 0, total: 0 };
+            const monthSummaryPerDay = tasks.map((tasksPerDay) => tasksPerDay.reduce((stats, task) => {
+                stats.total++;
+                monthSummary.total++;
+                if (task.isComplete) {
+                    stats.complete++;
+                    monthSummary.complete++;
+                }
+                return stats;
+            }, { complete: 0, total: 0 }));
+            resolve({ monthSummaryPerDay, monthSummary });
+        });
+    }
+
+    async #getMonthTasks() {
+        return new Promise(async (resolve) => {
+            const month = app.calendarService.getMonth();
+            const year = app.calendarService.getYear();
+
+            const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+
+            const datePlaceholderArray = new Array(lastDateOfMonth).fill('');
+
+            const requests = datePlaceholderArray
+                .map((_, index) => `${(index + 1).toString().padStart(2, '0')}/${(month + 1).toString().padStart(2, '0')}/${year}`)
+                .map((dateId) => app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', dateId));
+
+            const results = await Promise.all(requests);
+            resolve(results);
+        });
     }
 }

@@ -29,11 +29,10 @@ export class TaskService {
 
     getTasksSummary(date) {
         const tasks = this.getTasks(date);
-        const active = tasks.reduce((active, task) => active + (!task.isComplete ? 1 : 0), 0);
-        const complete = tasks.length - active;
+        const complete = tasks.reduce((active, task) => active + (task.isComplete ? 1 : 0), 0);
         return {
-            active,
-            complete
+            complete,
+            total: tasks.length
         }
     }
 

@@ -10,7 +10,7 @@ export class TaskList extends BaseComponent {
         this.attachTemplate('task-list');
         this.#render();
 
-        window.addEventListener(taskChangeEvent, () => {
+        addEventListener(taskChangeEvent, () => {
             this.#render();
         });
     }

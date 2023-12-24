@@ -65,13 +65,15 @@
 
 <template id="task-summary">
     <div class="container d-flex justify-between">
-        <span></span>
+        <span id="title"></span>
+        <task-counters></task-counters>
     </div>
 </template>
 
 <template id="calendar-header">
     <div class="container d-flex justify-between align-center">
         <div class="d-flex gap-xl" id="calendar-header-actions"></div>
+        <task-counters></task-counters>
     </div>
 </template>
 
