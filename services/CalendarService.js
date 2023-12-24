@@ -42,6 +42,10 @@ export class CalendarService {
         this.#stateProxy.month = Number.parseInt(month);
     }
 
+    setYear(year) {
+        this.#stateProxy.year = year;
+    }
+
     setNextYear() {
         this.#stateProxy.year++;
     }
