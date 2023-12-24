@@ -15,3 +15,8 @@ export function getMonthNames() {
     const formatter = Intl.DateTimeFormat('gb-GB', { month: 'long' });
     return monthIndexes.map((month) => formatter.format(date.setMonth(month)));
 }
+
+export function isToday(date) {
+    const today = new Date();
+    return today.getFullYear() === date.getFullYear() && today.getMonth() === date.getMonth() && today.getDate() === date.getDate();
+}

@@ -207,7 +207,17 @@ button:disabled {
 }
 
 .calendar__day {
+    cursor: pointer;
     margin-block: 0;
+}
+
+.calendar__day:hover {
+    background-color: var(--bg-btn-active);
+}
+
+.calendar__day--today {
+    background-color: var(--clr-accent);
+    font-weight: 700;
 }
 
 .not-found {

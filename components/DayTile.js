@@ -15,7 +15,11 @@ export class DayTile extends HTMLElement {
     }
 
     #render() {
-        this.className = 'container calendar__day';
+        this.classList.add('container', 'calendar__day');
+
+        if (this.isToday) {
+            this.classList.add('calendar__day--today');
+        }
 
         if (this.date.getDate() === 1) {
             const dayOfWeekIndex = this.date.getDay() || 7;

@@ -1,5 +1,6 @@
 import { BaseComponent } from "./BaseComponent.js";
 import { calendarChangeEvent } from "../consts/events.js";
+import { isToday } from "../helpers/date.js";
 
 export class Calendar extends BaseComponent {
     constructor() {
@@ -45,6 +46,7 @@ export class Calendar extends BaseComponent {
         new Array(lastDateOfMonth).fill('').map((_, index) => {
             const dayTile = document.createElement('day-tile');
             dayTile.date = new Date(year, month, index + 1);
+            dayTile.isToday = isToday(dayTile.date);
             daysContainer.appendChild(dayTile);
         });
 
