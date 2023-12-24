@@ -61,23 +61,18 @@ export class CalendarHeader extends BaseComponent {
 
     #renderYearSelector() {
         const div = document.createElement('div');
-        let activeYear = app.calendarService.getYear()
         div.className = 'd-flex align-center gap-xl'
         div.innerHTML = `
             <i id="increment-year" class="fs-xl pointer fa-solid fa-up-long"></i>
-            <span class="fs-md" id="current-year">${activeYear}</span>
+            <span class="fs-md" id="current-year">${app.calendarService.getYear()}</span>
             <i id="decrement-year" class="fs-xl pointer fa-solid fa-down-long"></i>
         `;
 
-        this.#incrementYearClickHandler = () => {
-            app.calendarService.setYear(activeYear + 1);
-        };
+        this.#incrementYearClickHandler = () => app.calendarService.setNextYear();
         this.#incrementYearIcon = div.querySelector('#increment-year');
         this.#incrementYearIcon.addEventListener('click', this.#incrementYearClickHandler);
 
-        this.#decrementYearClickHandler = () => {
-            app.calendarService.setYear(activeYear - 1);
-        };
+        this.#decrementYearClickHandler = () => app.calendarService.setPreviousYear();
         this.#decrementYearIcon = div.querySelector('#decrement-year');
         this.#decrementYearIcon.addEventListener('click', this.#decrementYearClickHandler);
 
