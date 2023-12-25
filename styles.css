@@ -187,6 +187,10 @@ button:disabled {
     display: flex;
 }
 
+.d-none {
+    display: none;
+}
+
 .justify-between {
     justify-content: space-between;
 }
@@ -235,4 +239,10 @@ button:disabled {
 
 .not-found i {
     font-size: 60px;
+}
+
+@media (display-mode: standalone), (display-mode: minimal-ui) {
+    #install {
+        display: none;
+    }
 }

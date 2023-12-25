@@ -13,3 +13,14 @@
 ### Preview installed service workers
 
 `chrome://serviceworker-internals`
+
+### Cache strategies
+
+1. Cache first
+2. Network first
+3. State while revalidating 
+
+### Custom installation
+
+1. `onbeforeinstallprompt`
+2. store `event` and call `prompt` when needed

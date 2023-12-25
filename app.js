@@ -42,6 +42,18 @@ window.app = {
     calendarService: new CalendarService()
 };
 
+let beforeInstallPromptEvent;
+const installButton = document.getElementById('install');
+addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    beforeInstallPromptEvent = event;
+    installButton.classList.remove('d-none');
+});
+
+installButton.addEventListener('click', (event) => {
+    beforeInstallPromptEvent.prompt();
+});
+
 addEventListener('popstate', (event) => {
     event.preventDefault();
     app.router.navigateTo(event.state.route, false);
