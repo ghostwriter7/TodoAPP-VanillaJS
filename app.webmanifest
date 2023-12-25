@@ -8,25 +8,39 @@
     "display": "standalone",
     "icons": [
         {
-            "src": "icons/icon-144.png",
+            "src": "assets/icon-144.png",
             "sizes": "144x144",
             "type": "image/png"
         },
         {
-            "src": "icons/icon-512.png",
+            "src": "assets/icon-512.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "icons/maskable-512.png",
+            "src": "assets/maskable-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "icons/icon-1024.png",
+            "src": "assets/icon-1024.png",
             "sizes": "1024x1024",
             "type": "image/png"
         }
+    ],
+    "description": "Demo TodoApp written in VanillaJS that allows to manage daily tasks, plan ahead and preview the big picture in the calendar view.",
+    "screenshots": [
+        {
+            "src": "assets/screenshot1.png",
+            "sizes": "950x697",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+         {
+            "src": "assets/screenshot2.png",
+            "sizes": "944x638",
+            "type": "image/png"
+         }
     ]
 }
