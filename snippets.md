@@ -18,7 +18,7 @@
 
 1. Cache first
 2. Network first
-3. State while revalidating 
+3. Stale while revalidating 
 
 ### Custom installation
 
