@@ -17,6 +17,8 @@ import { Dropdown } from "./components/Dropdown.js";
 import { ObservableButton } from "./components/ObservableButton.js";
 import { TaskCounters } from "./components/TaskCounters.js";
 
+navigator.serviceWorker?.register('./serviceworker.js');
+
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);
