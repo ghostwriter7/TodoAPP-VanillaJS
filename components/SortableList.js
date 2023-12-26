@@ -11,12 +11,9 @@ export class SortableList extends HTMLUListElement {
     #placeholder;
     #preview;
     #previewOffset = 10;
-    #tagName;
 
     constructor() {
         super();
-        this.classList.add('d-flex', 'column');
-
         this.observer = new MutationObserver((mutationList) => {
             for (const mutation of mutationList) {
                 let node;
@@ -93,6 +90,7 @@ export class SortableList extends HTMLUListElement {
         const placeholder = document.createElement('div');
         placeholder.innerText = 'Insert Here...';
         placeholder.className = 'container';
+        placeholder.style.backgroundColor = 'var(--bg-btn)';
         return placeholder;
     }
 
@@ -127,12 +125,28 @@ export class SortableList extends HTMLUListElement {
 
     #dragOverHandler = (event) => {
         event.preventDefault();
-        const closestItem = event.target.closest(this.#tagName);
-        if (closestItem !== this.#draggedItem && this.#draggedItem.nextSibling !== closestItem) {
-            this.#placeholder = this.#createPlaceholder();
-            closestItem.insertAdjacentElement('beforebegin', this.#placeholder)
-        } else {
+        const closestItem = event.target.closest(event.currentTarget.tagName);
+
+        if (closestItem === this.#draggedItem) {
             this.#placeholder?.remove();
+            return;
         }
+
+        this.#placeholder = this.#createPlaceholder();
+
+        const { bottom, top } = closestItem.getBoundingClientRect();
+        const { clientY } = event;
+        const isFirstHalf = Math.abs(top - clientY) < Math.abs(bottom - clientY);
+
+        let where = isFirstHalf ? 'beforebegin' : 'afterend';
+        if (this.#draggedItem.previousSibling === closestItem) {
+            where = 'beforebegin';
+        }
+        if (this.#draggedItem.nextSibling === closestItem) {
+            where = 'afterend';
+        }
+
+        closestItem.insertAdjacentElement(where, this.#placeholder);
+
     }
 }

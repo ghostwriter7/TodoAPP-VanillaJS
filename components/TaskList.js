@@ -26,7 +26,6 @@ export class TaskList extends BaseComponent {
             const taskItem = document.createElement('task-item');
             taskItem.task = task;
             taskItem.dataset.id = task.id;
-            taskItem.style.order = task.order;
             return taskItem;
         };
         sortableList.emptyListPlaceholder = 'You have no tasks for this day';
