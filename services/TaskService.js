@@ -19,7 +19,12 @@ export class TaskService {
     }
 
     async addTask(task, date) {
-        const todo = await app.dataSource.addOne('todo', { date: this.#activeDate, task, isComplete: false, order: this.tasksStore[date].length + 1 });
+        const todo = await app.dataSource.addOne('todo', {
+            date: this.#activeDate,
+            task,
+            isComplete: false,
+            order: this.tasksStore[date].length + 1
+        });
         this.tasksStore[date] = [...this.tasksStore[date], { ...todo }];
     }
 
@@ -41,6 +46,12 @@ export class TaskService {
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...updatedTask } : task);
     }
 
+    async updateManyTasks(updates) {
+        const requests = updates.map(({ id, ...update }) => app.dataSource.updateOneById('todo', id, update));
+        await Promise.all(requests);
+        this.loadTasks();
+    }
+
     async deleteTask(id) {
         await app.dataSource.deleteOneById('todo', id);
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
@@ -48,7 +59,7 @@ export class TaskService {
 
     async loadTasks() {
         const result = await app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.#activeDate);
-        this.tasksStore[this.#activeDate] = [...result];
+        this.tasksStore[this.#activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
     }
 
     setActiveView(date) {

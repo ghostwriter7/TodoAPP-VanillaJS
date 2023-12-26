@@ -2,6 +2,7 @@ import { BaseComponent } from "./BaseComponent.js";
 import { taskChangeEvent } from "../consts/events.js";
 
 export class TaskList extends BaseComponent {
+    #itemsOrderSubscription;
     #sortableList;
     #taskChangeEventHandler;
 
@@ -15,11 +16,20 @@ export class TaskList extends BaseComponent {
 
         this.#taskChangeEventHandler = () => this.#updateListItems();
         addEventListener(taskChangeEvent, this.#taskChangeEventHandler);
+
+        this.#itemsOrderSubscription = this.#sortableList.itemOrder$.subscribe({
+            next: (itemOrder) => {
+                const updates = itemOrder.map((itemId, index) => ({ id: itemId, order: index }));
+                app.taskService.updateManyTasks(updates);
+            }
+        });
     }
 
     disconnectedCallback() {
-        removeEventListener(taskChangeEvent, this.#taskChangeEventHandler)
+        removeEventListener(taskChangeEvent, this.#taskChangeEventHandler);
+        this.#itemsOrderSubscription.unsubscribe();
     }
+
     #createSortableList() {
         const sortableList = document.createElement('ul', { is: 'sortable-list' });
         sortableList.getItem = (task) => {

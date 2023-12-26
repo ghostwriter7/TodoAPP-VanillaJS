@@ -1,3 +1,5 @@
+import { Subject } from "../services/Subject.js";
+
 export class SortableList extends HTMLUListElement {
     static get observedAttributes() {
         return ['data-items'];
@@ -8,9 +10,12 @@ export class SortableList extends HTMLUListElement {
 
     #draggedItem;
     #items;
+    #itemOrderSubject = new Subject();
     #placeholder;
     #preview;
     #previewOffset = 10;
+
+    itemOrder$ = this.#itemOrderSubject.asObservable();
 
     constructor() {
         super();
@@ -51,6 +56,9 @@ export class SortableList extends HTMLUListElement {
             this.insertBefore(this.#draggedItem, this.#placeholder);
             this.#preview?.remove();
             this.#placeholder?.remove();
+
+            const itemsOrder = [...this.children].map((item) => +item.getAttribute('data-id'));
+            this.#itemOrderSubject.next(itemsOrder);
         });
 
         this.observer.observe(this, { childList: true });
@@ -141,10 +149,10 @@ export class SortableList extends HTMLUListElement {
         const isFirstHalf = Math.abs(top - clientY) < Math.abs(bottom - clientY);
 
         let where = isFirstHalf ? 'beforebegin' : 'afterend';
+
         if (this.#draggedItem.previousSibling === closestItem) {
             where = 'beforebegin';
-        }
-        if (this.#draggedItem.nextSibling === closestItem) {
+        } else if (this.#draggedItem.nextSibling === closestItem) {
             where = 'afterend';
         }
 
