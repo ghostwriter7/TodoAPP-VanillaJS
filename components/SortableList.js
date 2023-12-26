@@ -19,6 +19,7 @@ export class SortableList extends HTMLUListElement {
 
     constructor() {
         super();
+        this.classList.add('scrollbar');
         this.observer = new MutationObserver((mutationList) => {
             for (const mutation of mutationList) {
                 let node;

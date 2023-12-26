@@ -341,3 +341,9 @@ button:disabled {
     background: var(--bg-highlight);
     border-radius: var(--radius);
 }
+
+ul {
+    max-height: 500px;
+    overflow-y: scroll;
+    padding-right: var(--inner-padding);
+}
