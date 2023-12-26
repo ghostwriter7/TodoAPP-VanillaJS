@@ -21,16 +21,17 @@ export class SortableList extends HTMLUListElement {
         super();
         this.classList.add('scrollbar');
         this.observer = new MutationObserver((mutationList) => {
+            const shouldSkip = (node) => node === this.#placeholder || node.nodeName === '#text';
             for (const mutation of mutationList) {
                 let node;
                 if (node = mutation.addedNodes[0]) {
-                    if (node === this.#placeholder) continue;
+                    if (shouldSkip(node)) continue;
 
                     node.setAttribute('draggable', true);
                     node.addEventListener('dragstart', this.#dragStartHandler);
                     node.addEventListener('dragover', this.#dragOverHandler);
                 } else if (node = mutation.removedNodes[0]) {
-                    if (node === this.#placeholder) continue;
+                    if (shouldSkip(node)) continue;
 
                     node.removeEventListener('dragStart', this.#dragStartHandler);
                     node.removeEventListener('dragover', this.#dragOverHandler);

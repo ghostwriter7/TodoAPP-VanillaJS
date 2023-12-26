@@ -34,7 +34,7 @@ export class TaskItem extends BaseComponent {
     attributeChangedCallback(attribute, oldValue, newValue) {
         this.task = JSON.parse(newValue);
 
-        if (oldValue?.task !== this.task.task) {
+        if (oldValue?.task !== this.task.task && !!this.innerHTML) {
             this.#updateTaskContent(this.task.task);
         }
     }
