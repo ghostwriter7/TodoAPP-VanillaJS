@@ -98,18 +98,16 @@ export class SortableList extends HTMLUListElement {
         }
 
         const placeholder = document.createElement('div');
-        placeholder.innerText = 'Insert Here...';
-        placeholder.className = 'container';
-        placeholder.style.backgroundColor = 'var(--bg-btn)';
+        placeholder.innerText = 'Insert here...';
+        placeholder.className = 'placeholder';
         return placeholder;
     }
 
     #getTargetPreview(event) {
         const { clientX, clientY, currentTarget } = event;
         const targetPreview = document.createElement('div');
-        targetPreview.innerText = currentTarget.innerText;
-        targetPreview.className = 'container';
-        targetPreview.style.position = 'absolute';
+        targetPreview.innerHTML = `<i class="fa-solid fa-grip-vertical"></i> ${currentTarget.innerText} `;
+        targetPreview.classList.add('target-preview');
         targetPreview.style.left = `${clientX + this.#previewOffset}px`;
         targetPreview.style.top = `${clientY + this.#previewOffset}px`;
 

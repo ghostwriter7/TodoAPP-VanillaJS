@@ -9,7 +9,7 @@
     --bg-secondary: #010e1a;
 
     --bg-btn: #0b253a;
-    --bg-btn-active: #153a58;
+    --bg-highlight: #153a58;
 
     --border-primary: #122d42;
     --border-secondary: #30373d;
@@ -38,30 +38,89 @@ a {
     text-decoration: none;
 }
 
-.clr-accent { color: var(--clr-accent);}
-.clr-primary { color: var(--clr-primary);}
-.clr-secondary { color: var(--clr-secondary);}
+.clr-accent {
+    color: var(--clr-accent);
+}
 
-.bg-primary { background-color: var(--bg-primary);}
-.bg-secondary { background-color: var(--bg-secondary);}
+.clr-primary {
+    color: var(--clr-primary);
+}
 
-.fw-100 {font-weight: 100;}
-.fw-200 {font-weight: 200;}
-.fw-300 {font-weight: 300;}
-.fw-400 {font-weight: 400;}
-.fw-500 {font-weight: 500;}
-.fw-600 {font-weight: 600;}
-.fw-700 {font-weight: 700;}
+.clr-secondary {
+    color: var(--clr-secondary);
+}
 
-.fs-sm {font-size: 10px;}
-.fs-md {font-size: 14px;}
-.fs-lg {font-size: 18px;}
-.fs-xl {font-size: 22px;}
+.bg-primary {
+    background-color: var(--bg-primary);
+}
 
-.gap-sm {gap: 4px;}
-.gap-md {gap: 8px;}
-.gap-lg {gap: 12px;}
-.gap-xl {gap: 16px;}
+.bg-secondary {
+    background-color: var(--bg-secondary);
+}
+
+.bg-highlight {
+    background-color: var(--bg-highlight);
+}
+
+.fw-100 {
+    font-weight: 100;
+}
+
+.fw-200 {
+    font-weight: 200;
+}
+
+.fw-300 {
+    font-weight: 300;
+}
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fs-sm {
+    font-size: 10px;
+}
+
+.fs-md {
+    font-size: 14px;
+}
+
+.fs-lg {
+    font-size: 18px;
+}
+
+.fs-xl {
+    font-size: 22px;
+}
+
+.gap-sm {
+    gap: 4px;
+}
+
+.gap-md {
+    gap: 8px;
+}
+
+.gap-lg {
+    gap: 12px;
+}
+
+.gap-xl {
+    gap: 16px;
+}
 
 nav {
     background-color: var(--bg-secondary);
@@ -166,7 +225,7 @@ button {
 }
 
 button:not(:disabled):active, button:not(:disabled):hover {
-    background-color: var(--bg-btn-active);
+    background-color: var(--bg-highlight);
     color: var(--clr-primary);
 }
 
@@ -230,7 +289,7 @@ button:disabled {
 }
 
 .calendar__day:hover {
-    background-color: var(--bg-btn-active);
+    background-color: var(--bg-highlight);
 }
 
 .calendar__day--today {
@@ -253,4 +312,18 @@ button:disabled {
     #install {
         display: none;
     }
+}
+
+.target-preview {
+    background-color: var(--bg-highlight);
+    border-radius: var(--radius);
+    border: 2px solid var(--clr-accent);
+    padding: var(--inner-padding);
+    position: absolute;
+}
+
+.placeholder {
+    background-color: var(--bg-highlight);
+    padding: 4px var(--inner-padding);
+    border-radius: var(--radius);
 }
