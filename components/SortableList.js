@@ -59,19 +59,25 @@ export class SortableList extends HTMLUListElement {
 
     attributeChangedCallback(name, oldValue, newValue) {
         const items = JSON.parse(newValue);
+
+        if (this.textContent === this.emptyListPlaceholder && !!items.length) {
+            this.textContent = '';
+        }
+
         if (this.#items === undefined) {
             items.forEach((item) => this.appendChild(this.getItem(item)));
         } else if (items.length < this.#items.length) {
             const removedItems = this.#items.filter(({ id }) => !items.some((item) => item.id === id));
-            removedItems.forEach((item) => {
-                    const element = this.querySelector(`[data-id="${item.id}"]`);
-                    element.remove();
-                }
-            )
+            removedItems.forEach((item) => this.querySelector(`[data-id="${item.id}"]`).remove());
         } else {
             const newItems = items.filter(({ id }) => !this.#items.some((item) => item.id === id));
             newItems.forEach((item) => this.appendChild(this.getItem(item)));
         }
+
+        if (items.length === 0) {
+            this.textContent = this.emptyListPlaceholder;
+        }
+
         this.#items = items;
     }
 
