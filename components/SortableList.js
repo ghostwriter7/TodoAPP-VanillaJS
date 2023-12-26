@@ -34,7 +34,8 @@ export class SortableList extends HTMLUListElement {
 
         this.addEventListener('dragend', (event) => {
             this.#draggedItem = null;
-            this.#preview.remove();
+            this.#preview?.remove();
+            this.#placeholder?.remove();
         });
 
         this.addEventListener('drag', (event) => {
@@ -47,6 +48,7 @@ export class SortableList extends HTMLUListElement {
 
         this.addEventListener('drop', (event) => {
             event.preventDefault();
+            this.insertBefore(this.#draggedItem, this.#placeholder);
             this.#preview?.remove();
             this.#placeholder?.remove();
         });

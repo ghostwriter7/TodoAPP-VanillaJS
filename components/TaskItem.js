@@ -2,18 +2,23 @@ import { BaseComponent } from "./BaseComponent.js";
 import { taskEditInitEvent } from "../consts/events.js";
 
 export class TaskItem extends BaseComponent {
+    #isInitialized = false;
+
     constructor() {
         super();
     }
 
     connectedCallback() {
-        this.attachTemplate('task-item');
-        this.querySelector('.task-item__text').textContent = this.task.task;
-        this.style.cursor = 'grab';
-        this.#hookUpTaskCompleteCheckbox();
-        this.#handleTaskCompleteChange();
-        this.#handleTaskEditInit();
-        this.#handleDeleteTask();
+        if (!this.#isInitialized) {
+            this.attachTemplate('task-item');
+            this.querySelector('.task-item__text').textContent = this.task.task;
+            this.style.cursor = 'grab';
+            this.#hookUpTaskCompleteCheckbox();
+            this.#handleTaskCompleteChange();
+            this.#handleTaskEditInit();
+            this.#handleDeleteTask();
+            this.#isInitialized = true;
+        }
     }
 
     disconnectedCallback() {
