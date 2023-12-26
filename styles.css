@@ -327,3 +327,17 @@ button:disabled {
     padding: 4px var(--inner-padding);
     border-radius: var(--radius);
 }
+
+.scrollbar::-webkit-scrollbar {
+    width: 12px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: var(--bg-highlight);
+    border-radius: var(--radius);
+}

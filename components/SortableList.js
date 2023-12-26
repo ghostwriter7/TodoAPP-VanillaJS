@@ -109,21 +109,27 @@ export class SortableList extends HTMLUListElement {
         targetPreview.innerHTML = `<i class="fa-solid fa-grip-vertical"></i> ${currentTarget.innerText} `;
         targetPreview.classList.add('target-preview');
         targetPreview.style.left = `${clientX + this.#previewOffset}px`;
-        targetPreview.style.top = `${clientY + this.#previewOffset}px`;
+        targetPreview.style.top = `${clientY + this.#previewOffset + document.scrollingElement.scrollTop}px`;
 
         document.body.appendChild(targetPreview);
+
         const image = new Image();
         const transparentPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
         image.src = transparentPixel;
         Promise.resolve().then(() => {
             event.dataTransfer.setDragImage(image, 0, 0);
         });
+
         return targetPreview;
     }
 
     #repositionTargetPreview({ clientX, clientY }) {
+        if (!clientX || !clientY) {
+            return;
+        }
+
         this.#preview.style.left = `${clientX + this.#previewOffset}px`;
-        this.#preview.style.top = `${clientY + this.#previewOffset}px`;
+        this.#preview.style.top = `${clientY + this.#previewOffset + document.scrollingElement.scrollTop}px`;
     }
 
     #dragStartHandler = (event) => {
@@ -155,6 +161,5 @@ export class SortableList extends HTMLUListElement {
         }
 
         closestItem.insertAdjacentElement(where, this.#placeholder);
-
     }
 }
