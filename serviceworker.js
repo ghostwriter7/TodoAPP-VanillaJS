@@ -12,6 +12,7 @@ const assets = [
     'components/DayTile.js',
     'components/Dropdown.js',
     'components/ObservableButton.js',
+    'components/SortableList.js',
     'components/TaskCounters.js',
     'components/TaskForm.js',
     'components/TaskItem.js',

@@ -2,32 +2,40 @@ import { BaseComponent } from "./BaseComponent.js";
 import { taskChangeEvent } from "../consts/events.js";
 
 export class TaskList extends BaseComponent {
+    #sortableList;
+    #taskChangeEventHandler;
+
     constructor() {
         super();
     }
 
     connectedCallback() {
-        this.attachTemplate('task-list');
-        this.#render();
+        this.classList.add('container', 'd-block');
+        this.#createSortableList();
 
-        addEventListener(taskChangeEvent, () => {
-            this.#render();
-        });
+        this.#taskChangeEventHandler = () => this.#updateListItems();
+        addEventListener(taskChangeEvent, this.#taskChangeEventHandler);
     }
 
-    #render() {
-        const ul = this.querySelector('ul');
-        ul.innerHTML = '';
-        const tasks = app.taskService.getTasks(this.date);
+    disconnectedCallback() {
+        removeEventListener(taskChangeEvent, this.#taskChangeEventHandler)
+    }
+    #createSortableList() {
+        const sortableList = document.createElement('ul', { is: 'sortable-list' });
+        sortableList.getItem = (task) => {
+            const taskItem = document.createElement('task-item');
+            taskItem.task = task;
+            taskItem.dataset.id = task.id;
+            taskItem.style.order = task.order;
+            return taskItem;
+        };
+        sortableList.emptyListPlaceholder = 'You have no tasks for this day';
+        this.#sortableList = sortableList;
+        this.#updateListItems();
+        this.appendChild(sortableList);
+    }
 
-        if (tasks.length) {
-            tasks.forEach((task) => {
-                const taskItem = document.createElement('task-item');
-                taskItem.task = task;
-                ul.appendChild(taskItem);
-            });
-        } else {
-            ul.innerText = 'You have no tasks for this day';
-        }
+    #updateListItems() {
+        this.#sortableList.dataset.items = JSON.stringify(app.taskService.getTasks(this.date));
     }
 }

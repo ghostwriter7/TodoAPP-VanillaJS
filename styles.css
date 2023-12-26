@@ -183,12 +183,20 @@ button:disabled {
     padding: var(--inner-padding);
 }
 
+.d-block {
+    display: block;
+}
+
 .d-flex {
     display: flex;
 }
 
 .d-none {
     display: none;
+}
+
+.column {
+    flex-direction: column;
 }
 
 .justify-between {

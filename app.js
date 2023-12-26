@@ -16,6 +16,7 @@ import { CalendarService } from "./services/CalendarService.js";
 import { Dropdown } from "./components/Dropdown.js";
 import { ObservableButton } from "./components/ObservableButton.js";
 import { TaskCounters } from "./components/TaskCounters.js";
+import { SortableList } from "./components/SortableList.js";
 
 navigator.serviceWorker?.register('./serviceworker.js');
 
@@ -30,6 +31,7 @@ customElements.define('calendar-header', CalendarHeader);
 customElements.define('day-tile', DayTile);
 customElements.define('dropdown-control', Dropdown, { extends: 'select' });
 customElements.define('observable-button', ObservableButton, { extends: 'button' });
+customElements.define('sortable-list', SortableList, { extends: 'ul' });
 
 customElements.define('tasks-page', TasksPage);
 customElements.define('calendar-page', CalendarPage);

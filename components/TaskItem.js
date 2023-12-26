@@ -9,6 +9,7 @@ export class TaskItem extends BaseComponent {
     connectedCallback() {
         this.attachTemplate('task-item');
         this.querySelector('.task-item__text').textContent = this.task.task;
+        this.style.cursor = 'grab';
         this.#hookUpTaskCompleteCheckbox();
         this.#handleTaskCompleteChange();
         this.#handleTaskEditInit();

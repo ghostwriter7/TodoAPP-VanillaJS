@@ -19,8 +19,8 @@ export class TaskService {
     }
 
     async addTask(task, date) {
-        const todo = await app.dataSource.addOne('todo', { date: this.#activeDate, task, isComplete: false });
-        this.tasksStore[date] = [{ ...todo }, ...this.tasksStore[date]];
+        const todo = await app.dataSource.addOne('todo', { date: this.#activeDate, task, isComplete: false, order: this.tasksStore[date].length + 1 });
+        this.tasksStore[date] = [...this.tasksStore[date], { ...todo }];
     }
 
     getTasks(date) {
