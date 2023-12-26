@@ -1,0 +1,14 @@
+{
+  "name": "todoapp",
+  "version": "0.0.1",
+  "description": "A Demo TodoApp built with Vanilla JS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ghostwriter7",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "0.19.10"
+  }
+}
