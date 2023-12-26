@@ -38,7 +38,7 @@ export class SortableList extends HTMLUListElement {
             }
         });
 
-        this.addEventListener('dragend', (event) => {
+        this.addEventListener('dragend', () => {
             this.#draggedItem = null;
             this.#preview?.remove();
             this.#placeholder?.remove();
@@ -77,9 +77,19 @@ export class SortableList extends HTMLUListElement {
         } else if (items.length < this.#items.length) {
             const removedItems = this.#items.filter(({ id }) => !items.some((item) => item.id === id));
             removedItems.forEach((item) => this.querySelector(`[data-id="${item.id}"]`).remove());
-        } else {
+        } else if (items.length > this.#items.length) {
             const newItems = items.filter(({ id }) => !this.#items.some((item) => item.id === id));
             newItems.forEach((item) => this.appendChild(this.getItem(item)));
+        } else {
+            const updatedItem = items.find((item) => {
+                const matchingItem = this.#items.find((cachedItem) => item.id === cachedItem.id);
+                return matchingItem.updatedAt !== item.updatedAt;
+            });
+
+            if (updatedItem) {
+                const elementToBeUpdated = this.querySelector(`[data-id="${updatedItem.id}"]`);
+                elementToBeUpdated.dataset.data = JSON.stringify(updatedItem);
+            }
         }
 
         if (items.length === 0) {

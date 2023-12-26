@@ -34,7 +34,7 @@ export class TaskList extends BaseComponent {
         const sortableList = document.createElement('ul', { is: 'sortable-list' });
         sortableList.getItem = (task) => {
             const taskItem = document.createElement('task-item');
-            taskItem.task = task;
+            taskItem.dataset.data = JSON.stringify(task);
             taskItem.dataset.id = task.id;
             return taskItem;
         };

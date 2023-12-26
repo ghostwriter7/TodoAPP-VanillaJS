@@ -23,7 +23,8 @@ export class TaskService {
             date: this.#activeDate,
             task,
             isComplete: false,
-            order: this.tasksStore[date].length + 1
+            order: this.tasksStore[date].length + 1,
+            updatedAt: Date.now()
         });
         this.tasksStore[date] = [...this.tasksStore[date], { ...todo }];
     }
@@ -42,12 +43,12 @@ export class TaskService {
     }
 
     async updateTask(id, payload) {
-        const updatedTask = await app.dataSource.updateOneById('todo', id, payload);
+        const updatedTask = await app.dataSource.updateOneById('todo', id, { ...payload, updatedAt: Date.now() });
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...updatedTask } : task);
     }
 
     async updateManyTasks(updates) {
-        const requests = updates.map(({ id, ...update }) => app.dataSource.updateOneById('todo', id, update));
+        const requests = updates.map(({ id, ...update }) => app.dataSource.updateOneById('todo', id, { ...update, updatedAt: Date.now() }));
         await Promise.all(requests);
         this.loadTasks();
     }
