@@ -12,7 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "esbuild": "0.19.10"
+    "esbuild": "0.19.10",
+    "firebase-tools": "^13.0.2"
   },
   "dependencies": {
     "firebase": "^10.7.1"
