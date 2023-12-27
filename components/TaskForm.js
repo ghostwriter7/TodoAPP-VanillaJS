@@ -18,7 +18,7 @@ export class TaskForm extends BaseComponent {
     connectedCallback() {
         this.attachTemplate('task-form');
         this.#formControl = this.querySelector('form-control');
-        this.#label = this.#formControl.root.querySelector('label');
+        this.#label = this.#formControl.querySelector('label');
         this.#button = this.querySelector('button[type="submit"]');
         this.#setDisabledOnSubmitButton(true);
 
@@ -71,7 +71,7 @@ export class TaskForm extends BaseComponent {
 
     #initTwoWayDataBinding() {
         this.form.querySelectorAll('form-control').forEach((formControl) => {
-            const input = formControl.root.querySelector('input');
+            const input = formControl.querySelector('input');
             this.#inputMap[input.name] = input;
             input.addEventListener('input', (event) => {
                 this.#taskProxy[input.name] = event.currentTarget.value;

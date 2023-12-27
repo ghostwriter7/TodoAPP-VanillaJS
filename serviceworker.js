@@ -5,7 +5,7 @@ const assets = [
     'components/form-control/form-control.css',
     'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700&display=swap',
     'https://kit.fontawesome.com/376c1d5471.js',
-    'app.bundle.js'
+    'app.js'
 ];
 
 const cacheKey = 'assets';

@@ -79,7 +79,7 @@ export class CalendarService {
             const datePlaceholderArray = new Array(lastDateOfMonth).fill('');
 
             const requests = datePlaceholderArray
-                .map((_, index) => `${(index + 1).toString().padStart(2, '0')}/${(month + 1).toString().padStart(2, '0')}/${year}`)
+                .map((_, index) => `${(index + 1).toString().padStart(2, '0')}-${(month + 1).toString().padStart(2, '0')}-${year}`)
                 .map((dateId) => app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', dateId));
 
             const results = await Promise.all(requests);

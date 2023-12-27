@@ -1,4 +1,5 @@
 import { BaseComponent } from '../BaseComponent.js'
+import './form-control.css';
 
 export class FormControl extends BaseComponent {
     #inputChangeHandler;
@@ -7,11 +8,9 @@ export class FormControl extends BaseComponent {
 
     constructor() {
         super();
-        this.root = this.attachShadow({ mode: 'open'});
     }
 
     connectedCallback() {
-        this.ensureCssAvailability('./components/form-control/form-control.css');
         this.#render();
         this.#notifyAllOnValueChange();
     }
@@ -50,6 +49,6 @@ export class FormControl extends BaseComponent {
 
         wrapperEl.appendChild(this.#inputEl);
 
-        this.root.appendChild(wrapperEl);
+        this.appendChild(wrapperEl);
     }
 }

@@ -1,3 +1,4 @@
+import './styles.css';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import Router from "./services/Router.js";

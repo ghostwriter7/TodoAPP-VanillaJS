@@ -4,16 +4,16 @@
   "description": "A Demo TodoApp built with Vanilla JS",
   "main": "app.js",
   "scripts": {
-    "build": "esbuild app.js --bundle --minify --outfile=app.bundle.js",
-    "dev": "\"concurrently \"esbuild app.js --bundle --sourcemap --outfile=app.bundle.js --watch\" \"npx serve .\"",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ghostwriter7",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "esbuild": "0.19.10",
-    "firebase-tools": "^13.0.2"
+    "firebase-tools": "^13.0.2",
+    "vite": "^5.0.8"
   },
   "dependencies": {
     "firebase": "^10.7.1"
