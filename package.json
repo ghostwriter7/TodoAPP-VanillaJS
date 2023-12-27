@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "esbuild": "0.19.10"
+  },
+  "dependencies": {
+    "firebase": "^10.7.1"
   }
 }
