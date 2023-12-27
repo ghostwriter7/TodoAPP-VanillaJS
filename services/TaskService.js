@@ -1,11 +1,15 @@
 import { toTaskId } from "../helpers/date.js";
 import { taskChangeEvent } from "../consts/events.js";
+import { collection, doc, addDoc } from "firebase/firestore";
 
 export class TaskService {
     #tasks;
     #activeDate = toTaskId(new Date());
+    #daysCollection;
 
-    constructor() {
+
+    constructor(firestore) {
+        this.#daysCollection = collection(firestore, 'days');
         this.#tasks = {
             [this.#activeDate]: []
         };
@@ -19,14 +23,19 @@ export class TaskService {
     }
 
     async addTask(task, date) {
-        const todo = await app.dataSource.addOne('todo', {
+        const payload = {
             date: this.#activeDate,
             task,
             isComplete: false,
             order: this.tasksStore[date].length + 1,
             updatedAt: Date.now()
-        });
+        };
+        const todo = await app.dataSource.addOne('todo', payload);
         this.tasksStore[date] = [...this.tasksStore[date], { ...todo }];
+
+        const dayDoc = doc(this.#daysCollection, this.#activeDate);
+        const taskCollection = collection(dayDoc, 'tasks');
+        addDoc(taskCollection, payload);
     }
 
     getTasks(date) {
