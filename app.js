@@ -1,5 +1,4 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
+
 import Router from "./services/Router.js";
 import { TaskForm } from "./components/TaskForm.js";
 import { TasksPage } from "./pages/TasksPage.js";
@@ -19,13 +18,10 @@ import { Dropdown } from "./components/Dropdown.js";
 import { ObservableButton } from "./components/ObservableButton.js";
 import { TaskCounters } from "./components/TaskCounters.js";
 import { SortableList } from "./components/SortableList.js";
-import { firebaseConfig } from "./consts/firebase-config.js";
+import { initialize } from "./helpers/firebase.js";
 
 navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
     { type: 'module' });
-
-const firebase = initializeApp(firebaseConfig);
-const firestore = getFirestore(firebase);
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
@@ -47,7 +43,7 @@ customElements.define('not-found-page', NotFound);
 window.app = {
     dataSource: new DataSource(),
     router: new Router(),
-    taskService: new TaskService(firestore),
+    taskService: new TaskService(initialize().firestore),
     calendarService: new CalendarService()
 };
 
