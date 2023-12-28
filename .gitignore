@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 hosting..cache
+.firebase
+.parcel-cache
 
 # Editor directories and files
 .vscode/*

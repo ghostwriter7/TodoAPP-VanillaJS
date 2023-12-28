@@ -22,7 +22,8 @@ import { TaskCounters } from "./components/TaskCounters.js";
 import { SortableList } from "./components/SortableList.js";
 import { firebaseConfig } from "./consts/firebase-config.js";
 
-navigator.serviceWorker?.register('./serviceworker.js');
+navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
+    { type: 'module' });
 
 const firebase = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebase);
