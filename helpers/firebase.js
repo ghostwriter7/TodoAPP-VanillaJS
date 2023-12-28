@@ -9,8 +9,8 @@ export function initialize() {
     const auth = getAuth(firebase);
 
     if (location.hostname === 'localhost') {
-        connectAuthEmulator(auth, 'http://localhost:9099');
-        connectFirestoreEmulator(firebase, 'localhost', 8080);
+        connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+        connectFirestoreEmulator(firestore, 'localhost', 8080);
     }
 
     return { firebase, firestore, auth };
