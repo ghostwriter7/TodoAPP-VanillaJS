@@ -1,6 +1,5 @@
-import './styles.css';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js'
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js'
 import Router from "./services/Router.js";
 import { TaskForm } from "./components/TaskForm.js";
 import { TasksPage } from "./pages/TasksPage.js";

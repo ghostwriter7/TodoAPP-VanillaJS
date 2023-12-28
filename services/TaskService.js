@@ -1,6 +1,6 @@
 import { toTaskId } from "../helpers/date.js";
 import { taskChangeEvent } from "../consts/events.js";
-import { collection, doc, addDoc } from "firebase/firestore";
+import { collection, doc, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 export class TaskService {
     #tasks;

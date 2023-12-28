@@ -1,5 +1,4 @@
 import { BaseComponent } from '../BaseComponent.js'
-import './form-control.css';
 
 export class FormControl extends BaseComponent {
     #inputChangeHandler;
