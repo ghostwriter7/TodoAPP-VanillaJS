@@ -1,6 +1,6 @@
 import { toTaskId } from "../helpers/date.js";
 import { taskChangeEvent } from "../consts/events.js";
-import { collection, addDoc, getDocs, query } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, doc, setDoc } from "firebase/firestore";
 
 export class TaskService {
     #tasks;
@@ -23,6 +23,8 @@ export class TaskService {
     }
 
     async addTask(task, date) {
+        const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks`);
+        const taskDoc = doc(taskCollection);
         const payload = {
             date: this.#activeDate,
             task,
@@ -30,11 +32,9 @@ export class TaskService {
             order: this.tasksStore[date].length + 1,
             updatedAt: Date.now()
         };
-        const todo = await app.dataSource.addOne('todo', payload);
+        setDoc(taskDoc, payload);
+        const todo = await app.dataSource.addOne('todo', { ...payload, id: taskDoc.id });
         this.tasksStore[date] = [...this.tasksStore[date], { ...todo }];
-
-        const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks`);
-        addDoc(taskCollection, todo);
     }
 
     getTasks(date) {
