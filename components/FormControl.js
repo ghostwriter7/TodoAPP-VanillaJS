@@ -44,7 +44,5 @@ export class FormControl extends BaseComponent {
         this.#inputEl.type = type;
 
         this.appendChild(this.#inputEl);
-
-        this.appendChild(this);
     }
 }
