@@ -1,6 +1,6 @@
 import { toTaskId } from "../helpers/date.js";
 import { taskChangeEvent, taskLoadingEndEvent, taskLoadingStartEvent } from "../consts/events.js";
-import { collection, getDocs, query, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, query, doc, setDoc, deleteDoc, updateDoc } from "firebase/firestore";
 
 export class TaskService {
     #tasks;
@@ -51,7 +51,10 @@ export class TaskService {
     }
 
     async updateTask(id, payload) {
-        const updatedTask = await app.dataSource.updateOneById('todo', id, { ...payload, updatedAt: Date.now() });
+        const taskDoc = doc(this.#firebase.firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks/${id}`);
+        const update = { ...payload, updatedAt: Date.now() };
+        updateDoc(taskDoc, update);
+        const updatedTask = await app.dataSource.updateOneById('todo', id, update);
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...updatedTask } : task);
     }
 
@@ -65,6 +68,8 @@ export class TaskService {
     }
 
     async deleteTask(id) {
+        const taskDoc = doc(this.#firebase.firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks/${id}`);
+        deleteDoc(taskDoc);
         await app.dataSource.deleteOneById('todo', id);
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
     }
