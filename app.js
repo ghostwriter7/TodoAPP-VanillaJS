@@ -4,7 +4,7 @@ import { TaskForm } from "./components/TaskForm.js";
 import { TasksPage } from "./pages/TasksPage.js";
 import { TaskList } from "./components/TaskList.js";
 import { TaskItem } from "./components/TaskItem.js";
-import { FormControl } from "./components/form-control/FormControl.js";
+import { FormControl } from "./components/FormControl.js";
 import { TaskService } from "./services/TaskService.js";
 import { DataSource } from "./services/DataSource.js";
 import { CalendarPage } from "./pages/CalendarPage.js";
