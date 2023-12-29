@@ -18,7 +18,7 @@ import { Dropdown } from "./components/Dropdown.js";
 import { ObservableButton } from "./components/ObservableButton.js";
 import { TaskCounters } from "./components/TaskCounters.js";
 import { SortableList } from "./components/SortableList.js";
-import { initialize } from "./helpers/firebase.js";
+import Firebase from "./services/Firebase.js";
 
 navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
     { type: 'module' });
@@ -43,7 +43,7 @@ customElements.define('not-found-page', NotFound);
 window.app = {
     dataSource: new DataSource(),
     router: new Router(),
-    taskService: new TaskService(initialize().firestore),
+    taskService: new TaskService(Firebase),
     calendarService: new CalendarService()
 };
 

@@ -1,16 +1,15 @@
 import { toTaskId } from "../helpers/date.js";
 import { taskChangeEvent } from "../consts/events.js";
-import { collection, addDoc } from "firebase/firestore";
-import { initialize } from "../helpers/firebase.js";
+import { collection, addDoc, getDocs, query } from "firebase/firestore";
 
 export class TaskService {
     #tasks;
+    #firebase;
     #activeDate = toTaskId(new Date());
-    #daysCollection;
+    #syncMap = new Map();
 
-
-    constructor(firestore) {
-        this.#daysCollection = collection(firestore, 'days');
+    constructor(firebase) {
+        this.#firebase = firebase;
         this.#tasks = {
             [this.#activeDate]: []
         };
@@ -34,8 +33,7 @@ export class TaskService {
         const todo = await app.dataSource.addOne('todo', payload);
         this.tasksStore[date] = [...this.tasksStore[date], { ...todo }];
 
-        const { firestore } = initialize()
-        const taskCollection = collection(firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks`);
+        const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks`);
         addDoc(taskCollection, todo);
     }
 
@@ -58,7 +56,10 @@ export class TaskService {
     }
 
     async updateManyTasks(updates) {
-        const requests = updates.map(({ id, ...update }) => app.dataSource.updateOneById('todo', id, { ...update, updatedAt: Date.now() }));
+        const requests = updates.map(({ id, ...update }) => app.dataSource.updateOneById('todo', id, {
+            ...update,
+            updatedAt: Date.now()
+        }));
         await Promise.all(requests);
         this.loadTasks();
     }
@@ -73,7 +74,20 @@ export class TaskService {
         this.tasksStore[this.#activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
     }
 
-    setActiveView(date) {
+    async setActiveView(date) {
         this.#activeDate = date;
+
+        if (!this.#syncMap.get(this.#activeDate) && navigator.onLine) {
+            await this.#syncDataFromFirestore();
+            this.#syncMap.set(this.#activeDate, true);
+        }
+
+    }
+
+    async #syncDataFromFirestore() {
+        const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks`);
+        const response = await getDocs(query(taskCollection));
+        const storedTasks = response.docs.map((task) => ({ data: task.data(), id: task.id }));
+        await app.dataSource.upsertMany('todo', storedTasks);
     }
 }

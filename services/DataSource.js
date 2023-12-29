@@ -12,7 +12,7 @@ export class DataSource {
         return new Promise(async (resolve, reject) => {
             const dataSource = await this.#getDataSource();
             const transaction = dataSource.transaction(objectStoreKey, 'readwrite');
-            const request = transaction.objectStore(objectStoreKey).add(item);
+            const request = transaction.objectStore(objectStoreKey).put(item);
 
             request.onsuccess = ({ target }) => {
                 const id = target.result;
@@ -43,6 +43,22 @@ export class DataSource {
 
             request.onsuccess = () => resolve(updatedRecord);
             request.onerror = ({ target }) => reject(target.error);
+        });
+    }
+
+    upsertMany(objectStoreName, updates) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const requests = updates.map(({ data, id }) => new Promise(async (resolve, reject) => {
+                    const existingRecord = await this.getOneById(objectStoreName, id);
+                    await (existingRecord ? this.updateOneById(objectStoreName, id, { ...existingRecord, ...data }) : this.addOne(objectStoreName, { ...data, id }))
+                    resolve();
+                }));
+                await Promise.all(requests);
+                resolve();
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 
@@ -87,7 +103,7 @@ export class DataSource {
                     this.#db = target.result;
 
                     if (!this.#db.objectStoreNames.contains('todo')) {
-                        const todoStore = this.#db.createObjectStore('todo', { autoIncrement: true, keyPath: 'id' });
+                        const todoStore = this.#db.createObjectStore('todo', { keyPath: 'id' });
                         todoStore.createIndex('idx-todo-date', 'date', { unique: false });
                     }
                 }
