@@ -38,3 +38,12 @@
 
 1. `onSnapshot(doc, (snapshot) => {...})` - no need to await mutations, firebase will notify through the callback
 2. `snapshot.docChanges` - array of changes, adding / removing / modifying 
+
+## Emulators
+
+***
+
+1. `npx firebase init emulators`
+2. `npx firebase emulators:start`
+3. `connectAuthEmulator(auth, url, { disableWarnings: true })`
+4. `connectFirestoreEmulator(firestore, host, port)`
