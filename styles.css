@@ -351,7 +351,7 @@ ul {
 
 /* FORM CONTROL */
 @scope (form-control) {
-    .form-control {
+    :scope {
         display: flex;
         flex-direction: column;
         padding-top: 24px;
