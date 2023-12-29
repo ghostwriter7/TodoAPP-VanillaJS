@@ -47,3 +47,20 @@
 2. `npx firebase emulators:start`
 3. `connectAuthEmulator(auth, url, { disableWarnings: true })`
 4. `connectFirestoreEmulator(firestore, host, port)`
+
+## Queries
+
+***
+
+### Simple queries - on a single field
+
+1. `query(collection, where, where, where, orderBy, limit)`
+2. `where('price', '>', '200')`
+3. `limit(100)`
+4. on maps - `'user.city', '==', 'Helsinki'`, up to 20 levels deep
+5. `'user.city', 'in', '['Helsinki', 'London', 'Warsaw']'`
+6. operators: `in, not-in, ==, !=, >=, <=, >, <`
+7. `orderBy('cost', 'desc')`
+8. `where('date', '<', new Date('23/12/2023'))` - works with native JS objects!
+
+### Composite queries - on multiple fields

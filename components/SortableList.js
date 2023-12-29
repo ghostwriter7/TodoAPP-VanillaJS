@@ -59,7 +59,7 @@ export class SortableList extends HTMLUListElement {
             this.#preview?.remove();
             this.#placeholder?.remove();
 
-            const itemsOrder = [...this.children].map((item) => +item.getAttribute('data-id'));
+            const itemsOrder = [...this.children].map((item) => item.getAttribute('data-id'));
             this.#itemOrderSubject.next(itemsOrder);
         });
 

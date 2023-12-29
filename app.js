@@ -21,8 +21,8 @@ import { SortableList } from "./components/SortableList.js";
 import Firebase from "./services/Firebase.js";
 import { Loading } from "./components/Loading.js";
 
-navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
-    { type: 'module' });
+// navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
+//     { type: 'module' });
 
 customElements.define('form-control', FormControl);
 customElements.define('task-form', TaskForm);
