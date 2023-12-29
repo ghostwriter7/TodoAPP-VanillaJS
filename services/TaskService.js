@@ -1,6 +1,6 @@
 import { toTaskId } from "../helpers/date.js";
-import { taskChangeEvent } from "../consts/events.js";
-import { collection, addDoc, getDocs, query, doc, setDoc } from "firebase/firestore";
+import { taskChangeEvent, taskLoadingEndEvent, taskLoadingStartEvent } from "../consts/events.js";
+import { collection, getDocs, query, doc, setDoc } from "firebase/firestore";
 
 export class TaskService {
     #tasks;
@@ -69,19 +69,18 @@ export class TaskService {
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
     }
 
-    async loadTasks() {
-        const result = await app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.#activeDate);
-        this.tasksStore[this.#activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
-    }
-
-    async setActiveView(date) {
+    async loadTasks(date) {
         this.#activeDate = date;
 
         if (!this.#syncMap.get(this.#activeDate) && navigator.onLine) {
+            dispatchEvent(new Event(taskLoadingStartEvent));
             await this.#syncDataFromFirestore();
+            dispatchEvent(new Event(taskLoadingEndEvent));
             this.#syncMap.set(this.#activeDate, true);
         }
 
+        const result = await app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.#activeDate);
+        this.tasksStore[this.#activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
     }
 
     async #syncDataFromFirestore() {

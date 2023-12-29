@@ -19,6 +19,7 @@ import { ObservableButton } from "./components/ObservableButton.js";
 import { TaskCounters } from "./components/TaskCounters.js";
 import { SortableList } from "./components/SortableList.js";
 import Firebase from "./services/Firebase.js";
+import { Loading } from "./components/Loading.js";
 
 navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
     { type: 'module' });
@@ -35,6 +36,7 @@ customElements.define('day-tile', DayTile);
 customElements.define('dropdown-control', Dropdown, { extends: 'select' });
 customElements.define('observable-button', ObservableButton, { extends: 'button' });
 customElements.define('sortable-list', SortableList, { extends: 'ul' });
+customElements.define('loading-bar', Loading);
 
 customElements.define('tasks-page', TasksPage);
 customElements.define('calendar-page', CalendarPage);
