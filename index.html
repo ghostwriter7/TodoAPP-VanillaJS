@@ -37,20 +37,15 @@
 <main>
 </main>
 
-<template id="task-form">
-    <form>
-        <form-control
-                data-label="Task"
-                data-id="task"
-                data-placeholder="To win the world before lunchtime..."
-                data-type="text"
-        ></form-control>
-        <div class="form__actions">
-            <button type="submit">Add
-                <i class="fa-solid fa-fire"></i>
-            </button>
-        </div>
-    </form>
+<template id="form-group">
+    <div class="form__controls"></div>
+    <div class="form__actions">
+        <button class="d-none" type="button">Cancel <i class="fa-solid fa-xmark"></i></button>
+        <button type="submit">
+            <span id="button-label"></span>
+            <i class="fa-solid fa-fire"></i>
+        </button>
+    </div>
 </template>
 
 <template id="task-item">

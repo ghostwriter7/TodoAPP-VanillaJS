@@ -22,19 +22,19 @@ export class TaskService {
         });
     }
 
-    async addTask(task, date) {
+    async addTask({ task }) {
         const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/tasks`);
         const taskDoc = doc(taskCollection);
         const payload = {
             date: new Date(this.#activeDate),
             task,
             isComplete: false,
-            order: this.tasksStore[date].length + 1,
+            order: this.tasksStore[this.#activeDate].length + 1,
             updatedAt: Date.now()
         };
         setDoc(taskDoc, payload);
         const todo = await app.dataSource.addOne('todo', { ...payload, id: taskDoc.id, date: toTaskId(payload.date) });
-        this.tasksStore[date] = [...this.tasksStore[date], { ...todo }];
+        this.tasksStore[this.#activeDate] = [...this.tasksStore[this.#activeDate], { ...todo }];
     }
 
     getTasks(date) {

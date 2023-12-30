@@ -4,6 +4,7 @@
     --clr-primary: #d5ddcb;
     --clr-secondary: #5f7e97;
     --clr-accent: #7e57c2;
+    --clr-error: #d04c4c;
 
     --bg-primary: #011627;
     --bg-secondary: #010e1a;
@@ -401,6 +402,13 @@ ul {
             color: var(--clr-accent);
             transform: translate(-5px, -5px);
         }
+    }
+
+    .error {
+        color: var(--clr-error);
+        font-size: .8em;
+        font-weight: 600;
+        padding: var(--inner-padding);
     }
 }
 
