@@ -62,5 +62,19 @@
 6. operators: `in, not-in, ==, !=, >=, <=, >, <`
 7. `orderBy('cost', 'desc')`
 8. `where('date', '<', new Date('23/12/2023'))` - works with native JS objects!
+9. `where('category', 'array-contains', 'food')` - array-contains for querying arrays
+10. `array-contains-any`
 
 ### Composite queries - on multiple fields
+
+You need to create an index in production. No errors in emulators though.
+
+## Cursors
+
+***
+
+1. `orderBy` is mandatory for cursors
+2. `startAt(value)`
+3. `endAt(...)`
+4. `limitToLast(number)`
+5. `endBefore(docRef)`

@@ -10,6 +10,7 @@ export class TaskForm extends BaseComponent {
     #label;
     #button;
     #formControl;
+    #formControlSubscription;
 
     constructor() {
         super();
@@ -33,6 +34,7 @@ export class TaskForm extends BaseComponent {
     disconnectedCallback() {
         this.form.removeEventListener('submit', this.formSubmitHandler);
         this.form.removeEventListener('keydown', this.submitOnEnterHandler);
+        this.#formControlSubscription.unsubscribe();
     }
 
     #handleFormSubmit() {
@@ -121,8 +123,10 @@ export class TaskForm extends BaseComponent {
     }
 
     #disableSubmitButtonOnEmpty() {
-        this.#formControl.onValueChange((value) => {
-            this.#setDisabledOnSubmitButton(!value);
+        this.#formControlSubscription = this.#formControl.valueChanges$.subscribe({
+            next: (value) => {
+                this.#setDisabledOnSubmitButton(!value);
+            }
         });
     }
 

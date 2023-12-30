@@ -20,11 +20,13 @@ import { TaskCounters } from "./components/TaskCounters.js";
 import { SortableList } from "./components/SortableList.js";
 import Firebase from "./services/Firebase.js";
 import { Loading } from "./components/Loading.js";
+import { FormGroup } from "./components/FormGroup.js";
 
 // navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
 //     { type: 'module' });
 
 customElements.define('form-control', FormControl);
+customElements.define('form-group', FormGroup, { extends: 'form' });
 customElements.define('task-form', TaskForm);
 customElements.define('task-list', TaskList);
 customElements.define('task-item', TaskItem);

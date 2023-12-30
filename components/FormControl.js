@@ -1,9 +1,11 @@
 import { BaseComponent } from './BaseComponent.js'
+import { Subject } from "../services/Subject.js";
 
 export class FormControl extends BaseComponent {
     #inputChangeHandler;
     #inputEl;
-    #subscribers = [];
+    #subject = new Subject();
+    valueChanges$ = this.#subject.asObservable();
 
     constructor() {
         super();
@@ -18,14 +20,10 @@ export class FormControl extends BaseComponent {
         this.#inputEl.removeEventListener('change', this.#inputChangeHandler);
     }
 
-    onValueChange(subscriber) {
-        this.#subscribers.push(subscriber);
-    }
-
     #notifyAllOnValueChange() {
         this.#inputChangeHandler = (event) => {
             const value = event.target.value;
-            this.#subscribers.forEach((subscriber) => subscriber(value));
+            this.#subject.next(value);
         }
         this.#inputEl.addEventListener('input', this.#inputChangeHandler);
     }
