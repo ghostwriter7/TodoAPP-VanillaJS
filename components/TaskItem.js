@@ -18,11 +18,11 @@ export class TaskItem extends BaseComponent {
             this.#updateTaskContent(this.task.task);
             this.style.cursor = 'grab';
             this.#hookUpTaskCompleteCheckbox();
-            this.#handleTaskCompleteChange();
-            this.#handleTaskEditInit();
-            this.#handleDeleteTask();
-            this.#isInitialized = true;
         }
+        this.#handleTaskCompleteChange();
+        this.#handleTaskEditInit();
+        this.#handleDeleteTask();
+        this.#isInitialized = true;
     }
 
     disconnectedCallback() {
