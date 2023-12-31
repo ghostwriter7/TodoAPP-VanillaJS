@@ -151,6 +151,6 @@ export class FormGroup extends HTMLFormElement {
     }
 
     #resetForm() {
-        Object.keys(this.#modelProxy).forEach((key) => this.#modelProxy[key] = null);
+        Object.keys(this.#modelProxy).forEach((key) => this.#modelProxy[key] = this.formControls.find((formControl) => formControl.id === key)?.defaultValue || null);
     }
 }
