@@ -1,4 +1,6 @@
 export class RateSelector extends HTMLElement {
+    #eventHandlerMap = new Map();
+
     static get observedAttributes() {
         return ['data-value'];
     }
@@ -17,15 +19,21 @@ export class RateSelector extends HTMLElement {
            span.classList.add('level');
            this.#levelElements.push(span);
 
-           span.addEventListener('click', () => {
+           this.#eventHandlerMap.set(span, () => {
                this.#updateLevels(index + 1);
-
                const inputEvent = new InputEvent('input');
                inputEvent.value = index + 1;
                this.dispatchEvent(inputEvent);
            });
+           span.addEventListener('click', this.#eventHandlerMap.get(span));
 
            this.appendChild(span);
+        });
+    }
+
+    disconnectedCallback() {
+        this.#eventHandlerMap.forEach((eventHandler, spanEl) => {
+            spanEl.removeEventListener('click', eventHandler);
         });
     }
 
