@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="theme-color" content="#011627">
     <link rel="stylesheet" href="styles.css"/>
-    <link rel="manifest" href="app.webmanifest" />
+    <link rel="manifest" href="app.webmanifest"/>
     <link rel="apple-touch-icon" href="assets/icon-512.png">
     <script src="https://kit.fontawesome.com/376c1d5471.js" crossorigin="anonymous"></script>
     <script src="app.js" defer type="module"></script>
@@ -49,15 +49,20 @@
 </template>
 
 <template id="task-item">
-    <div class="container d-flex justify-between">
+    <div class="task-item__content d-flex column">
         <span class="task-item__text"></span>
-        <div class="d-flex gap-md">
-            <i id="task-edit" class="pointer fs-xl fa-regular fa-pen-to-square"></i>
-            <i id="task-delete" class="pointer fs-xl fa-solid fa-trash-can"></i>
-            <label>
-                <input type="checkbox"/>
-            </label>
-        </div>
+        <span class="task-item__description"></span>
+    </div>
+    <div class="task-item__rates d-flex column">
+        <span id="priority"></span>
+        <span id="effort"></span>
+    </div>
+    <div class="task-item__actions d-flex gap-md">
+        <i id="task-edit" class="pointer fs-xl fa-regular fa-pen-to-square"></i>
+        <i id="task-delete" class="pointer fs-xl fa-solid fa-trash-can"></i>
+        <label>
+            <input type="checkbox"/>
+        </label>
     </div>
 </template>
 

@@ -14,8 +14,9 @@ export class TaskItem extends BaseComponent {
 
     connectedCallback() {
         if (!this.#isInitialized) {
+            this.classList.add('container');
             this.attachTemplate('task-item');
-            this.#updateTaskContent(this.task.task);
+            this.#renderTaskDetails(this.task);
             this.style.cursor = 'grab';
             this.#hookUpTaskCompleteCheckbox();
         }
@@ -35,7 +36,7 @@ export class TaskItem extends BaseComponent {
         this.task = JSON.parse(newValue);
 
         if (oldValue?.task !== this.task.task && !!this.innerHTML) {
-            this.#updateTaskContent(this.task.task);
+            this.#renderTaskDetails(this.task);
         }
     }
 
@@ -72,7 +73,21 @@ export class TaskItem extends BaseComponent {
         this.deleteIcon.addEventListener('click', this.deleteHandler, { once: true });
     }
 
-    #updateTaskContent(content) {
-        this.querySelector('.task-item__text').textContent = content;
+    #renderTaskDetails(task) {
+        this.querySelector('.task-item__text').textContent = task.task;
+        this.querySelector('.task-item__description').textContent = task.description;
+        this.querySelector('#priority').innerHTML = this.#getPriority(task.priority);
+        this.querySelector('#effort').innerHTML = `Effort: ${task.effort}`
+    }
+
+    #getPriority(priority) {
+        switch (priority) {
+            case 3:
+                return 'High <i class="fa-solid fa-bolt-lightning"></i>';
+            case 2:
+                return 'Medium <i class="fa-solid fa-temperature-half"></i>';
+            case 1:
+                return 'Low <i class="fa-solid fa-feather"></i>';
+        }
     }
 }

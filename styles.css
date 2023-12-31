@@ -333,6 +333,7 @@ button {
 }
 
 
+textarea,
 .scrollbar {
     &::-webkit-scrollbar {
         width: 12px;
@@ -346,6 +347,10 @@ button {
     &::-webkit-scrollbar-thumb {
         background: var(--bg-highlight);
         border-radius: var(--radius);
+    }
+
+    &::-webkit-scrollbar-corner {
+        background: var(--bg-secondary);
     }
 }
 
@@ -472,5 +477,30 @@ ul {
         &.level--active {
             background: var(--clr-accent);
         }
+    }
+}
+
+@scope (task-item) {
+    :scope {
+        align-items: center;
+        display: grid;
+        grid-template-columns: 60% 20% 20%;
+    }
+
+    .task-item__text {
+
+    }
+
+    .task-item__description {
+        color: var(--clr-secondary);
+        font-size: .9em;
+    }
+
+    .task-item__rates {
+        justify-self: center;
+    }
+
+    .task-item__actions {
+        justify-self: end;
     }
 }
