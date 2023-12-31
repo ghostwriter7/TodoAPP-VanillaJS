@@ -351,8 +351,6 @@ button {
 
 ul {
     max-height: 500px;
-    overflow-y: scroll;
-    padding-right: var(--inner-padding);
 }
 
 

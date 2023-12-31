@@ -37,6 +37,7 @@ export class SortableList extends HTMLUListElement {
                     node.removeEventListener('dragover', this.#dragOverHandler);
                 }
             }
+            this.#checkScrollabilityAndAdjust();
         });
 
         this.addEventListener('dragend', () => {
@@ -173,5 +174,11 @@ export class SortableList extends HTMLUListElement {
         }
 
         closestItem.insertAdjacentElement(where, this.#placeholder);
+    }
+
+    #checkScrollabilityAndAdjust() {
+        const isScrollable = this.scrollHeight > this.offsetHeight;
+        this.style.paddingRight = isScrollable ? 'var(--inner-padding)' : 'unset';
+        this.style.overflowY = isScrollable ? 'scroll' : 'hidden';
     }
 }
