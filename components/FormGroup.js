@@ -74,13 +74,14 @@ export class FormGroup extends HTMLFormElement {
 
     #initializeFormControls() {
         const formControls = this.querySelector('.form__controls');
-        this.formControls.forEach((formControl) => {
+        this.formControls.forEach((formControl, index) => {
             const formControlEl = document.createElement('form-control');
             this.#model[formControl.id] = null;
             formControlEl.dataset.id = formControl.id;
             formControlEl.dataset.label = formControl.label;
             formControlEl.dataset.placeholder = formControl.placeholder;
             formControlEl.dataset.type = formControl.type;
+            formControlEl.dataset.tabIndex = index + 1  ;
 
             formControlEl.setValidators(formControl.validators, formControl.validationMessage);
 

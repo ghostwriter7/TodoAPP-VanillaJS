@@ -79,7 +79,7 @@ export class FormControl extends BaseComponent {
     }
 
     #renderFormControl() {
-        const { id, label, placeholder, type } = this.dataset;
+        const { id, label, placeholder, tabIndex, type } = this.dataset;
 
         const labelEl = document.createElement('label');
         labelEl.innerText = label;
@@ -88,6 +88,7 @@ export class FormControl extends BaseComponent {
 
         this.#inputEl = document.createElement(this.#getTagNameFromType(type));
         this.#inputEl.id = this.#inputEl.name = id;
+        this.#inputEl.tabIndex = tabIndex;
         this.#inputEl.placeholder = placeholder || '';
 
         if (this.#inputEl instanceof HTMLInputElement) {
