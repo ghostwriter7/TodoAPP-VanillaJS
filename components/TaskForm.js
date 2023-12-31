@@ -23,6 +23,12 @@ export class TaskForm extends BaseComponent {
                 validationMessage: {
                     required: `Task's text is required.`
                 }
+            },
+            {
+                label: "Description",
+                id: "description",
+                placeholder: "All the nitty-gritty about what and how comes here...",
+                type: "textarea",
             }
         ];
         this.#formGroup.onSubmitCallback = ({ id, ...data }) => {

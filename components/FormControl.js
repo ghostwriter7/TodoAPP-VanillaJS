@@ -58,6 +58,15 @@ export class FormControl extends BaseComponent {
         }
     }
 
+    #getTagNameFromType(type) {
+        switch (type) {
+            case 'text':
+                return 'input';
+            case 'textarea':
+                return 'textarea';
+        }
+    }
+
     #notifyAllOnValueChange() {
         this.#inputChangeHandler = (event) => {
             const value = event.target.value;
@@ -77,16 +86,20 @@ export class FormControl extends BaseComponent {
         labelEl.htmlFor = id;
         this.appendChild(labelEl);
 
-        this.#inputEl = document.createElement('input');
+        this.#inputEl = document.createElement(this.#getTagNameFromType(type));
         this.#inputEl.id = this.#inputEl.name = id;
         this.#inputEl.placeholder = placeholder || '';
-        this.#inputEl.type = type;
+
+        if (this.#inputEl instanceof HTMLInputElement) {
+            this.#inputEl.type = type;
+        }
 
         this.appendChild(this.#inputEl);
     }
 
     #renderError(errorMessage) {
         if (this.#errorEl) {
+            this.#toggleErrorMessageDisplayClass(errorMessage);
             this.#errorEl.innerText = errorMessage;
             return;
         }
@@ -95,6 +108,11 @@ export class FormControl extends BaseComponent {
         this.#errorEl = document.createElement('span');
         this.#errorEl.className = 'error';
         this.#errorEl.innerText = errorMessage;
+        this.#toggleErrorMessageDisplayClass(errorMessage);
         this.appendChild(this.#errorEl);
+    }
+
+    #toggleErrorMessageDisplayClass(errorMessage) {
+        this.#errorEl.classList[errorMessage ? 'remove' : 'add']('d-none');
     }
 }

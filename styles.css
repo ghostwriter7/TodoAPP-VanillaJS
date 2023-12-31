@@ -365,17 +365,22 @@ ul {
         position: relative;
     }
 
+    textarea {
+        resize: vertical;
+    }
+
+    textarea,
     input {
         background-color: var(--bg-secondary);
         border: 1px solid var(--border-primary);
         border-radius: var(--radius);
         color: var(--clr-primary);
-        font: 300 18px/26px var(--font);
-        padding: var(--inner-padding);
+        font: 300 16px/24px var(--font);
+        padding: 16px var(--inner-padding) var(--inner-padding) var(--inner-padding);
 
         &::placeholder {
             color: var(--clr-secondary);
-            font: 600 14px/26px var(--font);
+            font: 600 14px/24px var(--font);
         }
 
         &:active,
@@ -408,12 +413,12 @@ ul {
         color: var(--clr-error);
         font-size: .8em;
         font-weight: 600;
-        padding: var(--inner-padding);
+        padding: var(--inner-padding) var(--inner-padding) 0 var(--inner-padding);
     }
 }
 
 /* LOADING BAR */
-@scope(loading-bar) {
+@scope (loading-bar) {
 :scope {
     align-items: center;
     color: var(--clr-secondary);
@@ -441,3 +446,10 @@ ul {
     }
 }
 
+@scope (form) {
+    .form__controls {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+}
