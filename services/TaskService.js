@@ -22,12 +22,12 @@ export class TaskService {
         });
     }
 
-    async addTask({ task }) {
+    async addTask(task) {
         const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/tasks`);
         const taskDoc = doc(taskCollection);
         const payload = {
             date: new Date(this.#activeDate),
-            task,
+            ...task,
             isComplete: false,
             order: this.tasksStore[this.#activeDate].length + 1,
             updatedAt: Date.now()

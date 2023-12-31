@@ -39,6 +39,7 @@ export class FormControl extends BaseComponent {
 
     setValue(value) {
         this.#inputEl.value = value;
+        this.#inputEl.dataset.value = value;
     }
 
     updateValidity(value) {
@@ -71,7 +72,7 @@ export class FormControl extends BaseComponent {
 
     #notifyAllOnValueChange() {
         this.#inputChangeHandler = (event) => {
-            const value = event.target.value;
+            const value = event.value ?? event.target.value;
             this.#pristine = false;
             this.updateValidity(value);
 

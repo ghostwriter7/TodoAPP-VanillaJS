@@ -453,3 +453,24 @@ ul {
         gap: 12px;
     }
 }
+
+@scope (rate-selector) {
+    :scope {
+        display: flex;
+        gap: 12px;
+        margin-top: 0;
+        padding-top: calc(2 * var(--inner-padding));
+    }
+
+    .level {
+        border: 2px solid var(--border-primary);
+        border-radius: var(--radius);
+        cursor: pointer;
+        height: calc(var(--inner-padding) * 2);
+        width:calc(var(--inner-padding) * 2);
+
+        &.level--active {
+            background: var(--clr-accent);
+        }
+    }
+}

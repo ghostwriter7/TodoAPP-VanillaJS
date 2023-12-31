@@ -31,12 +31,14 @@ export class TaskForm extends BaseComponent {
                 type: "textarea",
             },
             {
+                defaultValue: 2,
                 label: "Priority",
                 id: 'priority',
                 type: 'rate',
                 levels: 3
             },
             {
+                defaultValue: 3,
                 label: "Effort",
                 id: 'effort',
                 type: 'rate',

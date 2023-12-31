@@ -35,8 +35,8 @@ export class FormGroup extends HTMLFormElement {
     connectedCallback() {
         this.#initializeEventListeners();
         this.#initializeSubmitOnEnterListener();
-        this.#initializeFormControls();
         this.#initializeModelProxy();
+        this.#initializeFormControls();
     }
 
     disconnectedCallback() {
@@ -74,21 +74,20 @@ export class FormGroup extends HTMLFormElement {
 
     #initializeFormControls() {
         const formControls = this.querySelector('.form__controls');
-        this.formControls.forEach(({ validators, validationMessage, ...additionalAttributes }, index) => {
+        this.formControls.forEach(({ defaultValue, validators, validationMessage, ...additionalAttributes }, index) => {
             const id = additionalAttributes.id;
             const formControlEl = document.createElement('form-control');
             this.#model[id] = null;
 
             Object.entries(additionalAttributes).forEach(([key, value]) => {
                 formControlEl.dataset[key] = value;
-
             });
 
             formControlEl.dataset.tabIndex = index + 1;
 
             formControlEl.setValidators(validators, validationMessage);
 
-            const valueChangeSubscription = formControlEl.valueChanges$.subscribe({ next: (value) => this.#modelProxy[formControl.id] = value });
+            const valueChangeSubscription = formControlEl.valueChanges$.subscribe({ next: (value) => this.#modelProxy[id] = value });
             this.#subscriptions.push(valueChangeSubscription);
 
             const statusChangeSubscription = formControlEl.statusChanges$.subscribe({
@@ -102,6 +101,10 @@ export class FormGroup extends HTMLFormElement {
             this.#formControlMap.set(id, formControlEl);
             formControlEl.updateValidity();
             formControls.appendChild(formControlEl);
+
+            if (defaultValue) {
+                this.#modelProxy[id] = defaultValue;
+            }
         });
     }
 
