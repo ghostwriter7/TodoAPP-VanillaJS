@@ -64,6 +64,8 @@ export class FormControl extends BaseComponent {
                 return 'input';
             case 'textarea':
                 return 'textarea';
+            case 'rate':
+                return 'rate-selector';
         }
     }
 
@@ -79,7 +81,7 @@ export class FormControl extends BaseComponent {
     }
 
     #renderFormControl() {
-        const { id, label, placeholder, tabIndex, type } = this.dataset;
+        const { id, label, type, ...additionalAttributes } = this.dataset;
 
         const labelEl = document.createElement('label');
         labelEl.innerText = label;
@@ -88,11 +90,13 @@ export class FormControl extends BaseComponent {
 
         this.#inputEl = document.createElement(this.#getTagNameFromType(type));
         this.#inputEl.id = this.#inputEl.name = id;
-        this.#inputEl.tabIndex = tabIndex;
-        this.#inputEl.placeholder = placeholder || '';
+
+        Object.entries(additionalAttributes).forEach(([key, value]) => {
+           this.#inputEl[key] = value;
+        });
 
         if (this.#inputEl instanceof HTMLInputElement) {
-            this.#inputEl.type = type;
+            this.#inputEl.type = additionalAttributes.type;
         }
 
         this.appendChild(this.#inputEl);

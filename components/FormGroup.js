@@ -74,29 +74,32 @@ export class FormGroup extends HTMLFormElement {
 
     #initializeFormControls() {
         const formControls = this.querySelector('.form__controls');
-        this.formControls.forEach((formControl, index) => {
+        this.formControls.forEach(({ validators, validationMessage, ...additionalAttributes }, index) => {
+            const id = additionalAttributes.id;
             const formControlEl = document.createElement('form-control');
-            this.#model[formControl.id] = null;
-            formControlEl.dataset.id = formControl.id;
-            formControlEl.dataset.label = formControl.label;
-            formControlEl.dataset.placeholder = formControl.placeholder;
-            formControlEl.dataset.type = formControl.type;
-            formControlEl.dataset.tabIndex = index + 1  ;
+            this.#model[id] = null;
 
-            formControlEl.setValidators(formControl.validators, formControl.validationMessage);
+            Object.entries(additionalAttributes).forEach(([key, value]) => {
+                formControlEl.dataset[key] = value;
+
+            });
+
+            formControlEl.dataset.tabIndex = index + 1;
+
+            formControlEl.setValidators(validators, validationMessage);
 
             const valueChangeSubscription = formControlEl.valueChanges$.subscribe({ next: (value) => this.#modelProxy[formControl.id] = value });
             this.#subscriptions.push(valueChangeSubscription);
 
             const statusChangeSubscription = formControlEl.statusChanges$.subscribe({
                 next: (valid) => {
-                    this.#validityMap.set(formControl.id, valid);
+                    this.#validityMap.set(id, valid);
                     this.#submitButton.disabled = !this.#isValid();
                 }
             });
             this.#subscriptions.push(statusChangeSubscription);
 
-            this.#formControlMap.set(formControl.id, formControlEl);
+            this.#formControlMap.set(id, formControlEl);
             formControlEl.updateValidity();
             formControls.appendChild(formControlEl);
         });

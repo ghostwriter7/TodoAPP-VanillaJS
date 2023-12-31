@@ -29,6 +29,18 @@ export class TaskForm extends BaseComponent {
                 id: "description",
                 placeholder: "All the nitty-gritty about what and how comes here...",
                 type: "textarea",
+            },
+            {
+                label: "Priority",
+                id: 'priority',
+                type: 'rate',
+                levels: 3
+            },
+            {
+                label: "Effort",
+                id: 'effort',
+                type: 'rate',
+                levels: 5
             }
         ];
         this.#formGroup.onSubmitCallback = ({ id, ...data }) => {
