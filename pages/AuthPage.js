@@ -125,7 +125,10 @@ export class AuthPage extends HTMLElement {
                 message = 'Invalid credentials. Try again.';
                 break;
             case 'auth/email-already-in-use':
-                message = 'A user with a given e-mail already exists. Please, sign in.'
+                message = 'A user with a given e-mail already exists. Please, sign in.';
+                break;
+            default:
+                message = 'An error has occurred, apologies.';
         }
 
         this.#error = getSpan();
