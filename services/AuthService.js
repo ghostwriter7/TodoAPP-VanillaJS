@@ -7,12 +7,20 @@ export class AuthService {
         this.#auth = auth;
     }
 
-    signUp(email, password) {
-        createUserWithEmailAndPassword(this.#auth, email, password);
+    async signUp(email, password) {
+        try {
+            await createUserWithEmailAndPassword(this.#auth, email, password);
+        } catch ({ code }) {
+            throw new Error(code);
+        }
     }
 
-    signIn(email, password) {
-        signInWithEmailAndPassword(this.#auth, email, password);
+    async signIn(email, password) {
+        try {
+            await signInWithEmailAndPassword(this.#auth, email, password);
+        } catch ({ code }) {
+            throw new Error(code);
+        }
     }
 
     logout() {

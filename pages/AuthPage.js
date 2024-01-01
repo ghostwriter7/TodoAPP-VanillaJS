@@ -3,8 +3,7 @@ import { FormMode } from "../consts/form-mode.js";
 import { getButton, getDiv, getSpan } from "../helpers/dom.js";
 
 export class AuthPage extends HTMLElement {
-    #changeModeButton;
-    #changeModeHandler;
+    #changeModeSubscription;
     #footer;
     #formGroup;
     #modeEnum = {
@@ -30,7 +29,7 @@ export class AuthPage extends HTMLElement {
     }
 
     disconnectedCallback() {
-        this.#changeModeButton.removeEventListener('click', this.#changeModeHandler);
+        this.#changeModeSubscription?.unsubscribe();
     }
 
     #renderAuthHeader() {
@@ -64,8 +63,13 @@ export class AuthPage extends HTMLElement {
                 }
             },
         ];
-        this.#formGroup.onSubmitCallback = ({ email, password }) =>
-            this.#isSignIn ? app.authService.signIn(email, password) : app.authService.signUp(email, password);
+        this.#formGroup.onSubmitCallback = async ({ email, password }) => {
+            try {
+                await app.authService[this.#isSignIn ? 'signIn' : 'signUp'](email, password);
+            } catch (e) {
+                this.#handleError(e.message);
+            }
+        }
         this.#formGroup.dataset.submitLabel = 'Submit';
         this.#formGroup.dataset.mode = FormMode.Create;
         this.appendChild(this.#formGroup);
@@ -77,24 +81,24 @@ export class AuthPage extends HTMLElement {
         const message = getSpan();
         this.#setFooterMessage(message);
         this.#footer.appendChild(message);
-        this.#changeModeButton = getButton();
-        this.#setChangeModeButtonLabel();
+        const changeModeButton = getButton('observable-button');
+        this.#setChangeModeButtonLabel(changeModeButton);
 
-        this.#changeModeHandler = () => {
-            this.#mode = this.#isSignIn ? this.#modeEnum.SignUp : this.#modeEnum.SignIn;
-            this.#setFooterMessage(message);
-            this.#setChangeModeButtonLabel();
-            this.#setHeaderTitle();
-        };
+        changeModeButton.click$.subscribe({
+            next: () => {
+                this.#mode = this.#isSignIn ? this.#modeEnum.SignUp : this.#modeEnum.SignIn;
+                this.#setFooterMessage(message);
+                this.#setChangeModeButtonLabel(changeModeButton);
+                this.#setHeaderTitle();
+            }
+        });
 
-        this.#changeModeButton.addEventListener('click', this.#changeModeHandler);
-
-        this.#footer.appendChild(this.#changeModeButton);
+        this.#footer.appendChild(changeModeButton);
         this.appendChild(this.#footer);
     }
 
-    #setChangeModeButtonLabel() {
-        this.#changeModeButton.innerText = this.#isSignIn ? 'Sign Up' : 'Sign In';
+    #setChangeModeButtonLabel(changeModeButton) {
+        changeModeButton.innerText = this.#isSignIn ? 'Sign Up' : 'Sign In';
     }
 
     #setHeaderTitle() {
@@ -103,5 +107,9 @@ export class AuthPage extends HTMLElement {
 
     #setFooterMessage(message) {
         message.innerText = `${this.#isSignIn ? `Don't you have an account yet?` : `Have you been here before?`} Click to `;
+    }
+
+    #handleError(message) {
+
     }
 }
