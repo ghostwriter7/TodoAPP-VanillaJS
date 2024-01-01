@@ -17,24 +17,25 @@
 
 <header class="d-none">
     <nav>
-        <a href="/">
-            <i class="fa-solid fa-house"></i>
-        </a>
-        <span class="clr-primary">TodoApp</span>
-        <a href="/calendar">
-            <i class="fa-solid fa-calendar-days"></i>
-        </a>
-        <a href="/settings">
-            <i class="fa-solid fa-sliders"></i>
-        </a>
-        <button id="logout" onclick="app.authService.logout()">
-            Logout
-            <i class="fa-solid fa-door-open"></i>
-        </button>
-        <button class="d-none" id="install">
-            Install
-            <i class="fa-solid fa-download"></i>
-        </button>
+        <div>
+            <span class="clr-primary" onclick="app.router.navigateTo('/')">
+                <i class="fa-solid fa-house"></i> TodoApp
+            </span>
+        </div>
+        <div>
+            <button onclick="app.router.navigateTo('/calendar')">
+                <span class="button-label">Calendar</span>
+                <i class="fa-solid fa-calendar-days"></i>
+            </button>
+            <button id="logout" onclick="app.authService.logout()">
+                <span class="button-label">Logout</span>
+                <i class="fa-solid fa-door-open"></i>
+            </button>
+            <button class="d-none" id="install">
+                <span class="button-label">Install</span>
+                <i class="fa-solid fa-download"></i>
+            </button>
+        </div>
     </nav>
 </header>
 

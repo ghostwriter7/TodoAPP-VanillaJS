@@ -7,19 +7,6 @@ export default class Router {
         this.#firebase = firebase;
     }
 
-
-    init() {
-        document.querySelector('nav').querySelectorAll('a').forEach((link) => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                this.navigateTo(event.currentTarget.pathname);
-            });
-        });
-
-        const route = !this.#firebase.auth.currentUser ? '/auth' : location.pathname;
-        this.navigateTo(route);
-    }
-
     navigateTo(route, addToHistory = true) {
         if (addToHistory) {
             history.pushState({ route }, null, route);

@@ -78,7 +78,3 @@ addEventListener('popstate', (event) => {
     event.preventDefault();
     app.router.navigateTo(event.state.route, false);
 });
-
-addEventListener('DOMContentLoaded', () => {
-    app.router.init();
-});

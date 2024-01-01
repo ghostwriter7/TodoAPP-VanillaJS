@@ -23,7 +23,7 @@ export class TaskService {
     }
 
     async addTask(task) {
-        const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/tasks`);
+        const taskCollection = collection(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks`);
         const taskDoc = doc(taskCollection);
         const payload = {
             date: new Date(this.#activeDate),

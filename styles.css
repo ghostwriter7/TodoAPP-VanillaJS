@@ -130,12 +130,25 @@ nav {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     display: flex;
+    flex-direction: column;
     font: 400 22px/26px var(--font);
     gap: 12px;
     padding: var(--inner-padding);
+    text-align: center;
 
-    > span {
-        flex: 1;
+    & .button-label {
+        display: none;
+    }
+
+    @media screen and (min-width: 500px) {
+        & .button-label {
+            display: unset;
+        }
+    }
+
+    @media screen and (min-width: 800px) {
+        flex-direction: row;
+        justify-content: space-between;
     }
 }
 
