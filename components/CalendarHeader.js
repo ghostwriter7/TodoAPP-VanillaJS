@@ -24,6 +24,7 @@ export class CalendarHeader extends BaseComponent {
     }
 
     connectedCallback() {
+        this.classList.add('container', 'd-flex', 'justify-between', 'align-center');
         this.#setCurrentMonthAndYear();
         this.attachTemplate('calendar-header');
         this.#actions = document.querySelector('#calendar-header-actions');

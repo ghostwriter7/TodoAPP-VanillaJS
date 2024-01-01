@@ -33,7 +33,7 @@ export class DayTile extends HTMLElement {
 
         if (this.stats.total !== 0) {
             const stats = getSpan();
-            stats.className = 'fs-sm fw-700';
+            stats.className = 'fs-sm fw-700 calendar__day-stats';
             stats.innerText = `${this.stats.complete} / ${this.stats.total}`;
             this.appendChild(stats);
         }
