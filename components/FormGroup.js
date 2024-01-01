@@ -136,7 +136,7 @@ export class FormGroup extends HTMLFormElement {
         const isCreateModeActive = this.dataset.mode === FormMode.Create;
         const formActions = this.querySelector('.form__actions');
 
-        formActions.querySelector('#button-label').innerText = `${isCreateModeActive ? 'Add' : 'Update'}`;
+        formActions.querySelector('#button-label').innerText = this.dataset.submitLabel ?? `${isCreateModeActive ? 'Add' : 'Update'}`;
         this.#cancelButton.className = isCreateModeActive ? 'd-none' : '';
     }
 
