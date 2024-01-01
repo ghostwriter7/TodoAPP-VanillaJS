@@ -23,6 +23,7 @@ import { FormGroup } from "./components/FormGroup.js";
 import { RateSelector } from "./components/RateSelector.js";
 import { onAuthStateChanged } from 'firebase/auth';
 import { AuthPage } from "./pages/AuthPage.js";
+import { AuthService } from "./services/AuthService.js";
 
 // navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
 //     { type: 'module' });
@@ -49,6 +50,7 @@ customElements.define('not-found-page', NotFound);
 customElements.define('auth-page', AuthPage);
 
 window.app = {
+    authService: new AuthService(Firebase.auth),
     dataSource: new DataSource(),
     router: new Router(Firebase),
     taskService: new TaskService(Firebase),

@@ -27,12 +27,9 @@
 }
 
 body {
-    align-items: center;
     background-color: var(--bg-primary);
     color: var(--clr-primary);
-    display: flex;
     font: 300 14px var(--font);
-    justify-content: center;
     margin: 0;
     padding: 12px;
 }

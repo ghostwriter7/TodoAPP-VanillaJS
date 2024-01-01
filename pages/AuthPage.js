@@ -64,9 +64,8 @@ export class AuthPage extends HTMLElement {
                 }
             },
         ];
-        this.#formGroup.onSubmitCallback = ({ id, ...data }) => {
-            // TODO...
-        };
+        this.#formGroup.onSubmitCallback = ({ email, password }) =>
+            this.#isSignIn ? app.authService.signIn(email, password) : app.authService.signUp(email, password);
         this.#formGroup.dataset.submitLabel = 'Submit';
         this.#formGroup.dataset.mode = FormMode.Create;
         this.appendChild(this.#formGroup);
