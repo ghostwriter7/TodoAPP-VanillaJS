@@ -1,4 +1,5 @@
 import { toTaskId } from "../helpers/date.js";
+import { getSpan } from "../helpers/dom.js";
 
 export class DayTile extends HTMLElement {
     constructor() {
@@ -26,12 +27,12 @@ export class DayTile extends HTMLElement {
             this.style.gridColumn = `${dayOfWeekIndex} / ${dayOfWeekIndex + 1}`;
         }
 
-        const date = document.createElement('span');
+        const date = getSpan();
         date.innerText = this.date.getDate();
         this.appendChild(date);
 
         if (this.stats.total !== 0) {
-            const stats = document.createElement('span');
+            const stats = getSpan();
             stats.className = 'fs-sm fw-700';
             stats.innerText = `${this.stats.complete} / ${this.stats.total}`;
             this.appendChild(stats);

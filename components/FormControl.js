@@ -1,5 +1,6 @@
 import { BaseComponent } from './BaseComponent.js'
 import { Subject } from "../services/Subject.js";
+import { getSpan } from "../helpers/dom.js";
 
 export class FormControl extends BaseComponent {
     #errorEl;
@@ -111,7 +112,7 @@ export class FormControl extends BaseComponent {
         }
 
 
-        this.#errorEl = document.createElement('span');
+        this.#errorEl = getSpan();
         this.#errorEl.className = 'error';
         this.#errorEl.innerText = errorMessage;
         this.#toggleErrorMessageDisplayClass(errorMessage);

@@ -1,5 +1,6 @@
 import { BaseComponent } from "./BaseComponent.js";
 import { getMonthNames } from "../helpers/date.js";
+import { getDiv } from "../helpers/dom.js";
 
 export class CalendarHeader extends BaseComponent {
     static get observedAttributes() {
@@ -68,7 +69,7 @@ export class CalendarHeader extends BaseComponent {
     }
 
     #renderYearSelector() {
-        const div = document.createElement('div');
+        const div = getDiv();
         div.className = 'd-flex align-center gap-xl'
         div.innerHTML = `
             <i id="increment-year" class="fs-xl pointer fa-solid fa-up-long"></i>

@@ -1,5 +1,6 @@
 import { BaseComponent } from "./BaseComponent.js";
 import { isToday } from "../helpers/date.js";
+import { getDiv, getSpan } from "../helpers/dom.js";
 
 export class Calendar extends BaseComponent {
     static get observedAttributes() {
@@ -20,12 +21,12 @@ export class Calendar extends BaseComponent {
     }
 
     #createCalendarHeader() {
-        const container = document.createElement('div');
+        const container = getDiv();
         container.className = 'd-flex';
 
         const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         daysOfWeek.forEach((dayOfWeek) => {
-            const dayOfWeekEl = document.createElement('span');
+            const dayOfWeekEl = getSpan();
             dayOfWeekEl.className = 'container grow';
             dayOfWeekEl.innerText = dayOfWeek;
             container.appendChild(dayOfWeekEl);
@@ -36,7 +37,7 @@ export class Calendar extends BaseComponent {
 
     async #createDateTiles(monthSummaryPerDay) {
         this.querySelector('.calendar__days')?.remove();
-        const daysContainer = document.createElement('div');
+        const daysContainer = getDiv();
         daysContainer.className = 'calendar__days';
 
         const year = app.calendarService.getYear();

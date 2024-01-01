@@ -1,3 +1,5 @@
+import { getSpan } from "../helpers/dom.js";
+
 export class RateSelector extends HTMLElement {
     #eventHandlerMap = new Map();
 
@@ -15,7 +17,7 @@ export class RateSelector extends HTMLElement {
         this.classList.add('container');
 
         new Array(+this.levels).fill(0).forEach((_, index) => {
-           const span = document.createElement('span');
+           const span = getSpan();
            span.classList.add('level');
            this.#levelElements.push(span);
 

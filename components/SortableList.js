@@ -1,4 +1,5 @@
 import { Subject } from "../services/Subject.js";
+import { getDiv } from "../helpers/dom.js";
 
 export class SortableList extends HTMLUListElement {
     static get observedAttributes() {
@@ -110,7 +111,7 @@ export class SortableList extends HTMLUListElement {
             return this.#placeholder;
         }
 
-        const placeholder = document.createElement('div');
+        const placeholder = getDiv();
         placeholder.innerText = 'Insert here...';
         placeholder.className = 'placeholder';
         return placeholder;
@@ -118,7 +119,7 @@ export class SortableList extends HTMLUListElement {
 
     #getTargetPreview(event) {
         const { clientX, clientY, currentTarget } = event;
-        const targetPreview = document.createElement('div');
+        const targetPreview = getDiv();
         targetPreview.innerHTML = `<i class="fa-solid fa-grip-vertical"></i> ${currentTarget.innerText} `;
         targetPreview.classList.add('target-preview');
         targetPreview.style.left = `${clientX + this.#previewOffset}px`;
