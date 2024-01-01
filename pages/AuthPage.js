@@ -4,6 +4,7 @@ import { getButton, getDiv, getSpan } from "../helpers/dom.js";
 
 export class AuthPage extends HTMLElement {
     #changeModeSubscription;
+    #error;
     #footer;
     #formGroup;
     #modeEnum = {
@@ -64,6 +65,7 @@ export class AuthPage extends HTMLElement {
             },
         ];
         this.#formGroup.onSubmitCallback = async ({ email, password }) => {
+            this.#resetError();
             try {
                 await app.authService[this.#isSignIn ? 'signIn' : 'signUp'](email, password);
             } catch (e) {
@@ -86,6 +88,7 @@ export class AuthPage extends HTMLElement {
 
         changeModeButton.click$.subscribe({
             next: () => {
+                this.#resetError();
                 this.#mode = this.#isSignIn ? this.#modeEnum.SignUp : this.#modeEnum.SignIn;
                 this.#setFooterMessage(message);
                 this.#setChangeModeButtonLabel(changeModeButton);
@@ -109,7 +112,28 @@ export class AuthPage extends HTMLElement {
         message.innerText = `${this.#isSignIn ? `Don't you have an account yet?` : `Have you been here before?`} Click to `;
     }
 
-    #handleError(message) {
+    #handleError(code) {
+        let message;
 
+        switch (code) {
+            case 'auth/invalid-email':
+                message = 'The user does not exist. Please, sign up.';
+                break;
+            case 'auth/wrong-password':
+                message = 'Invalid credentials. Try again.';
+                break;
+            case 'auth/email-already-in-use':
+                message = 'A user with a given e-mail already exists. Please, sign in.'
+        }
+
+        this.#error = getSpan();
+        this.#error.innerText = message;
+        this.#error.style.color = 'var(--clr-error)';
+        this.appendChild(this.#error);
+        setTimeout(() => this.#resetError(), 3000);
+    }
+
+    #resetError() {
+        this.#error?.remove();
     }
 }
