@@ -78,3 +78,61 @@ You need to create an index in production. No errors in emulators though.
 3. `endAt(...)`
 4. `limitToLast(number)`
 5. `endBefore(docRef)`
+
+## CollectionGroup
+
+***
+
+1. `collectionGroup(firestore, 'expenses')`
+2. will look into DB and search for all collections named `expenses` and a query against them
+3. solution to querying all the `users` in order to query all the `expenses` sub-collections across them 
+
+
+## Atomicity
+
+***
+
+### Batch Operations
+
+1. `writeBatch(firestore)`
+2. `batch.set() / update() / delete()...`
+3. `batch.commit()`
+4. limit of 500 documents per batch
+
+### Transactions
+
+1. no locking! you could lock the DB, if a client goes offline
+2. `runTransaction(firestore, (transaction) => {...}`
+3. retrieve initial value of a doc, mutate it and run a transaction's update, if in the meanwhile it got changed, server won't accept it but re-run your transaction
+
+
+# Auth
+
+***
+
+## API
+
+1. `createUserWithEmailAndPassword(auth, email, pass)`
+2. `signOut(auth)`
+3. `onAuthStateChanged(auth, (user) => {...})`
+
+## 3rd Party Providers
+
+1. `signInWithRedirect(auth, new GoogleAuthProvider())`
+
+## Linking Accounts
+
+1. `linkWithRedirect(auth.currentUser, new GoogleAuthProvider())` - can't run any code after it, as it goes to the auth provider
+2. `getRedirectResult(auth)` - returns the result of the above operation
+
+## Security Rules
+
+***
+
+1. `match /users/{uid} { }` -> at document level! use wildcards  
+2. `match /{variable=**} { }` -> recursive wildcard, to every single path in the database
+3. `allow` permission`: if` some condition
+4. `read`, `write`, `create`, `delete`, `get`, `list`
+5. `request.auth.uid == uid` -> condition to allow only authenticated users to read & write to their own sub-collections
+6. `resource.data.uid == request.auth.uid` -> if the user's ID is at the resource (doc) level only
+7. `request.resource.data.keys().hasAll(['someKey', 'anotherKey'])`

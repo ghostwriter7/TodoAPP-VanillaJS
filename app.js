@@ -1,4 +1,3 @@
-
 import Router from "./services/Router.js";
 import { TaskForm } from "./components/TaskForm.js";
 import { TasksPage } from "./pages/TasksPage.js";
@@ -22,6 +21,8 @@ import Firebase from "./services/Firebase.js";
 import { Loading } from "./components/Loading.js";
 import { FormGroup } from "./components/FormGroup.js";
 import { RateSelector } from "./components/RateSelector.js";
+import { onAuthStateChanged } from 'firebase/auth';
+import { AuthPage } from "./pages/AuthPage.js";
 
 // navigator.serviceWorker?.register(new URL('serviceworker.js', import.meta.url),
 //     { type: 'module' });
@@ -45,13 +46,19 @@ customElements.define('loading-bar', Loading);
 customElements.define('tasks-page', TasksPage);
 customElements.define('calendar-page', CalendarPage);
 customElements.define('not-found-page', NotFound);
+customElements.define('auth-page', AuthPage);
 
 window.app = {
     dataSource: new DataSource(),
-    router: new Router(),
+    router: new Router(Firebase),
     taskService: new TaskService(Firebase),
     calendarService: new CalendarService()
 };
+
+onAuthStateChanged(Firebase.auth, (user) => {
+    app.router.navigateTo(user ? '/' : '/auth');
+    document.querySelector('header').classList[user ? 'remove' : 'add']('d-none');
+});
 
 let beforeInstallPromptEvent;
 const installButton = document.getElementById('install');

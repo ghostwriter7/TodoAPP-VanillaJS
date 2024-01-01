@@ -1,6 +1,13 @@
 import { toTaskId } from "../helpers/date.js";
 
 export default class Router {
+    #firebase;
+
+    constructor(firebase) {
+        this.#firebase = firebase;
+    }
+
+
     init() {
         document.querySelector('nav').querySelectorAll('a').forEach((link) => {
             link.addEventListener('click', (event) => {
@@ -9,7 +16,8 @@ export default class Router {
             });
         });
 
-        this.navigateTo(location.pathname);
+        const route = !this.#firebase.auth.currentUser ? '/auth' : location.pathname;
+        this.navigateTo(route);
     }
 
     navigateTo(route, addToHistory = true) {
@@ -25,6 +33,9 @@ export default class Router {
         }
 
         switch (route) {
+            case '/auth':
+                pageElement = document.createElement('auth-page');
+                break;
             case '/':
             case '/tasks':
                 pageElement = document.createElement('tasks-page');
@@ -32,10 +43,6 @@ export default class Router {
                 break;
             case '/calendar':
                 pageElement = document.createElement('calendar-page');
-                break;
-            case '/settings':
-                pageElement = document.createElement('div');
-                pageElement.innerText = 'Settings';
                 break;
             default:
                 pageElement = document.createElement('not-found-page');
