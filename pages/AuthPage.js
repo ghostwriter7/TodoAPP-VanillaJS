@@ -1,4 +1,4 @@
-import { required } from "../helpers/validators.js";
+import { email, minLength, required } from "../helpers/validators.js";
 import { FormMode } from "../consts/form-mode.js";
 import { getButton, getDiv, getSpan } from "../helpers/dom.js";
 
@@ -48,9 +48,10 @@ export class AuthPage extends HTMLElement {
                 id: "email",
                 placeholder: "johnny.wick@yahoo.com...",
                 type: "text",
-                validators: [required],
+                validators: [required, email],
                 validationMessage: {
-                    required: `Email is required.`
+                    required: 'Email is required.',
+                    email: 'It does not look like a valid e-mail address.'
                 }
             },
             {
@@ -58,9 +59,10 @@ export class AuthPage extends HTMLElement {
                 id: "password",
                 placeholder: "abc123?",
                 type: "text",
-                validators: [required],
+                validators: [required, minLength(6)],
                 validationMessage: {
-                    required: `Password is required.`
+                    required: 'Password is required.',
+                    minLength: 'Password must be at least 6 chars long'
                 }
             },
         ];

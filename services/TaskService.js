@@ -51,7 +51,7 @@ export class TaskService {
     }
 
     async updateTask(id, payload) {
-        const taskDoc = doc(this.#firebase.firestore, `users/ghostwriter7/tasks/${id}`);
+        const taskDoc = doc(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks/${id}`);
         const update = { ...payload, updatedAt: Date.now() };
         updateDoc(taskDoc, update);
         const updatedTask = await app.dataSource.updateOneById('todo', id, update);
@@ -60,7 +60,7 @@ export class TaskService {
 
     async updateManyTasks(updates) {
         const updatedAt = Date.now();
-        const collectionRef = collection(this.#firebase.firestore, 'users/ghostwriter7/tasks');
+        const collectionRef = collection(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks`);
         const batch = writeBatch(this.#firebase.firestore);
 
         const requests = updates.map(({ id, ...update }) => {
@@ -74,7 +74,7 @@ export class TaskService {
     }
 
     async deleteTask(id) {
-        const taskDoc = doc(this.#firebase.firestore, `users/ghostwriter7/days/${this.#activeDate}/tasks/${id}`);
+        const taskDoc = doc(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/days/${this.#activeDate}/tasks/${id}`);
         deleteDoc(taskDoc);
         await app.dataSource.deleteOneById('todo', id);
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
@@ -95,7 +95,7 @@ export class TaskService {
     }
 
     async #syncDataFromFirestore() {
-        const taskCollection = collection(this.#firebase.firestore, `users/ghostwriter7/tasks`);
+        const taskCollection = collection(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks`);
         const response = await getDocs(
             query(taskCollection,
                 where('date', '>=', this.#getBeginningOfTheDay()),

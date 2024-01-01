@@ -419,6 +419,7 @@ ul {
         font-size: .8em;
         font-weight: 600;
         padding: var(--inner-padding) var(--inner-padding) 0 var(--inner-padding);
+        text-align: left;
     }
 }
 
