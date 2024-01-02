@@ -1,35 +1,16 @@
-const assets = [
+const bundledAssets = [];
+const staticAssets = [
     '/',
-    'app.js',
-    'styles.css',
     'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700&display=swap',
     'https://kit.fontawesome.com/376c1d5471.js',
-    'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js',
-    'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js',
-    'components/BaseComponent.js',
-    'components/FormControl.js',
-    'components/Calendar.js',
-    'components/CalendarHeader.js',
-    'components/DayTile.js',
-    'components/Dropdown.js',
-    'components/ObservableButton.js',
-    'components/SortableList.js',
-    'components/TaskCounters.js',
-    'components/TaskForm.js',
-    'components/TaskItem.js',
-    'components/TaskList.js',
-    'components/TaskSummary.js',
-    'consts/events.js',
-    'helpers/date.js',
-    'pages/CalendarPage.js',
-    'pages/NotFound.js',
-    'pages/TasksPage.js',
-    'services/CalendarService.js',
-    'services/DataSource.js',
-    'services/Subject.js',
-    'services/TaskService.js',
-    'services/Router.js',
+    'assets/icon-144.png',
+    'assets/icon-512.png',
+    'assets/icon-1024.png',
+    'assets/screenshot1.png',
+    'assets/screenshot2.png',
 ];
+
+const assets = [...bundledAssets, ...staticAssets];
 
 const version = 1;
 const cacheKey = `assets-v${version}`;

@@ -14,7 +14,8 @@
   "license": "ISC",
   "devDependencies": {
     "cypress": "^13.6.2",
-    "firebase-tools": "^13.0.2"
+    "firebase-tools": "^13.0.2",
+    "rollup-plugin-copy": "^3.5.0"
   },
   "dependencies": {
     "firebase": "^10.7.1",
