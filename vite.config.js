@@ -12,7 +12,7 @@ export default defineConfig({
             plugins: [
                 copy({
                     targets: [
-                        { src: 'src/serviceworker.js', dest: 'dist/assets' }
+                        { src: 'src/serviceworker.js', dest: 'dist' }
                     ],
                     verbose: true,
                     hook: 'writeBundle',
@@ -36,7 +36,7 @@ export default defineConfig({
                         order: 'post',
                         handler: () => {
                             const manifest = JSON.parse(fs.readFileSync('dist/manifest.json', 'utf-8'));
-                            const serviceWorkerPath = 'dist/assets/serviceworker.js';
+                            const serviceWorkerPath = 'dist/serviceworker.js';
 
                             if (fs.existsSync(serviceWorkerPath)) {
                                 let content = fs.readFileSync(serviceWorkerPath, 'utf-8');
@@ -46,7 +46,7 @@ export default defineConfig({
 
                                 const versionIdx = content.indexOf('const version = ') + 'const version = '.length;
                                 const version = parseInt(content.substring(versionIdx, versionIdx + 4));
-                                content = content.replace(`const version = ${version}`, `const version = ${version + 1}`);
+                                content = content.replace(`const version = ${version}`, `const version = ${Math.random()}`);
 
                                 fs.writeFileSync(serviceWorkerPath, content, 'utf-8');
                                 fs.rmSync('dist/manifest.json');

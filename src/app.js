@@ -25,7 +25,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { AuthPage } from "./pages/AuthPage.js";
 import { AuthService } from "./services/AuthService.js";
 
-navigator.serviceWorker?.register('assets/serviceworker.js');
+navigator.serviceWorker?.register('serviceworker.js');
 
 customElements.define('form-control', FormControl);
 customElements.define('form-group', FormGroup, { extends: 'form' });
