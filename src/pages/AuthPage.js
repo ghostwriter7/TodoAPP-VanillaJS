@@ -127,6 +127,9 @@ export class AuthPage extends HTMLElement {
             case 'auth/email-already-in-use':
                 message = 'A user with a given e-mail already exists. Please, sign in.';
                 break;
+            case 'auth/user-not-found':
+                message = 'A user with a given e-mail does not exist. Please, sign up.'
+                break;
             default:
                 message = 'An error has occurred, apologies.';
         }
