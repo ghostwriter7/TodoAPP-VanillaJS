@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"vite\" \"firebase emulators:start\" ",
     "build": "vite build",
     "deploy": "firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,7 @@
   "author": "ghostwriter7",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "cypress": "^13.6.2",
     "firebase-tools": "^13.0.2",
     "rollup-plugin-copy": "^3.5.0"
