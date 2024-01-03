@@ -74,7 +74,7 @@ export class TaskService {
     }
 
     async deleteTask(id) {
-        const taskDoc = doc(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/days/${this.#activeDate}/tasks/${id}`);
+        const taskDoc = doc(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks/${id}`);
         deleteDoc(taskDoc);
         await app.dataSource.deleteOneById('todo', id);
         this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);

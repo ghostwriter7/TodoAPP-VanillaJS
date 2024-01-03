@@ -27,11 +27,19 @@
 }
 
 body {
+    align-items: center;
     background-color: var(--bg-primary);
     color: var(--clr-primary);
+    display: flex;
+    flex-direction: column;
     font: 300 14px var(--font);
+    justify-content: center;
     margin: 0;
     padding: 12px;
+
+    > * {
+        width: min(100%, 1200px);
+    }
 }
 
 a {
@@ -240,6 +248,11 @@ button {
     min-width: 80px;
     transition: all 0.3s ease-in-out;
 
+    @media screen and (min-width: 800px) {
+        font: 600 20px/26px var(--font);
+        padding: 6px 12px;
+    }
+
     &:not(:disabled):active, &:not(:disabled):hover {
         background-color: var(--bg-highlight);
         color: var(--clr-primary);
@@ -293,6 +306,10 @@ button {
 
 .grow {
     flex: 1;
+}
+
+.center {
+    text-align: center;
 }
 
 @scope (calendar-header) {

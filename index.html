@@ -17,10 +17,8 @@
 
 <header class="d-none">
     <nav>
-        <div>
-            <span class="clr-primary" onclick="app.router.navigateTo('/')">
-                <i class="fa-solid fa-house"></i> TodoApp
-            </span>
+        <div class="d-flex gap-xl align-center fs-xl clr-primary" onclick="app.router.navigateTo('/')">
+            <i class="fa-solid fa-house"></i> TodoApp
         </div>
         <div>
             <button onclick="app.router.navigateTo('/calendar')">
@@ -73,7 +71,7 @@
 
 <template id="task-summary">
     <div class="container d-flex justify-between">
-        <span id="title"></span>
+        <span class="fs-lg" id="title"></span>
         <task-counters></task-counters>
     </div>
 </template>

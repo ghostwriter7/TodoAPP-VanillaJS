@@ -12,9 +12,9 @@ export class TasksPage extends BaseComponent {
 
     async connectedCallback() {
         this.#bindTaskLoadingEvents();
-        this.renderComponent('task-form', { date: this.date });
         await app.taskService.loadTasks(this.date);
         this.renderComponent('task-summary', { date: this.date });
+        this.renderComponent('task-form', { date: this.date });
         this.renderComponent('task-list', { date: this.date });
     }
 

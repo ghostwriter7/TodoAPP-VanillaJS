@@ -71,8 +71,8 @@ export class SortableList extends HTMLUListElement {
     attributeChangedCallback(name, oldValue, newValue) {
         const items = JSON.parse(newValue);
 
-        if (this.textContent === this.emptyListPlaceholder && !!items.length) {
-            this.textContent = '';
+        if (this.innerHTML.includes(this.emptyListPlaceholder) && !!items.length) {
+            this.innerHTML = '';
         }
 
         if (this.#items === undefined) {
@@ -96,7 +96,10 @@ export class SortableList extends HTMLUListElement {
         }
 
         if (items.length === 0) {
-            this.textContent = this.emptyListPlaceholder;
+            this.innerHTML = `<div style="font-size: 1.2em; padding-block: 1.5em;" class="d-flex column gap-xl align-center center">
+                <i style="font-size: 2em;" class="fa-solid fa-list"></i>
+                ${this.emptyListPlaceholder}
+            </div>`;
         }
 
         this.#items = items;

@@ -5,6 +5,7 @@ export class TaskCounters extends HTMLElement {
 
     constructor() {
         super();
+        this.classList.add('fs-lg');
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
