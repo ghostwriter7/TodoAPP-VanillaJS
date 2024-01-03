@@ -62,6 +62,7 @@ export class FormControl extends BaseComponent {
 
     #getTagNameFromType(type) {
         switch (type) {
+            case 'password':
             case 'text':
                 return 'input';
             case 'textarea':
@@ -98,7 +99,7 @@ export class FormControl extends BaseComponent {
         });
 
         if (this.#inputEl instanceof HTMLInputElement) {
-            this.#inputEl.type = additionalAttributes.type;
+            this.#inputEl.type = type;
         }
 
         this.appendChild(this.#inputEl);

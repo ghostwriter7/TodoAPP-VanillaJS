@@ -58,7 +58,7 @@ export class AuthPage extends HTMLElement {
                 label: "Password",
                 id: "password",
                 placeholder: "abc123?",
-                type: "text",
+                type: "password",
                 validators: [required, minLength(6)],
                 validationMessage: {
                     required: 'Password is required.',
