@@ -10,7 +10,7 @@ import { CalendarPage } from "./pages/CalendarPage.js";
 import { CalendarGrid } from "./components/calendar-grid/CalendarGrid.js";
 import { DayTile } from "./components/DayTile.js";
 import { NotFoundPage } from "./pages/not-found-page/NotFoundPage.js";
-import { TaskSummary } from "./components/TaskSummary.js";
+import { TaskSummary } from "./components/task-summary/TaskSummary.js";
 import { CalendarHeader } from "./components/callendar-header/CalendarHeader.js";
 import { CalendarService } from "./services/CalendarService.js";
 import { Dropdown } from "./components/Dropdown.js";
