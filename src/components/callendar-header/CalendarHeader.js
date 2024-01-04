@@ -93,6 +93,7 @@ export class CalendarHeader extends BaseComponent {
     #renderShowActiveMonthButton() {
         this.#showActiveViewBtn = document.createElement('button', { is: 'observable-button' });
         this.#showActiveViewBtn.innerText = 'Show Active Month';
+        this.#showActiveViewBtn.id = 'show-active-view';
 
         const isHidden = this.#currentMonth === app.calendarService.getMonth() && this.#currentYear === app.calendarService.getYear();
 
