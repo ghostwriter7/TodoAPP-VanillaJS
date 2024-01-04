@@ -1,0 +1,30 @@
+@scope (calendar-grid) {
+    .calendar__days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .calendar__day {
+        cursor: pointer;
+        margin-block: 0;
+
+        &:hover {
+            background-color: var(--bg-highlight);
+        }
+
+        &.calendar__day--today {
+            background-color: var(--clr-accent);
+            font-weight: 700;
+        }
+
+        & .calendar__day-stats {
+            display: none;
+        }
+
+        @media screen and (min-width: 800px) {
+            & .calendar__day-stats {
+                display: unset;
+            }
+        }
+    }
+}

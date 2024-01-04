@@ -1,0 +1,27 @@
+@scope (loading-bar) {
+    :scope {
+        align-items: center;
+        color: var(--clr-secondary);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        justify-content: center;
+        padding-block: 12px;
+    }
+
+    .loading {
+        animation: spin 1s infinite linear;
+        aspect-ratio: 1;
+        border: 8px solid var(--clr-accent);
+        border-radius: 50%;
+        border-right-color: var(--bg-secondary);
+        position: relative;
+        width: 50px;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(1turn);
+        }
+    }
+}

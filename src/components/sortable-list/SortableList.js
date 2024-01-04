@@ -1,5 +1,6 @@
-import { Subject } from "../services/Subject.js";
-import { getDiv } from "../helpers/dom.js";
+import './sortable-list.css';
+import { Subject } from "../../services/Subject.js";
+import { getDiv } from "../../helpers/dom.js";
 
 export class SortableList extends HTMLUListElement {
     static get observedAttributes() {

@@ -10,7 +10,7 @@ export class CalendarPage extends BaseComponent {
 
     async connectedCallback() {
         this.renderComponent('calendar-header');
-        this.renderComponent('calendar-component');
+        this.renderComponent('calendar-grid');
         this.#updateMonthSummaryParams();
         this.#handleCalendarChangeEvent();
     }
@@ -27,6 +27,6 @@ export class CalendarPage extends BaseComponent {
     async #updateMonthSummaryParams() {
         const { monthSummary, monthSummaryPerDay } = await app.calendarService.getMonthSummary();
         this.querySelector('calendar-header').setAttribute('summary', JSON.stringify(monthSummary));
-        this.querySelector('calendar-component').setAttribute('summary', JSON.stringify(monthSummaryPerDay));
+        this.querySelector('calendar-grid').setAttribute('summary', JSON.stringify(monthSummaryPerDay));
     }
 }

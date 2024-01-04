@@ -1,0 +1,15 @@
+@scope (sortable-list) {
+    .target-preview {
+        background-color: var(--bg-highlight);
+        border-radius: var(--radius);
+        border: 2px solid var(--clr-accent);
+        padding: var(--inner-padding);
+        position: absolute;
+    }
+
+    .placeholder {
+        background-color: var(--bg-highlight);
+        padding: 4px var(--inner-padding);
+        border-radius: var(--radius);
+    }
+}

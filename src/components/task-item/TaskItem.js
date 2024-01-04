@@ -1,5 +1,6 @@
-import { BaseComponent } from "./BaseComponent.js";
-import { taskEditInitEvent } from "../consts/events.js";
+import './task-item.css';
+import { BaseComponent } from "../BaseComponent.js";
+import { taskEditInitEvent } from "../../consts/events.js";
 
 export class TaskItem extends BaseComponent {
     static get observedAttributes() {

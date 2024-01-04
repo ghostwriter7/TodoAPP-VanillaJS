@@ -1,6 +1,7 @@
-import { BaseComponent } from './BaseComponent.js'
-import { Subject } from "../services/Subject.js";
-import { getSpan } from "../helpers/dom.js";
+import './form-control.css';
+import { BaseComponent } from '../BaseComponent.js'
+import { Subject } from "../../services/Subject.js";
+import { getSpan } from "../../helpers/dom.js";
 
 export class FormControl extends BaseComponent {
     #errorEl;

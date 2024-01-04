@@ -1,4 +1,6 @@
-export class NotFound extends HTMLElement {
+import './not-found-page.css';
+
+export class NotFoundPage extends HTMLElement {
     constructor() {
         super();
     }

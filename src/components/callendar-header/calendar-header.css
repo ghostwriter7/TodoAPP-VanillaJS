@@ -1,0 +1,12 @@
+@scope (calendar-header) {
+    :scope {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    @media screen and (min-width: 500px) {
+        :scope {
+            flex-direction: row;
+        }
+    }
+}

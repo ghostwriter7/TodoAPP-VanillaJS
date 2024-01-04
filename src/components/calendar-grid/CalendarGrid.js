@@ -1,8 +1,9 @@
-import { BaseComponent } from "./BaseComponent.js";
-import { isToday } from "../helpers/date.js";
-import { getDiv, getSpan } from "../helpers/dom.js";
+import './calendar-grid.css';
+import { BaseComponent } from "../BaseComponent.js";
+import { isToday } from "../../helpers/date.js";
+import { getDiv, getSpan } from "../../helpers/dom.js";
 
-export class Calendar extends BaseComponent {
+export class CalendarGrid extends BaseComponent {
     static get observedAttributes() {
         return ['summary'];
     }

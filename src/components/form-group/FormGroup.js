@@ -1,5 +1,6 @@
-import { Subject } from "../services/Subject.js";
-import { FormMode } from "../consts/form-mode.js";
+import './form-group.css';
+import { Subject } from "../../services/Subject.js";
+import { FormMode } from "../../consts/form-mode.js";
 
 export class FormGroup extends HTMLFormElement {
     static get observedAttributes() {

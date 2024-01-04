@@ -1,0 +1,62 @@
+@scope (form-control) {
+    :scope {
+        display: flex;
+        flex-direction: column;
+        padding-top: 24px;
+        position: relative;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    textarea,
+    input {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius);
+        color: var(--clr-primary);
+        font: 300 16px/24px var(--font);
+        padding: 16px var(--inner-padding) var(--inner-padding) var(--inner-padding);
+
+        &::placeholder {
+            color: var(--clr-secondary);
+            font: 600 14px/24px var(--font);
+        }
+
+        &:active,
+        &:focus {
+            outline: 1px solid var(--clr-accent);
+        }
+    }
+
+    label {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-primary);
+        color: var(--clr-secondary);
+        font: 600 14px/15px var(--font);
+        left: 17px;
+        padding: 6px 10px;
+        position: absolute;
+        transition: all 0.3s ease-in-out;
+        top: 8px;
+        width: fit-content;
+
+        &:has(+ input:focus),
+        &:has(+ input:active),
+        &:has(+ textarea:focus),
+        &:has(+ textarea:active) {
+            border-color: var(--clr-accent);
+            color: var(--clr-accent);
+            transform: translate(-5px, -5px);
+        }
+    }
+
+    .error {
+        color: var(--clr-error);
+        font-size: .8em;
+        font-weight: 600;
+        padding: var(--inner-padding) var(--inner-padding) 0 var(--inner-padding);
+        text-align: left;
+    }
+}

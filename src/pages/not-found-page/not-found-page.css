@@ -1,0 +1,13 @@
+@scope (not-found-page) {
+    .not-found {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        padding-block: 4rem;
+
+        & i {
+            font-size: 60px;
+        }
+    }
+}
+

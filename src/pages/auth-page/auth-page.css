@@ -1,0 +1,21 @@
+@scope (auth-page)  {
+    :scope {
+        text-align: center;
+    }
+
+    .auth__header {
+        background: var(--bg-highlight);
+        border-radius: var(--radius);
+        font-size: 1.3em;
+        letter-spacing: 1px;
+        padding-block: 0.5em;
+        text-transform: uppercase;
+    }
+
+    .auth__footer, .auth__footer button {
+        border-radius: var(--radius);
+        color: var(--clr-secondary);
+        font-size: 0.9em;
+        padding-block: 0.3em;
+    }
+}
