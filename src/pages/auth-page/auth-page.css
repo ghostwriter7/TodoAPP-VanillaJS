@@ -12,10 +12,19 @@
         text-transform: uppercase;
     }
 
-    .auth__footer, .auth__footer button {
+    .auth__footer {
         border-radius: var(--radius);
         color: var(--clr-secondary);
         font-size: 0.9em;
         padding-block: 0.3em;
+    }
+
+    .auth__footer button {
+        font-size: 0.9em;
+        margin-top: 4px;
+
+        @media screen and (min-width: 500px) {
+            margin-top: unset;
+        }
     }
 }
