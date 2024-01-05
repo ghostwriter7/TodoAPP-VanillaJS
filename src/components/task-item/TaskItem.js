@@ -84,11 +84,11 @@ export class TaskItem extends BaseComponent {
     #getPriority(priority) {
         switch (priority) {
             case 3:
-                return 'High <i class="fa-solid fa-bolt-lightning"></i>';
+                return 'High <span class="material-symbols-outlined">bolt</span>';
             case 2:
-                return 'Medium <i class="fa-solid fa-temperature-half"></i>';
+                return 'Medium <span class="material-symbols-outlined">water_medium</span>';
             case 1:
-                return 'Low <i class="fa-solid fa-feather"></i>';
+                return 'Low <span class="material-symbols-outlined">sunny</span>';
         }
     }
 }

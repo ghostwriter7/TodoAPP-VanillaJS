@@ -1,7 +1,10 @@
 .target-preview {
+    align-items: center;
     background-color: var(--bg-highlight);
     border-radius: var(--radius);
     border: 2px solid var(--clr-accent);
+    display: flex;
+    gap: 8px;
     max-width: min(50vw, 600px);
     padding: var(--inner-padding);
     position: absolute;

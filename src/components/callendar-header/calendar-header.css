@@ -8,6 +8,10 @@
         }
     }
 
+    task-counters:empty {
+        display: none;
+    }
+
     #calendar-header-actions {
         align-items: center;
         display: grid;

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="src/styles.css"/>
     <link rel="manifest" href="src/app.webmanifest"/>
     <link rel="apple-touch-icon" href="assets/icon-512.png">
-    <script src="https://kit.fontawesome.com/376c1d5471.js" crossorigin="anonymous"></script>
     <script src="src/app.js" defer type="module"></script>
     <title>TodoApp</title>
 </head>
@@ -17,21 +16,21 @@
 
 <header class="d-none">
     <nav>
-        <div class="d-flex gap-xl align-center fs-xl clr-primary" onclick="app.router.navigateTo('/')">
-            <i class="fa-solid fa-house"></i> TodoApp
+        <div class="d-flex gap-md align-center fs-xl clr-primary" onclick="app.router.navigateTo('/')">
+            <span class="material-symbols-outlined">home</span> TodoApp
         </div>
         <div>
             <button onclick="app.router.navigateTo('/calendar')">
                 <span class="button-label">Calendar</span>
-                <i class="fa-solid fa-calendar-days"></i>
+                <span class="material-symbols-outlined">calendar_month</span>
             </button>
             <button id="logout" onclick="app.authService.logout()">
                 <span class="button-label">Logout</span>
-                <i class="fa-solid fa-door-open"></i>
+                <span class="material-symbols-outlined">logout</span>
             </button>
             <button class="d-none" id="install">
                 <span class="button-label">Install</span>
-                <i class="fa-solid fa-download"></i>
+                <span class="material-symbols-outlined">install</span>
             </button>
         </div>
     </nav>
@@ -57,12 +56,12 @@
         <span class="task-item__description"></span>
     </div>
     <div class="task-item__rates">
-        <span id="priority"></span>
-        <span id="effort"></span>
+        <span class="d-flex align-center gap-sm" id="priority"></span>
+        <span class="d-flex align-center gap-sm" id="effort"></span>
     </div>
     <div class="task-item__actions d-flex gap-md">
-        <i id="task-edit" class="pointer fs-xl fa-regular fa-pen-to-square"></i>
-        <i id="task-delete" class="pointer fs-xl fa-solid fa-trash-can"></i>
+        <span id="task-edit" class="pointer material-symbols-outlined">edit_square</span>
+        <span id="task-delete" class="pointer material-symbols-outlined">delete</span>
         <label>
             <input type="checkbox"/>
         </label>

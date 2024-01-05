@@ -72,11 +72,11 @@ export class CalendarHeader extends BaseComponent {
 
     #renderYearSelector() {
         const div = getDiv();
-        div.className = 'd-flex align-center gap-xl'
+        div.className = 'd-flex align-center gap-md'
         div.innerHTML = `
-            <i id="increment-year" class="fs-xl pointer fa-solid fa-up-long"></i>
+            <span id="increment-year" class="material-symbols-outlined">north</span>
             <span class="fs-md" id="current-year">${app.calendarService.getYear()}</span>
-            <i id="decrement-year" class="fs-xl pointer fa-solid fa-down-long"></i>
+            <span id="decrement-year" class="material-symbols-outlined">south</span>
         `;
 
         this.#incrementYearClickHandler = () => app.calendarService.setNextYear();

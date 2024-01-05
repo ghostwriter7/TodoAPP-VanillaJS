@@ -98,7 +98,7 @@ export class SortableList extends HTMLUListElement {
 
         if (items.length === 0) {
             this.innerHTML = `<div style="font-size: 1.2em; padding-block: 1.5em;" class="d-flex column gap-xl align-center center">
-                <i style="font-size: 2em;" class="fa-solid fa-list"></i>
+                <span style="font-size: 3em;" class="material-symbols-outlined">checklist</span>
                 ${this.emptyListPlaceholder}
             </div>`;
         }
@@ -124,7 +124,7 @@ export class SortableList extends HTMLUListElement {
     #getTargetPreview(event) {
         const { clientX, clientY, currentTarget } = event;
         const targetPreview = getDiv();
-        targetPreview.innerHTML = `<i class="fa-solid fa-grip-vertical"></i> ${currentTarget.innerText} `;
+        targetPreview.innerHTML = `<span class="material-symbols-outlined">drag_indicator</span> ${currentTarget.task.task} `;
         targetPreview.classList.add('target-preview');
         targetPreview.style.left = `${clientX + this.#previewOffset}px`;
         targetPreview.style.top = `${clientY + this.#previewOffset + document.scrollingElement.scrollTop}px`;

@@ -17,7 +17,7 @@ export class NotFoundPage extends HTMLElement {
     #render() {
         this.className = 'container d-flex not-found gap-xl';
         this.innerHTML = `
-            <i class="fa-solid fa-map-location-dot"></i>
+            <span class="material-symbols-outlined">map</span>
             <span>Apologies. The page you are looking for does not exist.</span>
             <div class="d-flex gap-xl">
                 <button>See your <a href="/tasks">tasks for today</a></button>

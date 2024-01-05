@@ -11,11 +11,12 @@ export class TaskCounters extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         const { complete, total } = JSON.parse(newValue);
         if (total !== 0) {
-        const active = total - complete;
+            const active = total - complete;
+            this.classList.add('d-flex', 'gap-xl');
             this.innerHTML = `
-                ${active} <i class="fa-regular fa-square-check"></i> | 
-                ${complete} <i class="fa-solid fa-square-check"></i> | 
-                ${total} <i class="fa-solid fa-list-ul"></i>
+                <div class="d-flex gap-sm">${active} <span class="material-symbols-outlined">check_box_outline_blank</span></div>
+                <div class="d-flex gap-sm">${complete} <span class="material-symbols-outlined">check_box</span></div>
+                <div class="d-flex gap-sm">${total} <span class="material-symbols-outlined">done_all</span></div>
             `;
         } else {
             this.innerHTML = ``;

@@ -2,7 +2,8 @@ const bundledAssets = [];
 const staticAssets = [
     '/',
     'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700&display=swap',
-    'https://kit.fontawesome.com/376c1d5471.js',
+    'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined',
+    'https://fonts.gstatic.com/s/materialsymbolsoutlined/v156/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOej.woff2',
     'assets/icon-144.png',
     'assets/icon-512.png',
     'assets/icon-1024.png',
