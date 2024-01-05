@@ -203,9 +203,9 @@ label {
         align-items: center;
         background-color: var(--clr-accent);
         border: 2px solid var(--border-primary);
-        content: "\f00c";
+        content: "\e5ca";
         display: flex;
-        font-family: "Font Awesome 6 Free";
+        font-family: "Material Symbols Outlined";
         font-weight: 900;
         justify-content: center;
     }

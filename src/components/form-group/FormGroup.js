@@ -138,7 +138,8 @@ export class FormGroup extends HTMLFormElement {
         const formActions = this.querySelector('.form__actions');
 
         formActions.querySelector('#button-label').innerText = this.dataset.submitLabel ?? `${isCreateModeActive ? 'Add' : 'Update'}`;
-        this.#cancelButton.className = isCreateModeActive ? 'd-none' : '';
+        this.#cancelButton.classList[isCreateModeActive ? 'add' : 'remove']('d-none');
+        this.#cancelButton.classList[!isCreateModeActive ? 'add' : 'remove']('d-flex');
     }
 
     #reset() {
