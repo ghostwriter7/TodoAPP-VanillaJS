@@ -67,6 +67,7 @@ addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     beforeInstallPromptEvent = event;
     installButton.classList.remove('d-none');
+    installButton.classList.add('d-flex');
 });
 
 installButton.addEventListener('click', (event) => {
