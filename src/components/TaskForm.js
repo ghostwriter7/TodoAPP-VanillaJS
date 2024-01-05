@@ -4,6 +4,7 @@ import { required } from "../helpers/validators.js";
 import { FormMode } from "../consts/form-mode.js";
 
 export class TaskForm extends BaseComponent {
+    #detailsEl;
     #formGroup;
     #taskEditInitHandler;
 
@@ -12,6 +13,26 @@ export class TaskForm extends BaseComponent {
     }
 
     connectedCallback() {
+        this.#buildFormGroup();
+        this.#buildNativeAccordion();
+        this.#handleTaskEdit();
+    }
+
+    disconnectedCallback() {
+        removeEventListener(taskEditInitEvent, this.#taskEditInitHandler);
+    }
+
+    #handleTaskEdit() {
+        this.#taskEditInitHandler = (event) => {
+            const { payload } = event;
+            this.#formGroup.setValue(payload);
+            this.#formGroup.dataset.mode = FormMode.Update;
+            this.#detailsEl.open = true;
+        };
+        addEventListener(taskEditInitEvent, this.#taskEditInitHandler);
+    }
+
+    #buildFormGroup() {
         this.#formGroup = document.createElement('form', { is: 'form-group' });
         this.#formGroup.formControls = [
             {
@@ -49,20 +70,16 @@ export class TaskForm extends BaseComponent {
             id ? app.taskService.updateTask(id, data) : app.taskService.addTask(data);
         };
         this.#formGroup.dataset.mode = FormMode.Create;
-        this.appendChild(this.#formGroup);
-        this.#handleTaskEdit();
+
     }
 
-    disconnectedCallback() {
-        removeEventListener(taskEditInitEvent, this.#taskEditInitHandler);
-    }
-
-    #handleTaskEdit() {
-        this.#taskEditInitHandler = (event) => {
-            const { payload } = event;
-            this.#formGroup.setValue(payload);
-            this.#formGroup.dataset.mode = FormMode.Update;
-        };
-        addEventListener(taskEditInitEvent, this.#taskEditInitHandler);
+    #buildNativeAccordion() {
+        this.#detailsEl = document.createElement('details');
+        this.#detailsEl.classList.add('container', 'fs-lg');
+        const summaryEl = document.createElement('summary');
+        summaryEl.innerText = 'Task Form';
+        this.#detailsEl.appendChild(summaryEl);
+        this.#detailsEl.appendChild(this.#formGroup);
+        this.appendChild(this.#detailsEl);
     }
 }

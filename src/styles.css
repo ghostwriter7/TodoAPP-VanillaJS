@@ -328,3 +328,6 @@ ul {
     max-height: 500px;
 }
 
+*::marker {
+    color: var(--clr-accent);
+}

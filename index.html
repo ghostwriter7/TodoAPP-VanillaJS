@@ -22,7 +22,7 @@
         </div>
         <div>
             <button onclick="app.router.navigateTo('/calendar')">
-                <span class="button-label">CalendarGrid</span>
+                <span class="button-label">Calendar</span>
                 <i class="fa-solid fa-calendar-days"></i>
             </button>
             <button id="logout" onclick="app.authService.logout()">
@@ -77,7 +77,7 @@
 </template>
 
 <template id="calendar-header">
-    <div class="d-flex gap-xl" id="calendar-header-actions"></div>
+    <div id="calendar-header-actions"></div>
     <task-counters></task-counters>
 </template>
 
