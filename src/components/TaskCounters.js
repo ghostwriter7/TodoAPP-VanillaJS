@@ -16,7 +16,7 @@ export class TaskCounters extends HTMLElement {
             this.innerHTML = `
                 <div class="d-flex gap-sm">${active} <span class="material-symbols-outlined">check_box_outline_blank</span></div>
                 <div class="d-flex gap-sm">${complete} <span class="material-symbols-outlined">check_box</span></div>
-                <div class="d-flex gap-sm">${total} <span class="material-symbols-outlined">done_all</span></div>
+                <div class="d-flex gap-sm">${total} <span class="material-symbols-outlined">checklist</span></div>
             `;
         } else {
             this.innerHTML = ``;
