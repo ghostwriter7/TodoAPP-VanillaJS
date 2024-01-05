@@ -336,3 +336,13 @@ textarea,
 ul {
     max-height: 500px;
 }
+
+summary {
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        color: var(--clr-accent);
+        font-weight: 700;
+    }
+}
