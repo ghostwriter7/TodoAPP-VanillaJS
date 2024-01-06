@@ -1,7 +1,7 @@
 import './auth-page.css';
-import { email, minLength, required } from "../../helpers/validators.js";
-import { FormMode } from "../../consts/form-mode.js";
-import { getButton, getDiv, getSpan } from "../../helpers/dom.js";
+import { email, minLength, required } from "@helpers/validators";
+import { FormMode } from "@consts/form-mode";
+import { getButton, getDiv, getSpan } from "@helpers/dom";
 
 export class AuthPage extends HTMLElement {
     #changeModeSubscription;

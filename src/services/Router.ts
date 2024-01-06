@@ -1,4 +1,4 @@
-import { toTaskId } from "../helpers/date.js";
+import { toTaskId } from "@helpers/date";
 
 export default class Router {
     #firebase;

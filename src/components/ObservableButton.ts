@@ -1,4 +1,4 @@
-import { Subject } from "../services/Subject.js";
+import { Subject } from "@services/Subject.js";
 
 export class ObservableButton extends HTMLButtonElement {
     #clickSubject = new Subject();

@@ -1,5 +1,5 @@
-import { toTaskId } from "../helpers/date.js";
-import { getSpan } from "../helpers/dom.js";
+import { toTaskId } from "@helpers/date.js";
+import { getSpan } from "@helpers/dom.js";
 
 export class DayTile extends HTMLElement {
     constructor() {

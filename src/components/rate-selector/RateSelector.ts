@@ -1,5 +1,5 @@
 import './rate-selector.css';
-import { getSpan } from "../../helpers/dom.js";
+import { getSpan } from "@helpers/dom";
 
 export class RateSelector extends HTMLElement {
     #eventHandlerMap = new Map();

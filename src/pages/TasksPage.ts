@@ -1,5 +1,5 @@
-import { BaseComponent } from "../components/BaseComponent.js";
-import { taskLoadingEndEvent, taskLoadingStartEvent } from "../consts/events.js";
+import { BaseComponent } from "@components/BaseComponent";
+import { taskLoadingEndEvent, taskLoadingStartEvent } from "@consts/events";
 
 export class TasksPage extends BaseComponent {
     #endLoadingHandler;

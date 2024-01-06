@@ -1,7 +1,7 @@
-import { BaseComponent } from "./BaseComponent.js";
-import { taskEditInitEvent } from "../consts/events.js";
-import { required } from "../helpers/validators.js";
-import { FormMode } from "../consts/form-mode.js";
+import { BaseComponent } from "@components/BaseComponent.js";
+import { taskEditInitEvent } from "@consts/events.js";
+import { required } from "@helpers/validators.js";
+import { FormMode } from "@consts/form-mode.js";
 
 export class TaskForm extends BaseComponent {
     #detailsEl;

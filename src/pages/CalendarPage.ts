@@ -1,5 +1,5 @@
-import { BaseComponent } from "../components/BaseComponent.js";
-import { calendarChangeEvent } from "../consts/events.js";
+import { BaseComponent } from "@components/BaseComponent.js";
+import { calendarChangeEvent } from "@consts/events.js";
 
 export class CalendarPage extends BaseComponent {
     #calendarChangeEventHandler;

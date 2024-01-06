@@ -1,5 +1,5 @@
-import { calendarChangeEvent } from "../consts/events.js";
-import { Subject } from "./Subject.js";
+import { calendarChangeEvent } from "@consts/events";
+import { Subject } from "@services/Subject.js";
 
 export class CalendarService {
     #state = {

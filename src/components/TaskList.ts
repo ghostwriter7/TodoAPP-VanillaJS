@@ -1,5 +1,5 @@
-import { BaseComponent } from "./BaseComponent.js";
-import { taskChangeEvent } from "../consts/events.js";
+import { BaseComponent } from "@components/BaseComponent.js";
+import { taskChangeEvent } from "@consts/events";
 
 export class TaskList extends BaseComponent {
     #itemsOrderSubscription;

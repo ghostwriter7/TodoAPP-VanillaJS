@@ -1,7 +1,7 @@
 import './task-summary.css';
-import { BaseComponent } from "../BaseComponent.js";
-import { getMonthName } from "../../helpers/date.js";
-import { taskChangeEvent } from "../../consts/events.js";
+import { BaseComponent } from "@components/BaseComponent.js";
+import { getMonthName } from "@helpers/date";
+import { taskChangeEvent } from "@consts/events";
 
 export class TaskSummary extends BaseComponent {
     #taskChangeHandler;
