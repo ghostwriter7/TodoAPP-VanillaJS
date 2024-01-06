@@ -1,29 +1,45 @@
-import Router from "./services/Router.js";
-import { TaskForm } from "./components/TaskForm.js";
-import { TasksPage } from "./pages/TasksPage.js";
-import { TaskList } from "./components/TaskList.js";
-import { TaskItem } from "./components/task-item/TaskItem.js";
-import { FormControl } from "./components/form-control/FormControl.js";
-import { TaskService } from "./services/TaskService.js";
-import { DataSource } from "./services/DataSource.js";
-import { CalendarPage } from "./pages/CalendarPage.js";
-import { CalendarGrid } from "./components/calendar-grid/CalendarGrid.js";
-import { DayTile } from "./components/DayTile.js";
-import { NotFoundPage } from "./pages/not-found-page/NotFoundPage.js";
-import { TaskSummary } from "./components/task-summary/TaskSummary.js";
-import { CalendarHeader } from "./components/callendar-header/CalendarHeader.js";
-import { CalendarService } from "./services/CalendarService.js";
-import { Dropdown } from "./components/Dropdown.js";
-import { ObservableButton } from "./components/ObservableButton.js";
-import { TaskCounters } from "./components/TaskCounters.js";
-import { SortableList } from "./components/sortable-list/SortableList.js";
-import Firebase from "./services/Firebase.js";
-import { LoadingBar } from "./components/loading-bar/LoadingBar.js";
-import { FormGroup } from "./components/form-group/FormGroup.js";
-import { RateSelector } from "./components/rate-selector/RateSelector.js";
+import Router from "./services/Router";
+import { TaskForm } from "./components/TaskForm";
+import { TasksPage } from "./pages/TasksPage";
+import { TaskList } from "./components/TaskList";
+import { TaskItem } from "./components/task-item/TaskItem";
+import { FormControl } from "./components/form-control/FormControl";
+import { TaskService } from "./services/TaskService";
+import { DataSource } from "./services/DataSource";
+import { CalendarPage } from "./pages/CalendarPage";
+import { CalendarGrid } from "./components/calendar-grid/CalendarGrid";
+import { DayTile } from "./components/DayTile";
+import { NotFoundPage } from "./pages/not-found-page/NotFoundPage";
+import { TaskSummary } from "./components/task-summary/TaskSummary";
+import { CalendarHeader } from "./components/callendar-header/CalendarHeader";
+import { CalendarService } from "./services/CalendarService";
+import { Dropdown } from "./components/Dropdown";
+import { ObservableButton } from "./components/ObservableButton";
+import { TaskCounters } from "./components/TaskCounters";
+import { SortableList } from "./components/sortable-list/SortableList";
+import Firebase from "./services/Firebase";
+import { LoadingBar } from "./components/loading-bar/LoadingBar";
+import { FormGroup } from "./components/form-group/FormGroup";
+import { RateSelector } from "./components/rate-selector/RateSelector";
 import { onAuthStateChanged } from 'firebase/auth';
-import { AuthPage } from "./pages/auth-page/AuthPage.js";
-import { AuthService } from "./services/AuthService.js";
+import { AuthPage } from "./pages/auth-page/AuthPage";
+import { AuthService } from "./services/AuthService";
+
+type App = {
+    authService: AuthService,
+    dataSource: DataSource,
+    router: Router,
+    taskService: TaskService,
+    calendarService: CalendarService
+}
+
+declare global {
+    interface Window {
+        app: App
+    }
+}
+
+declare const app: App;
 
 navigator.serviceWorker?.register('serviceworker.js');
 

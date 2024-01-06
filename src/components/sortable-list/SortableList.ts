@@ -131,12 +131,14 @@ export class SortableList extends HTMLUListElement {
 
         document.body.appendChild(targetPreview);
 
-        const image = new Image();
-        const transparentPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-        image.src = transparentPixel;
-        Promise.resolve().then(() => {
-            event.dataTransfer.setDragImage(image, 0, 0);
-        });
+        if (event.type === 'dragstart') {
+            const image = new Image();
+            const transparentPixel = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+            image.src = transparentPixel;
+            Promise.resolve().then(() => {
+                event.dataTransfer.setDragImage(image, 0, 0);
+            });
+        }
 
         return targetPreview;
     }
