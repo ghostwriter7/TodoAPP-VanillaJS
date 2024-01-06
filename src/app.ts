@@ -1,29 +1,24 @@
-import Router from "@services/Router";
-import { TaskForm } from "@components/TaskForm";
-import { TasksPage } from "@pages/TasksPage";
-import { TaskList } from "@components/TaskList";
-import { TaskItem } from "@components/task-item/TaskItem";
-import { FormControl } from "@components/form-control/FormControl";
-import { TaskService } from "@services/TaskService";
-import { DataSource } from "@services/DataSource";
-import { CalendarPage } from "@pages/CalendarPage";
-import { CalendarGrid } from "@components/calendar-grid/CalendarGrid";
-import { DayTile } from "@components/DayTile";
-import { NotFoundPage } from "@pages/not-found-page/NotFoundPage";
-import { TaskSummary } from "@components/task-summary/TaskSummary";
-import { CalendarHeader } from "@components/callendar-header/CalendarHeader";
-import { CalendarService } from "@services/CalendarService";
-import { Dropdown } from "@components/Dropdown";
-import { ObservableButton } from "@components/ObservableButton";
-import { TaskCounters } from "@components/TaskCounters";
-import { SortableList } from "@components/sortable-list/SortableList";
+import {
+    CalendarGrid,
+    CalendarHeader,
+    DayTile,
+    Dropdown,
+    FormControl,
+    FormGroup,
+    LoadingBar,
+    ObservableButton,
+    RateSelector,
+    SortableList,
+    TaskCounters,
+    TaskForm,
+    TaskItem,
+    TaskList,
+    TaskSummary
+} from "@components/index";
+import { AuthService, CalendarService, DataSource, Router, TaskService } from "@services/index";
 import Firebase from "@services/Firebase";
-import { LoadingBar } from "@components/loading-bar/LoadingBar";
-import { FormGroup } from "@components/form-group/FormGroup";
-import { RateSelector } from "@components/rate-selector/RateSelector";
 import { onAuthStateChanged } from 'firebase/auth';
-import { AuthPage } from "@pages/auth-page/AuthPage";
-import { AuthService } from "@services/AuthService";
+import { AuthPage, CalendarPage, NotFoundPage, TasksPage } from "@pages/index";
 
 type App = {
     authService: AuthService,

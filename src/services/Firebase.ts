@@ -1,7 +1,7 @@
-import { firebaseConfig } from "../consts/firebase-config.js";
+import { firebaseConfig } from "@consts/firebase-config";
 import { initializeApp } from 'firebase/app'
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
+import { connectAuthEmulator, getAuth } from 'firebase/auth';
 
 class Firebase {
     #firebase;

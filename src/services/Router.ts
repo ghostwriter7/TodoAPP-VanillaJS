@@ -1,6 +1,6 @@
 import { toTaskId } from "@helpers/date";
 
-export default class Router {
+export class Router {
     #firebase;
 
     constructor(firebase) {
