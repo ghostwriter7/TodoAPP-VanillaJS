@@ -15,6 +15,7 @@ import {
     TaskList,
     TaskSummary
 } from "@components/index";
+import type { User } from '@firebase/auth-types';
 import { AuthService, CalendarService, DataSource, Router, TaskService } from "@services/index";
 import Firebase from "@services/Firebase";
 import { onAuthStateChanged } from 'firebase/auth';
