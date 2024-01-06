@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import fs from 'fs';
 import copy from "rollup-plugin-copy";
 import typescript from "@rollup/plugin-typescript";
+import { resolve } from "path";
 
 export default defineConfig({
     build: {
@@ -58,5 +59,14 @@ export default defineConfig({
                 }
             ]
         }
+    },
+    resolve: {
+        alias: [
+            { find: "@components", replacement: resolve(__dirname, "./src/components") },
+            { find: "@pages", replacement: resolve(__dirname, "./src/pages") },
+            { find: "@services", replacement: resolve(__dirname, "./src/services") },
+            { find: "@consts", replacement: resolve(__dirname, "./src/consts") },
+            { find: "@helpers", replacement: resolve(__dirname, "./src/helpers") },
+        ]
     }
 });

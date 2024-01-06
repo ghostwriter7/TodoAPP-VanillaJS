@@ -67,7 +67,7 @@ window.app = {
     calendarService: new CalendarService()
 };
 
-onAuthStateChanged(Firebase.auth, (user) => {
+onAuthStateChanged(Firebase.auth, (user: User) => {
     app.router.navigateTo(user ? '/' : '/auth');
     document.querySelector('header').classList[user ? 'remove' : 'add']('d-none');
 });
