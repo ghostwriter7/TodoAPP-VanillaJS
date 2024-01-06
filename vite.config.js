@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import fs from 'fs';
 import copy from "rollup-plugin-copy";
+import typescript from "@rollup/plugin-typescript";
 
 export default defineConfig({
     build: {
@@ -10,6 +11,7 @@ export default defineConfig({
         copyPublicDir: true,
         rollupOptions: {
             plugins: [
+                typescript(),
                 copy({
                     targets: [
                         { src: 'src/serviceworker.js', dest: 'dist' }

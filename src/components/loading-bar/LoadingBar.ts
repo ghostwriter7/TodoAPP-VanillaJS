@@ -1,4 +1,5 @@
 import './loading-bar.css';
+
 export class LoadingBar extends HTMLElement {
     constructor() {
         super();

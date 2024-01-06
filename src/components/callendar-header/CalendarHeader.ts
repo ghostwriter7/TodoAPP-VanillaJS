@@ -1,7 +1,7 @@
 import './calendar-header.css';
-import { BaseComponent } from "../BaseComponent.js";
-import { getMonthNames } from "../../helpers/date.js";
-import { getDiv } from "../../helpers/dom.js";
+import { BaseComponent } from "@components/BaseComponent.js";
+import { getMonthNames } from "@helpers/date";
+import { getDiv } from "@helpers/dom";
 
 export class CalendarHeader extends BaseComponent {
     static get observedAttributes() {

@@ -1,7 +1,7 @@
 import './form-control.css';
-import { BaseComponent } from '../BaseComponent.js'
-import { Subject } from "../../services/Subject.js";
-import { getSpan } from "../../helpers/dom.js";
+import { BaseComponent } from '@components/BaseComponent.js'
+import { Subject } from "@services/Subject";
+import { getSpan } from "@helpers/dom";
 
 export class FormControl extends BaseComponent {
     #errorEl;
@@ -96,7 +96,7 @@ export class FormControl extends BaseComponent {
         this.#inputEl.id = this.#inputEl.name = id;
 
         Object.entries(additionalAttributes).forEach(([key, value]) => {
-           this.#inputEl[key] = value;
+            this.#inputEl[key] = value;
         });
 
         if (this.#inputEl instanceof HTMLInputElement) {
