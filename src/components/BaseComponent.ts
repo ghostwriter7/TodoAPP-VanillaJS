@@ -3,14 +3,14 @@ export class BaseComponent extends HTMLElement {
         super();
     }
 
-    attachTemplate(templateId) {
-        const template = document.getElementById(templateId);
+    attachTemplate(templateId: string): void {
+        const template = document.getElementById(templateId) as HTMLTemplateElement;
         const content = template.content.cloneNode(true);
         this.appendChild(content);
     }
 
-    renderComponent(tagName, props) {
-        const component = document.createElement(tagName);
+    renderComponent<T extends HTMLElement>(tagName: string, props?: Record<keyof T, T[keyof T]>): void {
+        const component = document.createElement(tagName) as T;
 
         if (props) {
             Object.entries(props).forEach(([key, value]) => component[key] = value);
