@@ -2,6 +2,8 @@ import { BaseComponent } from "@components/BaseComponent.js";
 import { taskEditInitEvent } from "@consts/events.js";
 import { required } from "@helpers/validators.js";
 import { FormMode } from "@consts/form-mode.js";
+import { Injector } from "@services/Injector.ts";
+import { TaskService } from "@services/TaskService.ts";
 
 export class TaskForm extends BaseComponent {
     date: string;
@@ -9,8 +11,11 @@ export class TaskForm extends BaseComponent {
     #formGroup;
     #taskEditInitHandler;
 
+    private readonly taskService: TaskService;
+
     constructor() {
         super();
+        this.taskService = Injector.resolve(TaskService);
     }
 
     connectedCallback() {
@@ -68,7 +73,7 @@ export class TaskForm extends BaseComponent {
             }
         ];
         this.#formGroup.onSubmitCallback = ({ id, ...data }) => {
-            id ? app.taskService.updateTask(id, data) : app.taskService.addTask(data);
+            id ? this.taskService.updateTask(id, data) : this.taskService.addTask(data);
         };
         this.#formGroup.dataset.mode = FormMode.Create;
 

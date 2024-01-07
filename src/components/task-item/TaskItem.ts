@@ -1,8 +1,12 @@
 import './task-item.css';
 import { BaseComponent } from "@components/BaseComponent.js";
 import { taskEditInitEvent } from "@consts/events";
+import { TaskService } from "@services/TaskService.ts";
+import { Injector } from "@services/Injector.ts";
 
 export class TaskItem extends BaseComponent {
+    private readonly taskService: TaskService;
+
     static get observedAttributes() {
         return ['data-data'];
     }
@@ -11,6 +15,7 @@ export class TaskItem extends BaseComponent {
 
     constructor() {
         super();
+        this.taskService = Injector.resolve(TaskService);
     }
 
     connectedCallback() {
@@ -43,7 +48,7 @@ export class TaskItem extends BaseComponent {
 
     #handleTaskCompleteChange() {
         this.inputChangeHandler = (event) => {
-            app.taskService.updateTask(this.task.id, { isComplete: event.currentTarget.checked })
+            this.taskService.updateTask(this.task.id, { isComplete: event.currentTarget.checked })
         }
         this.input.addEventListener('change', this.inputChangeHandler);
     }
@@ -70,7 +75,7 @@ export class TaskItem extends BaseComponent {
 
     #handleDeleteTask() {
         this.deleteIcon = this.querySelector('#task-delete');
-        this.deleteHandler = () => app.taskService.deleteTask(this.task.id)
+        this.deleteHandler = () => this.taskService.deleteTask(this.task.id)
         this.deleteIcon.addEventListener('click', this.deleteHandler, { once: true });
     }
 

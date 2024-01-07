@@ -1,14 +1,18 @@
 import { BaseComponent } from "@components/BaseComponent.js";
 import { taskChangeEvent } from "@consts/events";
+import { Injector } from "@services/Injector.ts";
+import { TaskService } from "@services/TaskService.ts";
 
 export class TaskList extends BaseComponent {
     date: string;
     #itemsOrderSubscription;
     #sortableList;
     #taskChangeEventHandler;
+    private taskService: TaskService;
 
     constructor() {
         super();
+        this.taskService = Injector.resolve(TaskService);
     }
 
     connectedCallback() {
@@ -21,7 +25,7 @@ export class TaskList extends BaseComponent {
         this.#itemsOrderSubscription = this.#sortableList.itemOrder$.subscribe({
             next: (itemOrder) => {
                 const updates = itemOrder.map((itemId, index) => ({ id: itemId, order: index }));
-                app.taskService.updateManyTasks(updates);
+                this.taskService.updateManyTasks(updates);
             }
         });
     }
@@ -46,6 +50,6 @@ export class TaskList extends BaseComponent {
     }
 
     #updateListItems() {
-        this.#sortableList.dataset.items = JSON.stringify(app.taskService.getTasks(this.date));
+        this.#sortableList.dataset.items = JSON.stringify(this.taskService.getTasks(this.date));
     }
 }

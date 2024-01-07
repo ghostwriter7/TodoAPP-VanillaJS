@@ -89,5 +89,5 @@ installButton.addEventListener('click', (event) => {
 
 addEventListener('popstate', (event) => {
     event.preventDefault();
-    app.router.navigateTo(event.state.route, false);
+    Injector.resolve(Router).navigateTo(event.state.route, false);
 });

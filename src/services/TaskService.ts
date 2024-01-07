@@ -14,6 +14,7 @@ export class TaskService {
     #syncMap = new Map();
 
     constructor() {
+        this.dataSource = Injector.resolve(DataSource);
         this.firebase = Injector.resolve(Firebase);
         this.tasks = {
             [this.activeDate]: []

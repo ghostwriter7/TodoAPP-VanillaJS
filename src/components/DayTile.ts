@@ -1,6 +1,8 @@
 import { toTaskId } from "@helpers/date.js";
 import { getSpan } from "@helpers/dom.js";
 import type { TaskSummary } from "../types";
+import { Injector } from "@services/Injector.ts";
+import { Router } from "@services/Router.ts";
 
 export class DayTile extends HTMLElement {
     date: Date;
@@ -45,7 +47,7 @@ export class DayTile extends HTMLElement {
     }
 
     #initializeEventListener() {
-        this.clickHandler = () => app.router.navigateTo(`/tasks?date=${toTaskId(this.date)}`);
+        this.clickHandler = () => Injector.resolve(Router).navigateTo(`/tasks?date=${toTaskId(this.date)}`);
         this.addEventListener('click', this.clickHandler);
     }
 }

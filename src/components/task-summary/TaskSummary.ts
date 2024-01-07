@@ -2,6 +2,8 @@ import './task-summary.css';
 import { BaseComponent } from "@components/BaseComponent.js";
 import { getMonthName } from "@helpers/date";
 import { taskChangeEvent } from "@consts/events";
+import { Injector } from "@services/Injector.ts";
+import { TaskService } from "@services/TaskService.ts";
 
 export class TaskSummary extends BaseComponent {
     date: string;
@@ -32,6 +34,6 @@ export class TaskSummary extends BaseComponent {
     }
 
     #updateTaskCounters() {
-        this.querySelector('task-counters').setAttribute('summary', JSON.stringify(app.taskService.getTasksSummary(this.date)));
+        this.querySelector('task-counters').setAttribute('summary', JSON.stringify(Injector.resolve(TaskService).getTasksSummary(this.date)));
     }
 }
