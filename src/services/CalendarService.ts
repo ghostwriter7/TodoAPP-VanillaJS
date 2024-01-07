@@ -34,8 +34,8 @@ export class CalendarService {
         return this.state.year;
     }
 
-    setMonth(month: string): void {
-        this.state.month = Number.parseInt(month);
+    setMonth(month: string | number): void {
+        this.state.month = typeof month === 'number' ? month : Number.parseInt(month);
     }
 
     setYear(year: number): void {

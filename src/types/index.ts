@@ -1,5 +1,6 @@
 export * from './datasource-config.interface.ts';
-export * from './db-event.interface.ts'
+export * from './db-event.interface.ts';
+export * from './mouse-handler.type.ts';
 export * from './observer.type.ts';
 export * from './subscription.type.ts';
 export * from './task-item.interface.ts';

@@ -1,7 +1,7 @@
 import { Subject } from "@services/Subject.js";
 
 export class Dropdown extends HTMLSelectElement {
-    #changeSubject = new Subject();
+    #changeSubject = new Subject<string>();
     change$ = this.#changeSubject.asObservable();
 
     constructor() {
