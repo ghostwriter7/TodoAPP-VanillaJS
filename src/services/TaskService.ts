@@ -27,10 +27,10 @@ export class TaskService {
         });
     }
 
-    async addTask(task: Partial<TaskItem>): Promise<void> {
+    async addTask(task: Pick<TaskItem, 'task' | 'description' | 'rate' | 'effort'>): Promise<void> {
         const taskCollection = collection(this.firebase.firestore, `users/${this.firebase.auth.currentUser.uid}/tasks`);
         const taskDoc = doc(taskCollection);
-        const payload = {
+        const payload: TaskItem = {
             date: new Date(this.activeDate),
             ...task,
             isComplete: false,
@@ -38,7 +38,7 @@ export class TaskService {
             updatedAt: Date.now()
         };
         setDoc(taskDoc, payload);
-        const todo = await this.dataSource.addOne('todo', { ...payload, id: taskDoc.id, date: toTaskId(payload.date) });
+        const todo = await this.dataSource.addOne<TaskItem>('todo', { ...payload, id: taskDoc.id, date: toTaskId(payload.date) });
         this.tasksStore[this.activeDate] = [...this.tasksStore[this.activeDate], { ...todo }];
     }
 
@@ -95,7 +95,7 @@ export class TaskService {
             this.#syncMap.set(this.activeDate, true);
         }
 
-        const result = await this.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.activeDate);
+        const result = await this.dataSource.getAllByIndexAndValue<TaskItem[]>('todo', 'idx-todo-date', this.activeDate);
         this.tasksStore[this.activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
     }
 
