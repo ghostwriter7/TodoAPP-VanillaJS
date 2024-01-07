@@ -2,21 +2,29 @@ import './auth-page.css';
 import { email, minLength, required } from "@helpers/validators";
 import { FormMode } from "@consts/form-mode";
 import { getButton, getDiv, getSpan } from "@helpers/dom";
+import { ObservableButton } from "@components/ObservableButton.ts";
+import { FormGroup } from "@components/form-group/FormGroup.ts";
+import { Injector } from "@services/Injector.ts";
+import { AuthService } from "@services/AuthService.ts";
+import type { Subscription } from "../../types";
+
+enum Mode {
+    SignIn = 'SIGN_IN',
+    SignUp = 'SIGN_UP'
+}
+
+type AuthForm =  FormGroup<{ email: string, password: string }>;
 
 export class AuthPage extends HTMLElement {
-    #changeModeSubscription;
-    #error;
-    #footer;
-    #formGroup;
-    #modeEnum = {
-        SignIn: 'SIGN_IN',
-        SignUp: 'SIGN_UP'
-    };
-    #mode = this.#modeEnum.SignIn;
-    #header;
+    private changeModeSubscription: Subscription;
+    private error: HTMLSpanElement;
+    private footer: HTMLDivElement;
+    private formGroup: AuthForm;
+    private header: HTMLDivElement;
+    private mode = Mode.SignIn;
 
-    get #isSignIn() {
-        return this.#mode === this.#modeEnum.SignIn;
+    private get isSignIn() {
+        return this.mode === Mode.SignIn;
     }
 
     constructor() {
@@ -25,25 +33,25 @@ export class AuthPage extends HTMLElement {
 
     connectedCallback() {
         this.classList.add('container', 'd-flex', 'justify-center', 'column');
-        this.#renderAuthHeader();
-        this.#renderAuthForm();
-        this.#renderAuthFooter();
+        this.renderAuthHeader();
+        this.renderAuthForm();
+        this.renderAuthFooter();
     }
 
     disconnectedCallback() {
-        this.#changeModeSubscription?.unsubscribe();
+        this.changeModeSubscription?.unsubscribe();
     }
 
-    #renderAuthHeader() {
-        this.#header = getDiv();
-        this.#header.classList.add('auth__header');
-        this.#setHeaderTitle();
-        this.appendChild(this.#header);
+    renderAuthHeader() {
+        this.header = getDiv();
+        this.header.classList.add('auth__header');
+        this.setHeaderTitle();
+        this.appendChild(this.header);
     }
 
-    #renderAuthForm() {
-        this.#formGroup = document.createElement('form', { is: 'form-group' });
-        this.#formGroup.formControls = [
+    renderAuthForm() {
+        this.formGroup = document.createElement('form', { is: 'form-group' }) as AuthForm;
+        this.formGroup.formControls = [
             {
                 label: "E-mail",
                 id: "email",
@@ -67,55 +75,55 @@ export class AuthPage extends HTMLElement {
                 }
             },
         ];
-        this.#formGroup.onSubmitCallback = async ({ email, password }) => {
-            this.#resetError();
+        this.formGroup.onSubmitCallback = async ({ email, password }) => {
+            this.resetError();
             try {
-                await app.authService[this.#isSignIn ? 'signIn' : 'signUp'](email, password);
+                await Injector.resolve(AuthService)[this.isSignIn ? 'signIn' : 'signUp'](email, password);
             } catch (e) {
-                this.#handleError(e.message);
+                this.handleError(e.message);
             }
         }
-        this.#formGroup.dataset.submitLabel = 'Submit';
-        this.#formGroup.dataset.mode = FormMode.Create;
-        this.appendChild(this.#formGroup);
+        this.formGroup.dataset.submitLabel = 'Submit';
+        this.formGroup.dataset.mode = FormMode.Create;
+        this.appendChild(this.formGroup);
     }
 
-    #renderAuthFooter() {
-        this.#footer = getDiv();
-        this.#footer.classList.add('auth__footer');
+    private renderAuthFooter(): void {
+        this.footer = getDiv();
+        this.footer.classList.add('auth__footer');
         const message = getSpan();
-        this.#setFooterMessage(message);
-        this.#footer.appendChild(message);
-        const changeModeButton = getButton('observable-button');
-        this.#setChangeModeButtonLabel(changeModeButton);
+        this.setFooterMessage(message);
+        this.footer.appendChild(message);
+        const changeModeButton = getButton('observable-button') as ObservableButton;
+        this.setChangeModeButtonLabel(changeModeButton);
 
-        changeModeButton.click$.subscribe({
+        this.changeModeSubscription = changeModeButton.click$.subscribe({
             next: () => {
-                this.#resetError();
-                this.#mode = this.#isSignIn ? this.#modeEnum.SignUp : this.#modeEnum.SignIn;
-                this.#setFooterMessage(message);
-                this.#setChangeModeButtonLabel(changeModeButton);
-                this.#setHeaderTitle();
+                this.resetError();
+                this.mode = this.isSignIn ? Mode.SignUp : Mode.SignIn;
+                this.setFooterMessage(message);
+                this.setChangeModeButtonLabel(changeModeButton);
+                this.setHeaderTitle();
             }
         });
 
-        this.#footer.appendChild(changeModeButton);
-        this.appendChild(this.#footer);
+        this.footer.appendChild(changeModeButton);
+        this.appendChild(this.footer);
     }
 
-    #setChangeModeButtonLabel(changeModeButton) {
-        changeModeButton.innerText = this.#isSignIn ? 'Sign Up' : 'Sign In';
+    private setChangeModeButtonLabel(changeModeButton: HTMLButtonElement): void {
+        changeModeButton.innerText = this.isSignIn ? 'Sign Up' : 'Sign In';
     }
 
-    #setHeaderTitle() {
-        this.#header.innerText = this.#isSignIn ? 'Sign In' : 'Sign Up';
+    private setHeaderTitle(): void {
+        this.header.innerText = this.isSignIn ? 'Sign In' : 'Sign Up';
     }
 
-    #setFooterMessage(message) {
-        message.innerText = `${this.#isSignIn ? `Don't you have an account yet?` : `Have you been here before?`} Click to `;
+    private setFooterMessage(message: HTMLSpanElement): void {
+        message.innerText = `${this.isSignIn ? `Don't you have an account yet?` : `Have you been here before?`} Click to `;
     }
 
-    #handleError(code) {
+    private handleError(code: string): void {
         let message;
 
         switch (code) {
@@ -135,14 +143,14 @@ export class AuthPage extends HTMLElement {
                 message = 'An error has occurred, apologies.';
         }
 
-        this.#error = getSpan();
-        this.#error.innerText = message;
-        this.#error.style.color = 'var(--clr-error)';
-        this.appendChild(this.#error);
-        setTimeout(() => this.#resetError(), 3000);
+        this.error = getSpan();
+        this.error.innerText = message;
+        this.error.style.color = 'var(--clr-error)';
+        this.appendChild(this.error);
+        setTimeout(() => this.resetError(), 3000);
     }
 
-    #resetError() {
-        this.#error?.remove();
+    private resetError(): void {
+        this.error?.remove();
     }
 }

@@ -2,7 +2,7 @@ import './form-group.css';
 import { Subject } from "@services/Subject";
 import { FormMode } from "@consts/form-mode";
 
-export class FormGroup extends HTMLFormElement {
+export class FormGroup<TData extends {}> extends HTMLFormElement {
     static get observedAttributes() {
         return ['data-mode'];
     }
@@ -20,7 +20,7 @@ export class FormGroup extends HTMLFormElement {
     #validityMap = new Map();
 
     formControls;
-    onSubmitCallback;
+    onSubmitCallback: (data: TData) => void;
     valueChanges$ = this.#subject.asObservable();
 
     constructor() {

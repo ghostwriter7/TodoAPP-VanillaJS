@@ -3,7 +3,7 @@ import { Observer } from "../types";
 export class Subject<T = unknown> {
     private observers: Observer<T>[] = [];
 
-    asObservable(): { subscribe: Observer<T> } {
+    asObservable(): { subscribe: (observer: Observer<T>) => { unsubscribe: () => void } } {
         const subscribe = this.subscribe.bind(this);
         return { subscribe };
     }
