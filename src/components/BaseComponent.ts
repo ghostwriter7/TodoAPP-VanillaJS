@@ -9,7 +9,7 @@ export class BaseComponent extends HTMLElement {
         this.appendChild(content);
     }
 
-    renderComponent<T extends HTMLElement>(tagName: string, props?: Record<keyof T, T[keyof T]>): void {
+    renderComponent<T extends HTMLElement>(tagName: string, props?: Partial<T>): void {
         const component = document.createElement(tagName) as T;
 
         if (props) {

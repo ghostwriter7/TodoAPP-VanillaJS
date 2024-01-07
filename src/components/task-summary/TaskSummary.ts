@@ -4,6 +4,7 @@ import { getMonthName } from "@helpers/date";
 import { taskChangeEvent } from "@consts/events";
 
 export class TaskSummary extends BaseComponent {
+    date: string;
     #taskChangeHandler;
 
     constructor() {

@@ -4,6 +4,7 @@ import { required } from "@helpers/validators.js";
 import { FormMode } from "@consts/form-mode.js";
 
 export class TaskForm extends BaseComponent {
+    date: string;
     #detailsEl;
     #formGroup;
     #taskEditInitHandler;

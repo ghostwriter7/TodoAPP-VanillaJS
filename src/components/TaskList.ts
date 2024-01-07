@@ -2,6 +2,7 @@ import { BaseComponent } from "@components/BaseComponent.js";
 import { taskChangeEvent } from "@consts/events";
 
 export class TaskList extends BaseComponent {
+    date: string;
     #itemsOrderSubscription;
     #sortableList;
     #taskChangeEventHandler;
