@@ -95,7 +95,7 @@ export class TaskService {
             this.#syncMap.set(this.activeDate, true);
         }
 
-        const result = await this.dataSource.getAllByIndexAndValue<TaskItem[]>('todo', 'idx-todo-date', this.activeDate);
+        const result = await this.dataSource.getAllByIndexAndValue<TaskItem>('todo', 'idx-todo-date', this.activeDate);
         this.tasksStore[this.activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
     }
 

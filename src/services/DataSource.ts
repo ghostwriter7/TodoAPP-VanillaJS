@@ -64,7 +64,7 @@ export class DataSource {
         });
     }
 
-    getAllByIndexAndValue<T = unknown>(objectStoreName: string, index: string, value: string | number): Promise<T> {
+    getAllByIndexAndValue<T = unknown>(objectStoreName: string, index: string, value: string | number): Promise<T[]> {
         return new Promise(async (resolve, reject) => {
             const dataSource = await this.#getDataSource();
             const store = dataSource.transaction(objectStoreName, 'readonly').objectStore(objectStoreName);

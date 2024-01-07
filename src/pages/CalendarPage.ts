@@ -1,5 +1,7 @@
 import { BaseComponent } from "@components/BaseComponent.js";
 import { calendarChangeEvent } from "@consts/events.js";
+import { Injector } from "@services/Injector.ts";
+import { CalendarService } from "@services/CalendarService.ts";
 
 export class CalendarPage extends BaseComponent {
     #calendarChangeEventHandler;
@@ -25,7 +27,7 @@ export class CalendarPage extends BaseComponent {
     }
 
     async #updateMonthSummaryParams() {
-        const { monthSummary, monthSummaryPerDay } = await app.calendarService.getMonthSummary();
+        const { monthSummary, monthSummaryPerDay } = await Injector.resolve(CalendarService).getMonthSummary();
         this.querySelector('calendar-header').setAttribute('summary', JSON.stringify(monthSummary));
         this.querySelector('calendar-grid').setAttribute('summary', JSON.stringify(monthSummaryPerDay));
     }

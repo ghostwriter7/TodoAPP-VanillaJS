@@ -1,60 +1,58 @@
 import { calendarChangeEvent } from "@consts/events";
 import { Subject } from "@services/Subject.js";
+import { TaskItem, TaskSummary } from "../types";
+import { Injector } from "@services/Injector.ts";
+import { DataSource } from "@services/DataSource.ts";
 
 export class CalendarService {
-    #state = {
-        month: null,
-        year: null,
-    }
-    #stateProxy;
-    #activeViewSubject = new Subject();
-    activeView$ = this.#activeViewSubject.asObservable();
+    private state: { month: number; year: number };
+    private readonly activeViewSubject = new Subject<{ month: number, year: number }>();
+
+    activeView$ = this.activeViewSubject.asObservable();
 
     constructor() {
         const now = new Date();
-        this.#state.month = now.getMonth();
-        this.#state.year = now.getFullYear();
 
-        this.#stateProxy = new Proxy(this.#state, {
-            set: (target, property, newValue) => {
+        this.state = new Proxy({
+            month: now.getMonth(),
+            year: now.getFullYear(),
+        }, {
+            set: (target: { month: number, year: number }, property: 'month' | 'year', newValue: number): boolean => {
                 target[property] = newValue;
                 dispatchEvent(new Event(calendarChangeEvent));
-
-                if (['month', 'year'].includes(property)) {
-                    this.#activeViewSubject.next({ month: target['month'], year: target['year'] });
-                }
+                this.activeViewSubject.next({ month: target['month'], year: target['year'] });
                 return true;
             }
         });
     }
 
-    getMonth() {
-        return this.#stateProxy.month;
+    getMonth(): number {
+        return this.state.month;
     }
 
-    getYear() {
-        return this.#stateProxy.year;
+    getYear(): number {
+        return this.state.year;
     }
 
-    setMonth(month) {
-        this.#stateProxy.month = Number.parseInt(month);
+    setMonth(month: string): void {
+        this.state.month = Number.parseInt(month);
     }
 
-    setYear(year) {
-        this.#stateProxy.year = year;
+    setYear(year: number): void {
+        this.state.year = year;
     }
 
-    setNextYear() {
-        this.#stateProxy.year++;
+    setNextYear(): void {
+        this.state.year++;
     }
 
-    setPreviousYear() {
-        this.#stateProxy.year--;
+    setPreviousYear(): void {
+        this.state.year--;
     }
 
-    async getMonthSummary() {
+    async getMonthSummary(): Promise<{ monthSummaryPerDay: TaskSummary[], monthSummary: TaskSummary }> {
         return new Promise(async (resolve) => {
-            const tasks = await this.#getMonthTasks();
+            const tasks = await this.getMonthTasks();
             const monthSummary = { complete: 0, total: 0 };
             const monthSummaryPerDay = tasks.map((tasksPerDay) => tasksPerDay.reduce((stats, task) => {
                 stats.total++;
@@ -69,10 +67,10 @@ export class CalendarService {
         });
     }
 
-    async #getMonthTasks() {
+    private async getMonthTasks(): Promise<TaskItem[][]> {
         return new Promise(async (resolve) => {
-            const month = app.calendarService.getMonth();
-            const year = app.calendarService.getYear();
+            const month = this.getMonth();
+            const year = this.getYear();
 
             const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
 
@@ -81,7 +79,7 @@ export class CalendarService {
             const requests = datePlaceholderArray
                 .map((_, index) => {
                     const dateId = `${(month + 1).toString().padStart(2, '0')}/${(index + 1).toString().padStart(2, '0')}/${year}`;
-                    return app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', dateId);
+                    return Injector.resolve(DataSource).getAllByIndexAndValue<TaskItem>('todo', 'idx-todo-date', dateId);
                 });
 
             const results = await Promise.all(requests);
