@@ -16,8 +16,7 @@ import {
     TaskSummary
 } from "@components/index";
 import type { User } from '@firebase/auth-types';
-import { AuthService, CalendarService, DataSource, Router, TaskService } from "@services/index";
-import Firebase from "@services/Firebase";
+import { AuthService, CalendarService, DataSource, Firebase, Injector, Router, TaskService } from "@services/index";
 import { onAuthStateChanged } from 'firebase/auth';
 import { AuthPage, CalendarPage, NotFoundPage, TasksPage } from "@pages/index";
 
@@ -60,18 +59,20 @@ customElements.define('calendar-page', CalendarPage);
 customElements.define('not-found-page', NotFoundPage);
 customElements.define('auth-page', AuthPage);
 
-window.app = {
-    authService: new AuthService(Firebase.auth),
-    dataSource: new DataSource(),
-    router: new Router(Firebase),
-    taskService: new TaskService(Firebase),
-    calendarService: new CalendarService()
-};
+addEventListener('DOMContentLoaded', () => {
+    Injector.register(Firebase, new Firebase());
+    Injector.register(AuthService, new AuthService());
+    Injector.register(DataSource, new DataSource());
+    Injector.register(Router, new Router());
+    Injector.register(TaskService, new TaskService());
+    Injector.register(CalendarService, new CalendarService());
 
-onAuthStateChanged(Firebase.auth, (user: User) => {
-    app.router.navigateTo(user ? '/' : '/auth');
-    document.querySelector('header').classList[user ? 'remove' : 'add']('d-none');
+    onAuthStateChanged(Injector.resolve(Firebase).auth, (user: User) => {
+        Injector.resolve(Router).navigateTo(user ? '/' : '/auth');
+        document.querySelector('header').classList[user ? 'remove' : 'add']('d-none');
+    });
 });
+
 
 let beforeInstallPromptEvent;
 const installButton = document.getElementById('install');

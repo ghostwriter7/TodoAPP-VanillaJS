@@ -2,6 +2,7 @@ import { BaseComponent } from "@components/BaseComponent";
 import { taskLoadingEndEvent, taskLoadingStartEvent } from "@consts/events";
 
 export class TasksPage extends BaseComponent {
+    date: string;
     #endLoadingHandler;
     #loadingBar;
     #startLoadingHandler;

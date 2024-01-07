@@ -1,29 +1,31 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { Auth } from '@firebase/auth';
+import { Firebase, Injector } from "@services/index";
 
 export class AuthService {
-    #auth;
+    private readonly auth: Auth;
 
-    constructor(auth) {
-        this.#auth = auth;
+    constructor() {
+        this.auth = Injector.resolve(Firebase).auth;
     }
 
-    async signUp(email, password) {
+    async signUp(email: string, password: string): Promise<void> {
         try {
-            await createUserWithEmailAndPassword(this.#auth, email, password);
+            await createUserWithEmailAndPassword(this.auth, email, password);
         } catch ({ code }) {
             throw new Error(code);
         }
     }
 
-    async signIn(email, password) {
+    async signIn(email: string, password: string): Promise<void> {
         try {
-            await signInWithEmailAndPassword(this.#auth, email, password);
+            await signInWithEmailAndPassword(this.auth, email, password);
         } catch ({ code }) {
             throw new Error(code);
         }
     }
 
-    logout() {
-        signOut(this.#auth);
+    logout(): void {
+        signOut(this.auth);
     }
 }

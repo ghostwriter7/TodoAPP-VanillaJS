@@ -1,20 +1,25 @@
 import { toTaskId } from "@helpers/date";
 import { taskChangeEvent, taskLoadingEndEvent, taskLoadingStartEvent } from "@consts/events";
 import { collection, deleteDoc, doc, getDocs, query, setDoc, updateDoc, where, writeBatch } from "firebase/firestore";
+import { DataSource, Firebase, Injector } from "@services/index";
+import type { TaskItem, TaskStore, TaskSummary } from "../types";
 
 export class TaskService {
-    #tasks;
-    #firebase;
-    #activeDate = toTaskId(new Date());
+    private readonly dataSource: DataSource;
+    private readonly firebase: Firebase;
+    private readonly tasks: TaskStore;
+    private readonly tasksStore: TaskStore;
+
+    private activeDate: string = toTaskId(new Date());
     #syncMap = new Map();
 
-    constructor(firebase) {
-        this.#firebase = firebase;
-        this.#tasks = {
-            [this.#activeDate]: []
+    constructor() {
+        this.firebase = Injector.resolve(Firebase);
+        this.tasks = {
+            [this.activeDate]: []
         };
-        this.tasksStore = new Proxy(this.#tasks, {
-            set: (target, property, newValue) => {
+        this.tasksStore = new Proxy(this.tasks, {
+            set: (target: TaskStore, property: keyof TaskStore, newValue: TaskStore[keyof TaskStore]): boolean => {
                 target[property] = newValue;
                 window.dispatchEvent(new Event(taskChangeEvent));
                 return true;
@@ -22,26 +27,26 @@ export class TaskService {
         });
     }
 
-    async addTask(task) {
-        const taskCollection = collection(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks`);
+    async addTask(task: Partial<TaskItem>): Promise<void> {
+        const taskCollection = collection(this.firebase.firestore, `users/${this.firebase.auth.currentUser.uid}/tasks`);
         const taskDoc = doc(taskCollection);
         const payload = {
-            date: new Date(this.#activeDate),
+            date: new Date(this.activeDate),
             ...task,
             isComplete: false,
-            order: this.tasksStore[this.#activeDate].length + 1,
+            order: this.tasksStore[this.activeDate].length + 1,
             updatedAt: Date.now()
         };
         setDoc(taskDoc, payload);
-        const todo = await app.dataSource.addOne('todo', { ...payload, id: taskDoc.id, date: toTaskId(payload.date) });
-        this.tasksStore[this.#activeDate] = [...this.tasksStore[this.#activeDate], { ...todo }];
+        const todo = await this.dataSource.addOne('todo', { ...payload, id: taskDoc.id, date: toTaskId(payload.date) });
+        this.tasksStore[this.activeDate] = [...this.tasksStore[this.activeDate], { ...todo }];
     }
 
-    getTasks(date) {
+    getTasks(date: string): TaskItem[] {
         return [...this.tasksStore[date]];
     }
 
-    getTasksSummary(date) {
+    getTasksSummary(date: string): TaskSummary {
         const tasks = this.getTasks(date);
         const complete = tasks.reduce((active, task) => active + (task.isComplete ? 1 : 0), 0);
         return {
@@ -50,52 +55,52 @@ export class TaskService {
         }
     }
 
-    async updateTask(id, payload) {
-        const taskDoc = doc(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks/${id}`);
+    async updateTask(id: string, payload: Partial<TaskItem>): Promise<void> {
+        const taskDoc = doc(this.firebase.firestore, `users/${this.firebase.auth.currentUser.uid}/tasks/${id}`);
         const update = { ...payload, updatedAt: Date.now() };
         updateDoc(taskDoc, update);
-        const updatedTask = await app.dataSource.updateOneById('todo', id, update);
-        this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].map((task) => task.id === id ? { ...updatedTask } : task);
+        const updatedTask = await this.dataSource.updateOneById('todo', id, update);
+        this.tasksStore[this.activeDate] = this.tasksStore[this.activeDate].map((task) => task.id === id ? { ...updatedTask } : task);
     }
 
-    async updateManyTasks(updates) {
+    async updateManyTasks(updates: Partial<TaskItem>[]): Promise<void> {
         const updatedAt = Date.now();
-        const collectionRef = collection(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks`);
-        const batch = writeBatch(this.#firebase.firestore);
+        const collectionRef = collection(this.firebase.firestore, `users/${this.firebase.auth.currentUser.uid}/tasks`);
+        const batch = writeBatch(this.firebase.firestore);
 
         const requests = updates.map(({ id, ...update }) => {
             const payload = { ...update, updatedAt };
             batch.update(doc(collectionRef, id), payload);
-            return app.dataSource.updateOneById('todo', id, payload);
+            return this.dataSource.updateOneById('todo', id, payload);
         });
         await Promise.all(requests);
 
         batch.commit();
     }
 
-    async deleteTask(id) {
-        const taskDoc = doc(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks/${id}`);
+    async deleteTask(id: string): Promise<void> {
+        const taskDoc = doc(this.firebase.firestore, `users/${this.firebase.auth.currentUser.uid}/tasks/${id}`);
         deleteDoc(taskDoc);
-        await app.dataSource.deleteOneById('todo', id);
-        this.tasksStore[this.#activeDate] = this.tasksStore[this.#activeDate].filter((task) => task.id !== id);
+        await this.dataSource.deleteOneById('todo', id);
+        this.tasksStore[this.activeDate] = this.tasksStore[this.activeDate].filter((task) => task.id !== id);
     }
 
-    async loadTasks(date) {
-        this.#activeDate = date;
+    async loadTasks(date: string): Promise<void> {
+        this.activeDate = date;
 
-        if (!this.#syncMap.get(this.#activeDate) && navigator.onLine) {
+        if (!this.#syncMap.get(this.activeDate) && navigator.onLine) {
             dispatchEvent(new Event(taskLoadingStartEvent));
             await this.#syncDataFromFirestore();
             dispatchEvent(new Event(taskLoadingEndEvent));
-            this.#syncMap.set(this.#activeDate, true);
+            this.#syncMap.set(this.activeDate, true);
         }
 
-        const result = await app.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.#activeDate);
-        this.tasksStore[this.#activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
+        const result = await this.dataSource.getAllByIndexAndValue('todo', 'idx-todo-date', this.activeDate);
+        this.tasksStore[this.activeDate] = [...result].sort((a, b) => a.order - b.order > 0 ? 1 : -1);
     }
 
-    async #syncDataFromFirestore() {
-        const taskCollection = collection(this.#firebase.firestore, `users/${this.#firebase.auth.currentUser.uid}/tasks`);
+    async #syncDataFromFirestore(): Promise<void> {
+        const taskCollection = collection(this.firebase.firestore, `users/${this.firebase.auth.currentUser.uid}/tasks`);
         const response = await getDocs(
             query(taskCollection,
                 where('date', '>=', this.#getBeginningOfTheDay()),
@@ -105,19 +110,19 @@ export class TaskService {
             data.date = toTaskId(data.date.toDate());
             return { data, id: task.id };
         });
-        await app.dataSource.upsertMany('todo', storedTasks);
+        await this.dataSource.upsertMany('todo', storedTasks);
     }
 
-    #getBeginningOfTheDay() {
-        const beginning = new Date(this.#activeDate);
+    #getBeginningOfTheDay(): Date {
+        const beginning = new Date(this.activeDate);
         beginning.setHours(0);
         beginning.setMinutes(0);
         beginning.setSeconds(0);
         return beginning;
     }
 
-    #getEndingOfTheDay() {
-        const ending = new Date(this.#activeDate);
+    #getEndingOfTheDay(): Date {
+        const ending = new Date(this.activeDate);
         ending.setHours(23);
         ending.setMinutes(59);
         ending.setSeconds(59);

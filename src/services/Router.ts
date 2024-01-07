@@ -1,20 +1,18 @@
 import { toTaskId } from "@helpers/date";
+import { TasksPage } from "@pages/TasksPage.ts";
+
+type ParamsMap = Record<string, string>
 
 export class Router {
-    #firebase;
 
-    constructor(firebase) {
-        this.#firebase = firebase;
-    }
-
-    navigateTo(route, addToHistory = true) {
+    navigateTo(route: string, addToHistory = true): void {
         if (addToHistory) {
             history.pushState({ route }, null, route);
         }
 
-        let pageElement = null;
+        let pageElement: HTMLElement;
 
-        const paramsMap = this.#getQueryParamsMap(route);
+        const paramsMap: ParamsMap = this.#getQueryParamsMap(route);
         if (this.#hasQueryParams(paramsMap)) {
             route = this.#getRouteWithoutQueryParams(route)
         }
@@ -26,7 +24,7 @@ export class Router {
             case '/':
             case '/tasks':
                 pageElement = document.createElement('tasks-page');
-                pageElement.date = paramsMap.date || toTaskId(new Date());
+                (pageElement as TasksPage).date = paramsMap.date || toTaskId(new Date());
                 break;
             case '/calendar':
                 pageElement = document.createElement('calendar-page');
@@ -41,22 +39,21 @@ export class Router {
         scrollX = scrollY = 0;
     }
 
-    #getQueryParamsMap(route) {
+    #getQueryParamsMap(route: string): ParamsMap {
         const regex = /[?&]([^=#]+)=([^&#]*)/g;
-        const paramsMap = {};
-        let match;
+        const paramsMap: ParamsMap = {};
+        let match: RegExpExecArray;
         while (match = regex.exec(route)) {
             paramsMap[match[1]] = match[2];
         }
         return paramsMap;
     }
 
-    #hasQueryParams(paramsMap) {
+    #hasQueryParams(paramsMap: ParamsMap): boolean {
         return Object.keys(paramsMap).length !== 0;
-        ;
     }
 
-    #getRouteWithoutQueryParams(route) {
+    #getRouteWithoutQueryParams(route: string): string {
         return route.slice(0, route.indexOf('?'));
     }
 }
