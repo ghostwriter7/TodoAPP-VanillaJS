@@ -94,7 +94,7 @@ export class AuthPage extends HTMLElement {
         const message = getSpan();
         this.setFooterMessage(message);
         this.footer.appendChild(message);
-        const changeModeButton = getButton('observable-button') as ObservableButton;
+        const changeModeButton = getButton({ is: 'observable-button' }) as ObservableButton;
         this.setChangeModeButtonLabel(changeModeButton);
 
         this.changeModeSubscription = changeModeButton.click$.subscribe({
