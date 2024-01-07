@@ -1,7 +1,12 @@
 import { toTaskId } from "@helpers/date.js";
 import { getSpan } from "@helpers/dom.js";
+import type { TaskSummary } from "../types";
 
 export class DayTile extends HTMLElement {
+    date: Date;
+    isToday: boolean;
+    stats: TaskSummary;
+
     constructor() {
         super();
     }
