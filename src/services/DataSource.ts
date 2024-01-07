@@ -48,7 +48,7 @@ export class DataSource {
     upsertMany<T>(objectStoreName: string, updates: { data: T, id: string }[]): Promise<void> {
         return new Promise(async (resolve, reject) => {
             try {
-                const requests: Promise<void>[] = updates.map(({ data, id }) => new Promise(async (resolve, reject) => {
+                const requests: Promise<void>[] = updates.map(({ data, id }) => new Promise(async (resolve) => {
                     const existingRecord = await this.getOneById<T>(objectStoreName, id);
                     await (existingRecord ? this.updateOneById(objectStoreName, id, { ...existingRecord, ...data }) : this.addOne(objectStoreName, {
                         ...data,
@@ -73,7 +73,7 @@ export class DataSource {
             const range = IDBKeyRange.only(value);
             const request = dbIndex.getAll(range);
 
-            request.onsuccess = (({ target }: DbEvent<T>) => resolve(target.result));
+            request.onsuccess = (({ target }: DbEvent<T[]>) => resolve(target.result));
             request.onerror = (({ target }: DbEvent<T>) => reject(target.error))
         });
     }
