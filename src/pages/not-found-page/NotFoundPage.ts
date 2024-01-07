@@ -1,20 +1,24 @@
 import './not-found-page.css';
+import { Injector } from "@services/Injector.ts";
+import { Router } from "@services/Router.ts";
 
 export class NotFoundPage extends HTMLElement {
+    private readonly eventHandlerMap = new Map<HTMLAnchorElement, (event: MouseEvent) => void>();
+
     constructor() {
         super();
     }
 
-    connectedCallback() {
-        this.#render();
+    connectedCallback(): void {
+        this.render();
         this.interceptLinks();
     }
 
-    disconnectedCallback() {
-        Object.entries(([anchor, handler]) => anchor.removeEventListener('click', handler));
+    disconnectedCallback(): void {
+        this.eventHandlerMap.forEach((handler, anchor) => anchor.removeEventListener('click', handler));
     }
 
-    #render() {
+    private render(): void {
         this.className = 'container d-flex not-found gap-xl';
         this.innerHTML = `
             <span class="material-symbols-outlined">map</span>
@@ -26,15 +30,13 @@ export class NotFoundPage extends HTMLElement {
         `;
     }
 
-    interceptLinks() {
-        this.eventHandlerMap = {};
-
+    private interceptLinks(): void {
         this.querySelectorAll('a').forEach((anchor) => {
-            this.eventHandlerMap[anchor] = (event) => {
+            this.eventHandlerMap.set(anchor, (event) => {
                 event.preventDefault();
-                app.router.navigateTo(anchor.pathname);
-            };
-            anchor.addEventListener('click', this.eventHandlerMap[anchor], { once: true });
+                Injector.resolve(Router).navigateTo(anchor.pathname);
+            });
+            anchor.addEventListener('click', this.eventHandlerMap.get(anchor), { once: true });
         });
     }
 }
