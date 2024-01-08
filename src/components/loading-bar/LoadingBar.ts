@@ -5,7 +5,7 @@ export class LoadingBar extends HTMLElement {
         super();
     }
 
-    connectedCallback() {
+    private connectedCallback(): void {
         this.innerHTML = `<div class="loading"></div> <div>${this.dataset.message || 'Loading...'}</div>`;
     }
 }

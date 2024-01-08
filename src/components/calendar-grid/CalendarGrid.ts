@@ -17,7 +17,6 @@ export class CalendarGrid extends BaseComponent {
     constructor() {
         super();
         this.calendarService = Injector.resolve(CalendarService);
-
     }
 
     private async connectedCallback(): Promise<void> {
