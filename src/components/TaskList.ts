@@ -2,12 +2,14 @@ import { BaseComponent } from "@components/BaseComponent.js";
 import { taskChangeEvent } from "@consts/events";
 import { Injector } from "@services/Injector.ts";
 import { TaskService } from "@services/TaskService.ts";
+import type { Subscription, TaskItem } from "../types";
+import type { SortableList } from "@components/sortable-list/SortableList.ts";
 
 export class TaskList extends BaseComponent {
     date: string;
-    #itemsOrderSubscription;
-    #sortableList;
-    #taskChangeEventHandler;
+    private itemsOrderSubscription: Subscription;
+    private sortableList: SortableList;
+    private taskChangeEventHandler: (event: Event) => void;
     private taskService: TaskService;
 
     constructor() {
@@ -15,14 +17,14 @@ export class TaskList extends BaseComponent {
         this.taskService = Injector.resolve(TaskService);
     }
 
-    connectedCallback() {
+    private connectedCallback(): void {
         this.classList.add('container', 'd-block');
-        this.#createSortableList();
+        this.createSortableList();
 
-        this.#taskChangeEventHandler = () => this.#updateListItems();
-        addEventListener(taskChangeEvent, this.#taskChangeEventHandler);
+        this.taskChangeEventHandler = () => this.updateListItems();
+        addEventListener(taskChangeEvent, this.taskChangeEventHandler);
 
-        this.#itemsOrderSubscription = this.#sortableList.itemOrder$.subscribe({
+        this.itemsOrderSubscription = this.sortableList.itemOrder$.subscribe({
             next: (itemOrder) => {
                 const updates = itemOrder.map((itemId, index) => ({ id: itemId, order: index }));
                 this.taskService.updateManyTasks(updates);
@@ -30,26 +32,26 @@ export class TaskList extends BaseComponent {
         });
     }
 
-    disconnectedCallback() {
-        removeEventListener(taskChangeEvent, this.#taskChangeEventHandler);
-        this.#itemsOrderSubscription.unsubscribe();
+    private disconnectedCallback(): void {
+        removeEventListener(taskChangeEvent, this.taskChangeEventHandler);
+        this.itemsOrderSubscription.unsubscribe();
     }
 
-    #createSortableList() {
-        const sortableList = document.createElement('ul', { is: 'sortable-list' });
-        sortableList.getItem = (task) => {
+    private createSortableList(): void {
+        const sortableList = document.createElement('ul', { is: 'sortable-list' }) as SortableList;
+        sortableList.getItem = (task: TaskItem) => {
             const taskItem = document.createElement('task-item');
             taskItem.dataset.data = JSON.stringify(task);
             taskItem.dataset.id = task.id;
             return taskItem;
         };
         sortableList.emptyListPlaceholder = 'You have no tasks for this day';
-        this.#sortableList = sortableList;
-        this.#updateListItems();
+        this.sortableList = sortableList;
+        this.updateListItems();
         this.appendChild(sortableList);
     }
 
-    #updateListItems() {
-        this.#sortableList.dataset.items = JSON.stringify(this.taskService.getTasks(this.date));
+    private updateListItems(): void {
+        this.sortableList.dataset.items = JSON.stringify(this.taskService.getTasks(this.date));
     }
 }

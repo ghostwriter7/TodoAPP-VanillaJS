@@ -8,7 +8,7 @@ import type { TaskForm } from "@components/TaskForm.ts";
 import type { TaskList } from "@components/TaskList.ts";
 
 export class TasksPage extends BaseComponent {
-    private date: string;
+    public date: string;
     private endLoadingHandler: (event: Event) => void;
     private loadingBar: LoadingBar;
     private startLoadingHandler: (event: Event) => void;

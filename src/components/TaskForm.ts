@@ -8,6 +8,7 @@ import { FormGroup } from "@components/form-group/FormGroup.ts";
 import { SubmitFormEvent } from "../types";
 
 interface TaskFormGroup {
+    id?: string;
     task: string;
     description: string;
     effort: number;

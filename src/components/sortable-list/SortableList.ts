@@ -12,7 +12,7 @@ export class SortableList extends HTMLUListElement {
 
     #draggedItem;
     #items;
-    #itemOrderSubject = new Subject();
+    #itemOrderSubject = new Subject<string[]>();
     #placeholder;
     #preview;
     #previewOffset = 10;
