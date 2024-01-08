@@ -28,7 +28,7 @@ export class TaskService {
         });
     }
 
-    async addTask(task: Pick<TaskItem, 'task' | 'description' | 'rate' | 'effort'>): Promise<void> {
+    async addTask(task: Pick<TaskItem, 'task' | 'description' | 'priority' | 'effort'>): Promise<void> {
         const taskCollection = collection(this.firebase.firestore, `users/${this.firebase.auth.currentUser.uid}/tasks`);
         const taskDoc = doc(taskCollection);
         const payload: TaskItem = {
@@ -39,7 +39,7 @@ export class TaskService {
             updatedAt: Date.now()
         };
         setDoc(taskDoc, payload);
-        const todo = await this.dataSource.addOne<TaskItem>('todo', { ...payload, id: taskDoc.id, date: toTaskId(payload.date) });
+        const todo = await this.dataSource.addOne<TaskItem>('todo', { ...payload, id: taskDoc.id, date: toTaskId(payload.date as Date) });
         this.tasksStore[this.activeDate] = [...this.tasksStore[this.activeDate], { ...todo }];
     }
 

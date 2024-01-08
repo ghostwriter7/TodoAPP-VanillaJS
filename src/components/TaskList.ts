@@ -43,6 +43,7 @@ export class TaskList extends BaseComponent {
             const taskItem = document.createElement('task-item');
             taskItem.dataset.data = JSON.stringify(task);
             taskItem.dataset.id = task.id;
+            taskItem.dataset.previewLabel = task.task;
             return taskItem;
         };
         sortableList.emptyListPlaceholder = 'You have no tasks for this day';

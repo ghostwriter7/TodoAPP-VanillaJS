@@ -4,6 +4,7 @@ export * from './mouse-handler.type.ts';
 export * from './observable.type.ts';
 export * from './observer.type.ts';
 export * from './custom-event.type.ts';
+export * from './list-item.interface.ts';
 export * from './subscription.type.ts';
 export * from './task-item.interface.ts';
 export * from './task-store.type.ts';

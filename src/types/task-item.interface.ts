@@ -1,11 +1,11 @@
-export interface TaskItem {
+import type { ListItem } from "./list-item.interface.ts";
+
+export interface TaskItem extends ListItem {
     date: string | Date;
     description?: string;
     effort: number;
-    id?: string;
     isComplete: boolean;
     order: number;
     priority: number;
-    updatedAt: number;
     task: string;
 }

@@ -5,16 +5,16 @@ type ParamsMap = Record<string, string>
 
 export class Router {
 
-    navigateTo(route: string, addToHistory = true): void {
+    public navigateTo(route: string, addToHistory = true): void {
         if (addToHistory) {
             history.pushState({ route }, null, route);
         }
 
         let pageElement: HTMLElement;
 
-        const paramsMap: ParamsMap = this.#getQueryParamsMap(route);
-        if (this.#hasQueryParams(paramsMap)) {
-            route = this.#getRouteWithoutQueryParams(route)
+        const paramsMap: ParamsMap = this.getQueryParamsMap(route);
+        if (this.hasQueryParams(paramsMap)) {
+            route = this.getRouteWithoutQueryParams(route)
         }
 
         switch (route) {
@@ -39,7 +39,7 @@ export class Router {
         scrollX = scrollY = 0;
     }
 
-    #getQueryParamsMap(route: string): ParamsMap {
+    private getQueryParamsMap(route: string): ParamsMap {
         const regex = /[?&]([^=#]+)=([^&#]*)/g;
         const paramsMap: ParamsMap = {};
         let match: RegExpExecArray;
@@ -49,11 +49,11 @@ export class Router {
         return paramsMap;
     }
 
-    #hasQueryParams(paramsMap: ParamsMap): boolean {
+    private hasQueryParams(paramsMap: ParamsMap): boolean {
         return Object.keys(paramsMap).length !== 0;
     }
 
-    #getRouteWithoutQueryParams(route: string): string {
+    private getRouteWithoutQueryParams(route: string): string {
         return route.slice(0, route.indexOf('?'));
     }
 }
