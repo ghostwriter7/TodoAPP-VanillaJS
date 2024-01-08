@@ -10,16 +10,16 @@ export class FormGroup<TData extends object> extends HTMLFormElement {
     }
 
     private cancelButton: HTMLButtonElement;
-    formControlMap = new Map();
+    private readonly formControlMap = new Map<string, FormControl>();
     private model: TData;
-    subject = new Subject();
+    private readonly subject = new Subject<TData>();
     private submitButton: HTMLButtonElement;
     private readonly subscriptions: Subscription[] = [];
-    validityMap = new Map();
+    private readonly validityMap = new Map<string, boolean>();
 
-    private formControls: FormControl[];
-    onSubmitCallback: (data: TData) => void;
-    valueChanges$ = this.subject.asObservable();
+    public formControls: FormControl[];
+    public onSubmitCallback: (data: TData) => void;
+    public valueChanges$ = this.subject.asObservable();
 
     constructor() {
         super();
