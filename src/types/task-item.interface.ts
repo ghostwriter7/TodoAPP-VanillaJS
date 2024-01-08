@@ -5,7 +5,7 @@ export interface TaskItem {
     id?: string;
     isComplete: boolean;
     order: number;
-    rate: number;
+    priority: number;
     updatedAt: number;
     task: string;
 }

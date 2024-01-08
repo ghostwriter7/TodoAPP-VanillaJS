@@ -3,90 +3,83 @@ import { BaseComponent } from "@components/BaseComponent.js";
 import { taskEditInitEvent } from "@consts/events";
 import { TaskService } from "@services/TaskService.ts";
 import { Injector } from "@services/Injector.ts";
+import type { CustomEvent, TaskItem as Task } from "../../types";
 
 export class TaskItem extends BaseComponent {
+    public task: Task;
+
+    private deleteIcon: HTMLSpanElement;
+    private deleteHandler: () => void;
     private readonly taskService: TaskService;
+    private isInitialized = false;
 
     static get observedAttributes() {
         return ['data-data'];
     }
-
-    #isInitialized = false;
 
     constructor() {
         super();
         this.taskService = Injector.resolve(TaskService);
     }
 
-    connectedCallback() {
-        if (!this.#isInitialized) {
+    private connectedCallback(): void {
+        if (!this.isInitialized) {
             this.classList.add('container');
             this.attachTemplate('task-item');
-            this.#renderTaskDetails(this.task);
+            this.renderTaskDetails(this.task);
             this.style.cursor = 'grab';
-            this.#hookUpTaskCompleteCheckbox();
+            this.hookUpTaskCompleteCheckbox();
         }
-        this.#handleTaskCompleteChange();
-        this.#handleTaskEditInit();
-        this.#handleDeleteTask();
-        this.#isInitialized = true;
+        this.handleTaskEditInit();
+        this.handleDeleteTask();
+        this.isInitialized = true;
     }
 
-    disconnectedCallback() {
-        this.input.removeEventListener('change', this.inputChangeHandler);
-        this.editIcon.removeEventListener('click', this.taskEditInitHandler);
+    private disconnectedCallback(): void {
         this.deleteIcon.removeEventListener('click', this.deleteHandler);
     }
 
-    attributeChangedCallback(attribute, oldValue, newValue) {
-        this.task = JSON.parse(newValue);
+    private attributeChangedCallback(attribute: string, oldValue: Task, newValue: string): void {
+        this.task = JSON.parse(newValue) as Task;
 
         if (oldValue?.task !== this.task.task && !!this.innerHTML) {
-            this.#renderTaskDetails(this.task);
+            this.renderTaskDetails(this.task);
         }
     }
 
-    #handleTaskCompleteChange() {
-        this.inputChangeHandler = (event) => {
-            this.taskService.updateTask(this.task.id, { isComplete: event.currentTarget.checked })
-        }
-        this.input.addEventListener('change', this.inputChangeHandler);
-    }
-
-    #handleTaskEditInit() {
-        this.taskEditInitHandler = () => {
-            const event = new Event(taskEditInitEvent);
+    private handleTaskEditInit(): void {
+        (this.querySelector('#task-edit') as HTMLSpanElement).onclick = () => {
+            const event = new Event(taskEditInitEvent) as CustomEvent<Task>;
             event.payload = { ...this.task };
             dispatchEvent(event);
-        };
-        this.editIcon = this.querySelector('#task-edit');
-        this.editIcon.addEventListener('click', this.taskEditInitHandler);
+        }
     }
 
-    #hookUpTaskCompleteCheckbox() {
-        this.input = this.querySelector('input');
+    hookUpTaskCompleteCheckbox() {
+        const input = this.querySelector('input') as HTMLInputElement;
         const label = this.querySelector('label');
         const id = `task-${this.task.id}`;
         label.htmlFor = id;
-        this.input.id = id;
-        this.input.checked = this.task.isComplete;
-        this.input.name = id;
+        input.onchange = (event: InputEvent) => this.taskService.updateTask(this.task.id, { isComplete: (event.currentTarget as HTMLInputElement).checked })
+        input.id = id;
+        input.checked = this.task.isComplete;
+        input.name = id;
     }
 
-    #handleDeleteTask() {
+    private handleDeleteTask(): void {
         this.deleteIcon = this.querySelector('#task-delete');
         this.deleteHandler = () => this.taskService.deleteTask(this.task.id)
         this.deleteIcon.addEventListener('click', this.deleteHandler, { once: true });
     }
 
-    #renderTaskDetails(task) {
+    private renderTaskDetails(task: Task): void {
         this.querySelector('.task-item__text').textContent = task.task;
         this.querySelector('.task-item__description').textContent = task.description;
-        this.querySelector('#priority').innerHTML = this.#getPriority(task.priority);
+        this.querySelector('#priority').innerHTML = this.getPriorityMarkup(task.priority);
         this.querySelector('#effort').innerHTML = `Effort: ${task.effort}`
     }
 
-    #getPriority(priority) {
+    private getPriorityMarkup(priority: number): string {
         switch (priority) {
             case 3:
                 return 'High <span class="material-symbols-outlined">bolt</span>';

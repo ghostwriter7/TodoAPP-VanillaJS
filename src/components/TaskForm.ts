@@ -5,7 +5,7 @@ import { FormMode } from "@consts/form-mode.js";
 import { Injector } from "@services/Injector.ts";
 import { TaskService } from "@services/TaskService.ts";
 import { FormGroup } from "@components/form-group/FormGroup.ts";
-import { SubmitFormEvent } from "../types";
+import { CustomEvent } from "../types";
 
 interface TaskFormGroup {
     id?: string;
@@ -19,7 +19,7 @@ export class TaskForm extends BaseComponent {
     date: string;
     detailsEl: HTMLDetailsElement;
     formGroup: FormGroup<TaskFormGroup>;
-    taskEditInitHandler: (event: SubmitFormEvent<TaskFormGroup>) => void;
+    taskEditInitHandler: (event: CustomEvent<TaskFormGroup>) => void;
 
     private readonly taskService: TaskService;
 
@@ -39,7 +39,7 @@ export class TaskForm extends BaseComponent {
     }
 
     private handleTaskEdit(): void {
-        this.taskEditInitHandler = (event: SubmitFormEvent<TaskFormGroup>) => {
+        this.taskEditInitHandler = (event: CustomEvent<TaskFormGroup>) => {
             const { payload } = event;
             this.formGroup.setValue(payload);
             this.formGroup.dataset.mode = FormMode.Update;

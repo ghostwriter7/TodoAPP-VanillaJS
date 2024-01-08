@@ -7,33 +7,33 @@ import { TaskService } from "@services/TaskService.ts";
 
 export class TaskSummary extends BaseComponent {
     date: string;
-    #taskChangeHandler;
+    taskChangeHandler: (event: Event) => void;
 
     constructor() {
         super();
     }
 
-    connectedCallback() {
+    private connectedCallback(): void {
         this.attachTemplate('task-summary');
-        this.#renderTitle();
+        this.renderTitle();
 
-        this.#taskChangeHandler = () => this.#updateTaskCounters();
-        addEventListener(taskChangeEvent, this.#taskChangeHandler);
-        this.#updateTaskCounters();
+        this.taskChangeHandler = () => this.updateTaskCounters();
+        addEventListener(taskChangeEvent, this.taskChangeHandler);
+        this.updateTaskCounters();
     }
 
-    disconnectedCallback() {
-        removeEventListener(taskChangeEvent, this.#taskChangeHandler);
+    private disconnectedCallback(): void {
+        removeEventListener(taskChangeEvent, this.taskChangeHandler);
     }
 
-    #renderTitle() {
-        const title = this.querySelector('#title');
+    private renderTitle(): void {
+        const title = this.querySelector('#title') as HTMLSpanElement;
         const [month, date, year] = this.date.split('/');
-        const monthName = getMonthName(month - 1);
+        const monthName = getMonthName( parseInt(month) - 1);
         title.innerText = `${date} ${monthName} ${year}`;
     }
 
-    #updateTaskCounters() {
+    private updateTaskCounters(): void {
         this.querySelector('task-counters').setAttribute('summary', JSON.stringify(Injector.resolve(TaskService).getTasksSummary(this.date)));
     }
 }
