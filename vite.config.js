@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { defineConfig } from 'vite';
 import fs from 'fs';
 import copy from "rollup-plugin-copy";
@@ -68,5 +70,8 @@ export default defineConfig({
             { find: "@consts", replacement: resolve(__dirname, "./src/consts") },
             { find: "@helpers", replacement: resolve(__dirname, "./src/helpers") },
         ]
+    },
+    test: {
+
     }
 });
