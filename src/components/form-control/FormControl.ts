@@ -5,6 +5,7 @@ import { getSpan } from "@helpers/dom";
 
 export class FormControl extends BaseComponent {
     #errorEl;
+    defaultValue
     #inputChangeHandler;
     #inputEl;
     #pristine = true;
@@ -44,7 +45,7 @@ export class FormControl extends BaseComponent {
         this.#inputEl.dataset.value = value;
     }
 
-    updateValidity(value) {
+    updateValidity(value?: string | number) {
         if (this.#validators) {
             const failedValidator = this.#validators.find((validator) => !validator(value));
 
