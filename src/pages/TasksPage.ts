@@ -41,6 +41,8 @@ export class TasksPage extends BaseComponent {
     private renderLoadingBar(): void {
         this.loadingBar = document.createElement('loading-bar') as LoadingBar;
         this.loadingBar.dataset.message = 'Loading tasks...';
+        this.loadingBar.style.position = 'absolute';
+        this.loadingBar.style.inset = '0';
         this.appendChild(this.loadingBar);
     }
 }
