@@ -15,25 +15,7 @@
 <body class="scrollbar">
 
 <header class="d-none">
-    <nav>
-        <div class="d-flex gap-md align-center fs-xl clr-primary" onclick="app.router.navigateTo('/')">
-            <span class="material-symbols-outlined">home</span> TodoApp
-        </div>
-        <div class="d-flex align-center gap-md justify-center">
-            <button class="d-flex align-center gap-sm justify-center" onclick="app.router.navigateTo('/calendar')">
-                <span class="button-label">Calendar</span>
-                <span class="material-symbols-outlined">calendar_month</span>
-            </button>
-            <button class="d-flex align-center gap-sm justify-center" id="logout" onclick="app.authService.logout()">
-                <span class="button-label">Logout</span>
-                <span class="material-symbols-outlined">logout</span>
-            </button>
-            <button class="d-none align-center gap-sm justify-center" id="install">
-                <span class="button-label">Install</span>
-                <span class="material-symbols-outlined">download</span>
-            </button>
-        </div>
-    </nav>
+    <nav-bar></nav-bar>
 </header>
 
 <main>
@@ -42,7 +24,8 @@
 <template id="form-group">
     <div class="form__controls"></div>
     <div class="form__actions">
-        <button class="d-none align-center gap-md" type="button">Cancel <span class="material-symbols-outlined">close</span></button>
+        <button class="d-none align-center gap-md" type="button">Cancel <span
+                class="material-symbols-outlined">close</span></button>
         <button class="d-flex align-center gap-md" type="submit">
             <span id="button-label"></span>
             <span class="material-symbols-outlined">local_fire_department</span>
@@ -78,6 +61,27 @@
 <template id="calendar-header">
     <div id="calendar-header-actions"></div>
     <task-counters></task-counters>
+</template>
+
+<template id="nav-bar">
+    <div class="d-flex gap-md align-center fs-xl clr-primary" data-route="/">
+        <span class="material-symbols-outlined">home</span> TodoApp
+    </div>
+    <div class="d-flex align-center gap-md justify-center">
+        <button class="d-flex align-center gap-sm justify-center"
+                data-route="/calendar">
+            <span class="button-label">Calendar</span>
+            <span class="material-symbols-outlined">calendar_month</span>
+        </button>
+        <button class="d-flex align-center gap-sm justify-center" id="logout">
+            <span class="button-label">Logout</span>
+            <span class="material-symbols-outlined">logout</span>
+        </button>
+        <button class="d-none align-center gap-sm justify-center" id="install">
+            <span class="button-label">Install</span>
+            <span class="material-symbols-outlined">download</span>
+        </button>
+    </div>
 </template>
 
 </body>

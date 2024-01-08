@@ -6,6 +6,7 @@ import {
     FormControl,
     FormGroup,
     LoadingBar,
+    NavBar,
     ObservableButton,
     RateSelector,
     SortableList,
@@ -20,24 +21,9 @@ import { AuthService, CalendarService, DataSource, Firebase, Injector, Router, T
 import { onAuthStateChanged } from 'firebase/auth';
 import { AuthPage, CalendarPage, NotFoundPage, TasksPage } from "@pages/index";
 
-type App = {
-    authService: AuthService,
-    dataSource: DataSource,
-    router: Router,
-    taskService: TaskService,
-    calendarService: CalendarService
-}
-
-declare global {
-    interface Window {
-        app: App
-    }
-}
-
-declare const app: App;
-
 navigator.serviceWorker?.register('serviceworker.js');
 
+customElements.define('nav-bar', NavBar);
 customElements.define('form-control', FormControl);
 customElements.define('form-group', FormGroup, { extends: 'form' });
 customElements.define('rate-selector', RateSelector);
@@ -71,20 +57,6 @@ addEventListener('DOMContentLoaded', () => {
         Injector.resolve(Router).navigateTo(user ? '/' : '/auth');
         document.querySelector('header').classList[user ? 'remove' : 'add']('d-none');
     });
-});
-
-
-let beforeInstallPromptEvent;
-const installButton = document.getElementById('install');
-addEventListener('beforeinstallprompt', (event) => {
-    event.preventDefault();
-    beforeInstallPromptEvent = event;
-    installButton.classList.remove('d-none');
-    installButton.classList.add('d-flex');
-});
-
-installButton.addEventListener('click', (event) => {
-    beforeInstallPromptEvent.prompt();
 });
 
 addEventListener('popstate', (event) => {

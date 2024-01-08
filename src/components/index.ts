@@ -6,6 +6,7 @@ export * from './Dropdown';
 export * from './form-control/FormControl';
 export * from './form-group/FormGroup';
 export * from './loading-bar/LoadingBar';
+export * from './NavBar';
 export * from './ObservableButton';
 export * from './rate-selector/RateSelector';
 export * from './sortable-list/SortableList';
