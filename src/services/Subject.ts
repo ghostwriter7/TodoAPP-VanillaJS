@@ -1,9 +1,9 @@
-import { Observer } from "../types";
+import { Observable, Observer } from "../types";
 
 export class Subject<T = unknown> {
     private observers: Observer<T>[] = [];
 
-    asObservable(): { subscribe: (observer: Observer<T>) => { unsubscribe: () => void } } {
+    asObservable(): Observable<T> {
         const subscribe = this.subscribe.bind(this);
         return { subscribe };
     }

@@ -1,27 +1,18 @@
 import { Subject } from "@services/Subject.js";
+import { Observable } from "../types";
 
 export class ObservableButton extends HTMLButtonElement {
-    #clickSubject = new Subject();
-    #clickHandler;
-    click$ = this.#clickSubject.asObservable();
+    private readonly clickSubject = new Subject<void>();
+    click$: Observable<void> = this.clickSubject.asObservable();
 
     constructor() {
         super();
     }
 
     connectedCallback() {
-        this.#clickHandler = (event) => {
+        this.onclick = (event: MouseEvent) => {
             event.preventDefault();
-            this.#clickSubject.next(true);
-        };
-
-        this.addEventListener('click', (event) => {
-            event.preventDefault();
-            this.#clickSubject.next(true);
-        });
-    }
-
-    disconnectedCallback() {
-        this.removeEventListener('click', this.#clickHandler);
+            this.clickSubject.next();
+        }
     }
 }

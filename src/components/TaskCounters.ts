@@ -1,3 +1,5 @@
+import type { TaskSummary } from "../types";
+
 export class TaskCounters extends HTMLElement {
     static get observedAttributes() {
         return ['summary'];
@@ -8,8 +10,8 @@ export class TaskCounters extends HTMLElement {
         this.classList.add('fs-lg');
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        const { complete, total } = JSON.parse(newValue);
+    private attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+        const { complete, total } = JSON.parse(newValue) as TaskSummary;
         if (total !== 0) {
             const active = total - complete;
             this.classList.add('d-flex', 'gap-xl');
