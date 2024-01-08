@@ -13,16 +13,12 @@ export class DayTile extends HTMLElement {
         super();
     }
 
-    connectedCallback() {
-        this.#render();
-        this.#initializeEventListener();
+    private connectedCallback(): void {
+        this.render();
+        this.initializeEventListener();
     }
 
-    disconnectedCallback() {
-        this.removeEventListener('click', this.clickHandler);
-    }
-
-    #render() {
+    private render(): void {
         this.classList.add('container', 'calendar__day', 'd-flex', 'justify-between');
 
         if (this.isToday) {
@@ -35,7 +31,7 @@ export class DayTile extends HTMLElement {
         }
 
         const date = getSpan();
-        date.innerText = this.date.getDate();
+        date.innerText = this.date.getDate().toString();
         this.appendChild(date);
 
         if (this.stats.total !== 0) {
@@ -46,8 +42,7 @@ export class DayTile extends HTMLElement {
         }
     }
 
-    #initializeEventListener() {
-        this.clickHandler = () => Injector.resolve(Router).navigateTo(`/tasks?date=${toTaskId(this.date)}`);
-        this.addEventListener('click', this.clickHandler);
+    private initializeEventListener(): void {
+        this.onclick = () => Injector.resolve(Router).navigateTo(`/tasks?date=${toTaskId(this.date)}`);
     }
 }

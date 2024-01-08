@@ -1,21 +1,14 @@
 import { Subject } from "@services/Subject.js";
 
 export class Dropdown extends HTMLSelectElement {
-    #changeSubject = new Subject<string>();
-    change$ = this.#changeSubject.asObservable();
+    private readonly changeSubject = new Subject<string>();
+    public change$ = this.changeSubject.asObservable();
 
     constructor() {
         super();
     }
 
-    connectedCallback() {
-        this.changeEventHandler = (event) => {
-            this.#changeSubject.next(event.target.value);
-        };
-        this.addEventListener('change', this.changeEventHandler);
-    }
-
-    disconnectedCallback() {
-        this.removeEventListener('change', this.changeEventHandler);
+    private connectedCallback(): void {
+        this.onchange = (event: Event) => this.changeSubject.next((event.target as HTMLSelectElement).value)
     }
 }
