@@ -6,6 +6,7 @@ import type { TaskSummary } from "../../types";
 import { Injector } from "@services/Injector.ts";
 import { CalendarService } from "@services/CalendarService.ts";
 import type { DayTile } from "@components/DayTile.ts";
+import { TemplateBuilder } from "@helpers/TemplateBuilder.ts";
 
 export class CalendarGrid extends BaseComponent {
     private calendarService: CalendarService;
@@ -28,18 +29,21 @@ export class CalendarGrid extends BaseComponent {
     }
 
     private createCalendarHeader(): void {
-        const container = getDiv();
-        container.className = 'd-flex';
+        const calendarHeaderBuilder = TemplateBuilder
+            .get()
+            .createRoot('div')
+            .withClasses('d-flex');
 
-        const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        daysOfWeek.forEach((dayOfWeek) => {
-            const dayOfWeekEl = getSpan();
-            dayOfWeekEl.className = 'container grow';
-            dayOfWeekEl.innerText = dayOfWeek;
-            container.appendChild(dayOfWeekEl);
-        });
+        ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            .forEach((dayOfWeek) => {
+               calendarHeaderBuilder
+                   .createElement('span')
+                   .withClasses('container', 'grow')
+                   .withContent(dayOfWeek)
+                   .appendTo('root');
+            });
 
-        this.appendChild(container);
+        this.appendChild(calendarHeaderBuilder.build());
     }
 
     private async createDateTiles(monthSummaryPerDay: TaskSummary[]): Promise<void> {
