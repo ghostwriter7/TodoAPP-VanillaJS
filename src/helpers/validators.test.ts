@@ -23,6 +23,7 @@ describe('Form Validators', () => {
        it('should fail the sample email as it is invalid', () => {
           const sample = 'hello@';
           expect(email(sample)).toEqual(false);
+          expect.assertions(1);
        });
     });
 
@@ -37,6 +38,7 @@ describe('Form Validators', () => {
           const value = 'abc';
           const validator = minLength(4);
           expect(validator(value)).toEqual(false);
+          expect.hasAssertions();
        });
     });
 });
