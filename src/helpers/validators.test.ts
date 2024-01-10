@@ -1,3 +1,5 @@
+// @vitest-environment node
+
 import { describe, expect, it } from "vitest";
 import { email, minLength, required } from "@helpers/validators.ts";
 
