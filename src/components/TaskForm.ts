@@ -12,7 +12,7 @@ interface TaskFormGroup {
     task: string;
     description: string;
     effort: number;
-    rate: number
+    priority: number
 }
 
 export class TaskForm extends BaseComponent {

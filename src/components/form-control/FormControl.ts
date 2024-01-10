@@ -3,6 +3,7 @@ import { BaseComponent } from '@components/BaseComponent.js'
 import { Subject } from "@services/Subject";
 import { getSpan } from "@helpers/dom";
 import { ValidationMessageMap, Validator } from "../../types/form-validation.type.ts";
+import type { CustomInputEvent } from "../../types";
 
 export class FormControl extends BaseComponent {
     private errorEl: HTMLSpanElement;
@@ -40,7 +41,7 @@ export class FormControl extends BaseComponent {
         this.inputEl.dataset.value = value;
     }
 
-    public updateValidity(value?: string): void {
+    public updateValidity(value?: string | number): void {
         if (this.validators) {
             const failedValidator = this.validators.find((validator) => !validator(value));
 
@@ -70,7 +71,7 @@ export class FormControl extends BaseComponent {
     }
 
     private notifyAllOnValueChange(): void {
-        this.inputEl.oninput = (event: InputEvent & { value?: string }) => {
+        this.inputEl.oninput = (event: CustomInputEvent<string | number>) => {
             const value = event.value ?? (event.target as HTMLInputElement).value;
             this.pristine = false;
             this.updateValidity(value);

@@ -1,5 +1,6 @@
 import './rate-selector.css';
 import { getSpan } from "@helpers/dom";
+import { CustomInputEvent } from "../../types";
 
 export class RateSelector extends HTMLElement {
     private eventHandlerMap = new Map<HTMLSpanElement, () => void>();
@@ -10,7 +11,6 @@ export class RateSelector extends HTMLElement {
     static get observedAttributes() {
         return ['data-value'];
     }
-
 
     constructor() {
         super();
@@ -26,7 +26,7 @@ export class RateSelector extends HTMLElement {
 
             this.eventHandlerMap.set(span, () => {
                 this.updateLevels(index + 1);
-                const inputEvent = new InputEvent('input') as InputEvent & { value: number };
+                const inputEvent = new InputEvent('input') as CustomInputEvent<number>;
                 inputEvent.value = index + 1;
                 this.dispatchEvent(inputEvent);
             });
